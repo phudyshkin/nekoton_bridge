@@ -23,11 +23,12 @@ abstract class NekotonBridge {
   ///----------------------------
   /// CONTENT OF src/nekoton_wrapper/crypto/crypto_api.rs
   ///----------------------------
-  /// Check signature by publicKey and data hash
+  /// Check signature by publicKey and data
   Future<bool> verifySignature(
       {required String publicKey,
-      required String dataHash,
+      required String data,
       required String signature,
+      int? signatureId,
       dynamic hint});
 
   FlutterRustBridgeTaskConstMeta get kVerifySignatureConstMeta;
@@ -82,7 +83,7 @@ abstract class NekotonBridge {
   FlutterRustBridgeTaskConstMeta get kRunLocalConstMeta;
 
   /// Get address of tvc and contract_abi.
-  /// Returns list of [address, state_init, hash] or throws error
+  /// Returns list of [address, boc of state_init, hash] or throws error
   Future<List<String>> getExpectedAddress(
       {required String tvc,
       required String contractAbi,
@@ -186,7 +187,10 @@ abstract class NekotonBridge {
   /// Return base64 encoded bytes of tokens or throws error
   /// returns [tvc, hash]
   Future<List<String>> packIntoCell(
-      {required String params, required String tokens, dynamic hint});
+      {required String params,
+      required String tokens,
+      String? version,
+      dynamic hint});
 
   FlutterRustBridgeTaskConstMeta get kPackIntoCellConstMeta;
 
@@ -195,6 +199,7 @@ abstract class NekotonBridge {
       {required String params,
       required String boc,
       required bool allowPartial,
+      String? version,
       dynamic hint});
 
   FlutterRustBridgeTaskConstMeta get kUnpackFromCellConstMeta;
@@ -1178,6 +1183,22 @@ abstract class NekotonBridge {
   FlutterRustBridgeTaskConstMeta
       get kAddTokenWalletMethodAccountsStorageImplConstMeta;
 
+  /// Add token wallets signatures to account (add new tokens to account aka enable it via slider).
+  /// account_address - address of account
+  /// network_group - name of network group where this token must be visible, could be found in
+  ///   connection info
+  /// root_token_contracts - list of addresses of tokens in blockchain.
+  /// Return true or throw error.
+  Future<bool> addTokenWalletsMethodAccountsStorageImpl(
+      {required AccountsStorageImpl that,
+      required String accountAddress,
+      required String networkGroup,
+      required List<String> rootTokenContracts,
+      dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta
+      get kAddTokenWalletsMethodAccountsStorageImplConstMeta;
+
   /// Remove token wallet signature from account (remove token from account aka disable it via slider).
   /// account_address - address of account
   /// network_group - name of network group where this token must be visible, could be found in
@@ -1193,6 +1214,22 @@ abstract class NekotonBridge {
 
   FlutterRustBridgeTaskConstMeta
       get kRemoveTokenWalletMethodAccountsStorageImplConstMeta;
+
+  /// Remove token wallets signatures from account (remove tokens from account aka disable it via slider).
+  /// account_address - address of account
+  /// network_group - name of network group where this token must be visible, could be found in
+  ///   connection info
+  /// root_token_contracts - list of addresses of tokens in blockchain.
+  /// Return true or throw error.
+  Future<bool> removeTokenWalletsMethodAccountsStorageImpl(
+      {required AccountsStorageImpl that,
+      required String accountAddress,
+      required String networkGroup,
+      required List<String> rootTokenContracts,
+      dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta
+      get kRemoveTokenWalletsMethodAccountsStorageImplConstMeta;
 
   /// Remove account from storage and return its instance if it was removed.
   /// account_address - address of account
@@ -1983,6 +2020,24 @@ class AccountsStorageImpl {
         rootTokenContract: rootTokenContract,
       );
 
+  /// Add token wallets signatures to account (add new tokens to account aka enable it via slider).
+  /// account_address - address of account
+  /// network_group - name of network group where this token must be visible, could be found in
+  ///   connection info
+  /// root_token_contracts - list of addresses of tokens in blockchain.
+  /// Return true or throw error.
+  Future<bool> addTokenWallets(
+          {required String accountAddress,
+          required String networkGroup,
+          required List<String> rootTokenContracts,
+          dynamic hint}) =>
+      bridge.addTokenWalletsMethodAccountsStorageImpl(
+        that: this,
+        accountAddress: accountAddress,
+        networkGroup: networkGroup,
+        rootTokenContracts: rootTokenContracts,
+      );
+
   /// Remove token wallet signature from account (remove token from account aka disable it via slider).
   /// account_address - address of account
   /// network_group - name of network group where this token must be visible, could be found in
@@ -1999,6 +2054,24 @@ class AccountsStorageImpl {
         accountAddress: accountAddress,
         networkGroup: networkGroup,
         rootTokenContract: rootTokenContract,
+      );
+
+  /// Remove token wallets signatures from account (remove tokens from account aka disable it via slider).
+  /// account_address - address of account
+  /// network_group - name of network group where this token must be visible, could be found in
+  ///   connection info
+  /// root_token_contracts - list of addresses of tokens in blockchain.
+  /// Return true or throw error.
+  Future<bool> removeTokenWallets(
+          {required String accountAddress,
+          required String networkGroup,
+          required List<String> rootTokenContracts,
+          dynamic hint}) =>
+      bridge.removeTokenWalletsMethodAccountsStorageImpl(
+        that: this,
+        accountAddress: accountAddress,
+        networkGroup: networkGroup,
+        rootTokenContracts: rootTokenContracts,
       );
 
   /// Remove account from storage and return its instance if it was removed.
@@ -2853,12 +2926,14 @@ class LogEntry {
   final LogLevel level;
   final String tag;
   final String msg;
+  final String? stack;
 
   const LogEntry({
     required this.timeMillis,
     required this.level,
     required this.tag,
     required this.msg,
+    this.stack,
   });
 }
 
@@ -3611,18 +3686,20 @@ class NekotonBridgeImpl implements NekotonBridge {
   NekotonBridgeImpl.raw(this._platform);
   Future<bool> verifySignature(
       {required String publicKey,
-      required String dataHash,
+      required String data,
       required String signature,
+      int? signatureId,
       dynamic hint}) {
     var arg0 = _platform.api2wire_String(publicKey);
-    var arg1 = _platform.api2wire_String(dataHash);
+    var arg1 = _platform.api2wire_String(data);
     var arg2 = _platform.api2wire_String(signature);
+    var arg3 = _platform.api2wire_opt_box_autoadd_i32(signatureId);
     return _platform.executeNormal(FlutterRustBridgeTask(
       callFfi: (port_) =>
-          _platform.inner.wire_verify_signature(port_, arg0, arg1, arg2),
+          _platform.inner.wire_verify_signature(port_, arg0, arg1, arg2, arg3),
       parseSuccessData: _wire2api_bool,
       constMeta: kVerifySignatureConstMeta,
-      argValues: [publicKey, dataHash, signature],
+      argValues: [publicKey, data, signature, signatureId],
       hint: hint,
     ));
   }
@@ -3630,7 +3707,7 @@ class NekotonBridgeImpl implements NekotonBridge {
   FlutterRustBridgeTaskConstMeta get kVerifySignatureConstMeta =>
       const FlutterRustBridgeTaskConstMeta(
         debugName: "verify_signature",
-        argNames: ["publicKey", "dataHash", "signature"],
+        argNames: ["publicKey", "data", "signature", "signatureId"],
       );
 
   Future<GeneratedKeyG> ntGenerateKey(
@@ -4041,15 +4118,19 @@ class NekotonBridgeImpl implements NekotonBridge {
       );
 
   Future<List<String>> packIntoCell(
-      {required String params, required String tokens, dynamic hint}) {
+      {required String params,
+      required String tokens,
+      String? version,
+      dynamic hint}) {
     var arg0 = _platform.api2wire_String(params);
     var arg1 = _platform.api2wire_String(tokens);
+    var arg2 = _platform.api2wire_opt_String(version);
     return _platform.executeNormal(FlutterRustBridgeTask(
       callFfi: (port_) =>
-          _platform.inner.wire_pack_into_cell(port_, arg0, arg1),
+          _platform.inner.wire_pack_into_cell(port_, arg0, arg1, arg2),
       parseSuccessData: _wire2api_StringList,
       constMeta: kPackIntoCellConstMeta,
-      argValues: [params, tokens],
+      argValues: [params, tokens, version],
       hint: hint,
     ));
   }
@@ -4057,23 +4138,25 @@ class NekotonBridgeImpl implements NekotonBridge {
   FlutterRustBridgeTaskConstMeta get kPackIntoCellConstMeta =>
       const FlutterRustBridgeTaskConstMeta(
         debugName: "pack_into_cell",
-        argNames: ["params", "tokens"],
+        argNames: ["params", "tokens", "version"],
       );
 
   Future<String> unpackFromCell(
       {required String params,
       required String boc,
       required bool allowPartial,
+      String? version,
       dynamic hint}) {
     var arg0 = _platform.api2wire_String(params);
     var arg1 = _platform.api2wire_String(boc);
     var arg2 = allowPartial;
+    var arg3 = _platform.api2wire_opt_String(version);
     return _platform.executeNormal(FlutterRustBridgeTask(
       callFfi: (port_) =>
-          _platform.inner.wire_unpack_from_cell(port_, arg0, arg1, arg2),
+          _platform.inner.wire_unpack_from_cell(port_, arg0, arg1, arg2, arg3),
       parseSuccessData: _wire2api_String,
       constMeta: kUnpackFromCellConstMeta,
-      argValues: [params, boc, allowPartial],
+      argValues: [params, boc, allowPartial, version],
       hint: hint,
     ));
   }
@@ -4081,7 +4164,7 @@ class NekotonBridgeImpl implements NekotonBridge {
   FlutterRustBridgeTaskConstMeta get kUnpackFromCellConstMeta =>
       const FlutterRustBridgeTaskConstMeta(
         debugName: "unpack_from_cell",
-        argNames: ["params", "boc", "allowPartial"],
+        argNames: ["params", "boc", "allowPartial", "version"],
       );
 
   Future<String> packStdSmcAddr(
@@ -6707,6 +6790,39 @@ class NekotonBridgeImpl implements NekotonBridge {
             ],
           );
 
+  Future<bool> addTokenWalletsMethodAccountsStorageImpl(
+      {required AccountsStorageImpl that,
+      required String accountAddress,
+      required String networkGroup,
+      required List<String> rootTokenContracts,
+      dynamic hint}) {
+    var arg0 = _platform.api2wire_box_autoadd_accounts_storage_impl(that);
+    var arg1 = _platform.api2wire_String(accountAddress);
+    var arg2 = _platform.api2wire_String(networkGroup);
+    var arg3 = _platform.api2wire_StringList(rootTokenContracts);
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) => _platform.inner
+          .wire_add_token_wallets__method__AccountsStorageImpl(
+              port_, arg0, arg1, arg2, arg3),
+      parseSuccessData: _wire2api_bool,
+      constMeta: kAddTokenWalletsMethodAccountsStorageImplConstMeta,
+      argValues: [that, accountAddress, networkGroup, rootTokenContracts],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta
+      get kAddTokenWalletsMethodAccountsStorageImplConstMeta =>
+          const FlutterRustBridgeTaskConstMeta(
+            debugName: "add_token_wallets__method__AccountsStorageImpl",
+            argNames: [
+              "that",
+              "accountAddress",
+              "networkGroup",
+              "rootTokenContracts"
+            ],
+          );
+
   Future<String> removeTokenWalletMethodAccountsStorageImpl(
       {required AccountsStorageImpl that,
       required String accountAddress,
@@ -6737,6 +6853,39 @@ class NekotonBridgeImpl implements NekotonBridge {
               "accountAddress",
               "networkGroup",
               "rootTokenContract"
+            ],
+          );
+
+  Future<bool> removeTokenWalletsMethodAccountsStorageImpl(
+      {required AccountsStorageImpl that,
+      required String accountAddress,
+      required String networkGroup,
+      required List<String> rootTokenContracts,
+      dynamic hint}) {
+    var arg0 = _platform.api2wire_box_autoadd_accounts_storage_impl(that);
+    var arg1 = _platform.api2wire_String(accountAddress);
+    var arg2 = _platform.api2wire_String(networkGroup);
+    var arg3 = _platform.api2wire_StringList(rootTokenContracts);
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) => _platform.inner
+          .wire_remove_token_wallets__method__AccountsStorageImpl(
+              port_, arg0, arg1, arg2, arg3),
+      parseSuccessData: _wire2api_bool,
+      constMeta: kRemoveTokenWalletsMethodAccountsStorageImplConstMeta,
+      argValues: [that, accountAddress, networkGroup, rootTokenContracts],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta
+      get kRemoveTokenWalletsMethodAccountsStorageImplConstMeta =>
+          const FlutterRustBridgeTaskConstMeta(
+            debugName: "remove_token_wallets__method__AccountsStorageImpl",
+            argNames: [
+              "that",
+              "accountAddress",
+              "networkGroup",
+              "rootTokenContracts"
             ],
           );
 
@@ -8369,13 +8518,14 @@ class NekotonBridgeImpl implements NekotonBridge {
 
   LogEntry _wire2api_log_entry(dynamic raw) {
     final arr = raw as List<dynamic>;
-    if (arr.length != 4)
-      throw Exception('unexpected arr length: expect 4 but see ${arr.length}');
+    if (arr.length != 5)
+      throw Exception('unexpected arr length: expect 5 but see ${arr.length}');
     return LogEntry(
       timeMillis: _wire2api_i64(arr[0]),
       level: _wire2api_log_level(arr[1]),
       tag: _wire2api_String(arr[2]),
       msg: _wire2api_String(arr[3]),
+      stack: _wire2api_opt_String(arr[4]),
     );
   }
 

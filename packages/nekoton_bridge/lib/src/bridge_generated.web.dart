@@ -533,7 +533,7 @@ class NekotonBridgeWasmModule implements WasmModule {
   external Object /* Promise */ call([String? moduleName]);
   external NekotonBridgeWasmModule bind(dynamic thisArg, String moduleName);
   external dynamic /* void */ wire_verify_signature(NativePortType port_,
-      String public_key, String data_hash, String signature);
+      String public_key, String data, String signature, int? signature_id);
 
   external dynamic /* void */ wire_nt_generate_key(
       NativePortType port_, List<dynamic> account_type);
@@ -607,10 +607,10 @@ class NekotonBridgeWasmModule implements WasmModule {
       NativePortType port_, String boc);
 
   external dynamic /* void */ wire_pack_into_cell(
-      NativePortType port_, String params, String tokens);
+      NativePortType port_, String params, String tokens, String? version);
 
-  external dynamic /* void */ wire_unpack_from_cell(
-      NativePortType port_, String params, String boc, bool allow_partial);
+  external dynamic /* void */ wire_unpack_from_cell(NativePortType port_,
+      String params, String boc, bool allow_partial, String? version);
 
   external dynamic /* void */ wire_pack_std_smc_addr(
       NativePortType port_, String addr, bool base64_url, bool bounceable);
@@ -1086,12 +1086,28 @@ class NekotonBridgeWasmModule implements WasmModule {
           String root_token_contract);
 
   external dynamic /* void */
+      wire_add_token_wallets__method__AccountsStorageImpl(
+          NativePortType port_,
+          List<dynamic> that,
+          String account_address,
+          String network_group,
+          List<String> root_token_contracts);
+
+  external dynamic /* void */
       wire_remove_token_wallet__method__AccountsStorageImpl(
           NativePortType port_,
           List<dynamic> that,
           String account_address,
           String network_group,
           String root_token_contract);
+
+  external dynamic /* void */
+      wire_remove_token_wallets__method__AccountsStorageImpl(
+          NativePortType port_,
+          List<dynamic> that,
+          String account_address,
+          String network_group,
+          List<String> root_token_contracts);
 
   external dynamic /* void */ wire_remove_account__method__AccountsStorageImpl(
       NativePortType port_, List<dynamic> that, String account_address);
@@ -1370,8 +1386,9 @@ class NekotonBridgeWire
       : super(WasmModule.cast<NekotonBridgeWasmModule>(module));
 
   void wire_verify_signature(NativePortType port_, String public_key,
-          String data_hash, String signature) =>
-      wasmModule.wire_verify_signature(port_, public_key, data_hash, signature);
+          String data, String signature, int? signature_id) =>
+      wasmModule.wire_verify_signature(
+          port_, public_key, data, signature, signature_id);
 
   void wire_nt_generate_key(NativePortType port_, List<dynamic> account_type) =>
       wasmModule.wire_nt_generate_key(port_, account_type);
@@ -1457,13 +1474,14 @@ class NekotonBridgeWire
   void wire_get_boc_hash(NativePortType port_, String boc) =>
       wasmModule.wire_get_boc_hash(port_, boc);
 
-  void wire_pack_into_cell(
-          NativePortType port_, String params, String tokens) =>
-      wasmModule.wire_pack_into_cell(port_, params, tokens);
+  void wire_pack_into_cell(NativePortType port_, String params, String tokens,
+          String? version) =>
+      wasmModule.wire_pack_into_cell(port_, params, tokens, version);
 
   void wire_unpack_from_cell(NativePortType port_, String params, String boc,
-          bool allow_partial) =>
-      wasmModule.wire_unpack_from_cell(port_, params, boc, allow_partial);
+          bool allow_partial, String? version) =>
+      wasmModule.wire_unpack_from_cell(
+          port_, params, boc, allow_partial, version);
 
   void wire_pack_std_smc_addr(NativePortType port_, String addr,
           bool base64_url, bool bounceable) =>
@@ -2041,6 +2059,15 @@ class NekotonBridgeWire
       wasmModule.wire_add_token_wallet__method__AccountsStorageImpl(
           port_, that, account_address, network_group, root_token_contract);
 
+  void wire_add_token_wallets__method__AccountsStorageImpl(
+          NativePortType port_,
+          List<dynamic> that,
+          String account_address,
+          String network_group,
+          List<String> root_token_contracts) =>
+      wasmModule.wire_add_token_wallets__method__AccountsStorageImpl(
+          port_, that, account_address, network_group, root_token_contracts);
+
   void wire_remove_token_wallet__method__AccountsStorageImpl(
           NativePortType port_,
           List<dynamic> that,
@@ -2049,6 +2076,15 @@ class NekotonBridgeWire
           String root_token_contract) =>
       wasmModule.wire_remove_token_wallet__method__AccountsStorageImpl(
           port_, that, account_address, network_group, root_token_contract);
+
+  void wire_remove_token_wallets__method__AccountsStorageImpl(
+          NativePortType port_,
+          List<dynamic> that,
+          String account_address,
+          String network_group,
+          List<String> root_token_contracts) =>
+      wasmModule.wire_remove_token_wallets__method__AccountsStorageImpl(
+          port_, that, account_address, network_group, root_token_contracts);
 
   void wire_remove_account__method__AccountsStorageImpl(
           NativePortType port_, List<dynamic> that, String account_address) =>

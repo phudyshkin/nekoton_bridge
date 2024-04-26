@@ -1,3 +1,32 @@
+## 1.27.3
+
+ - **FIX**: added disposed flag to transport ([#243](https://github.com/broxus/nekoton_bridge/issues/243)). ([b49beb8c](https://github.com/broxus/nekoton_bridge/commit/b49beb8c2ef7aeae28d7456d8ff396647f8626b6))
+
+## 1.27.2
+
+ - **FIX**: abi methods ([#241](https://github.com/broxus/nekoton_bridge/issues/241)). ([d3f908aa](https://github.com/broxus/nekoton_bridge/commit/d3f908aada544a80b26d68a948eb349cc2591fc9))
+
+## 1.27.1
+
+ - **FIX**: make Transaction.boc nullable ([#238](https://github.com/broxus/nekoton_bridge/issues/238)). ([93cc547a](https://github.com/broxus/nekoton_bridge/commit/93cc547a7988db0480556b6eededf19c622ac94d))
+
+## 1.27.0
+
+ - **FEAT**: add stacktrace to LogEntry ([#236](https://github.com/broxus/nekoton_bridge/issues/236)). ([50a639eb](https://github.com/broxus/nekoton_bridge/commit/50a639eb385edf49c03d3249f8858fd2daff9983))
+
+## 1.26.1
+
+ - **FIX**: add codeHash to contract ([#234](https://github.com/broxus/nekoton_bridge/issues/234)). ([911aec9c](https://github.com/broxus/nekoton_bridge/commit/911aec9c87c07f43a1ec597f437c87b7132168e8))
+
+## 1.26.0
+
+ - **FIX**: generated files ([#229](https://github.com/broxus/nekoton_bridge/issues/229)). ([ed63cac4](https://github.com/broxus/nekoton_bridge/commit/ed63cac4c5b2382f0b6fa34e120ae5066f08732b))
+ - **FEAT**: added method to add multiple token wallets at timme ([#231](https://github.com/broxus/nekoton_bridge/issues/231)). ([f88c0da3](https://github.com/broxus/nekoton_bridge/commit/f88c0da3ed357316b1bd66dec49b985b92fe29d2))
+
+## 1.25.2
+
+ - **FIX**: http header for protobuf ([#226](https://github.com/broxus/nekoton_bridge/issues/226)). ([ade9998e](https://github.com/broxus/nekoton_bridge/commit/ade9998ea41ce9186cfc16ca5dbd5e108a943c79))
+
 ## 1.25.1
 
  - **FIX**: updateClockOffset param changed to Duration ([#224](https://github.com/broxus/nekoton_bridge/issues/224)). ([23ca1175](https://github.com/broxus/nekoton_bridge/commit/23ca1175e210dd3b856e49cb8c3292ababcbcd42))
