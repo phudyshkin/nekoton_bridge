@@ -28,12 +28,10 @@ import 'proto_connection.dart' as prefix1;
 // ignore_for_file: prefer_adjacent_string_concatenation
 // ignore_for_file: prefer_collection_literals
 // ignore_for_file: unnecessary_const
+// ignore_for_file: unused_import
 
-// ignore:unused_import
 import 'package:reflectable/mirrors.dart' as m;
-// ignore:unused_import
 import 'package:reflectable/src/reflectable_builder_based.dart' as r;
-// ignore:unused_import
 import 'package:reflectable/reflectable.dart' as r show Reflectable;
 
 final _data = <r.Reflectable, r.ReflectorData>{

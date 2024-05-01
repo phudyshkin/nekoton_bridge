@@ -2479,8 +2479,7 @@ class NekotonBridgeWire implements FlutterRustBridgeWireBase {
 
   late final _wire_get_accounts_by_code_hash__method__GqlTransportImplPtr =
       _lookup<
-              ffi
-              .NativeFunction<
+              ffi.NativeFunction<
                   ffi.Void Function(
                       ffi.Int64,
                       ffi.Pointer<wire_GqlTransportImpl>,
@@ -2766,8 +2765,7 @@ class NekotonBridgeWire implements FlutterRustBridgeWireBase {
 
   late final _wire_get_full_contract_state__method__ProtoTransportImplPtr =
       _lookup<
-              ffi
-              .NativeFunction<
+              ffi.NativeFunction<
                   ffi.Void Function(
                       ffi.Int64,
                       ffi.Pointer<wire_ProtoTransportImpl>,
@@ -5265,8 +5263,7 @@ class NekotonBridgeWire implements FlutterRustBridgeWireBase {
 
   late final _wire_get_custodians__static_method__TonWalletDartWrapperPtr =
       _lookup<
-              ffi
-              .NativeFunction<
+              ffi.NativeFunction<
                   ffi.Void Function(ffi.Int64, wire_ArcTransportBoxTrait,
                       ffi.Pointer<wire_uint_8_list>)>>(
           'wire_get_custodians__static_method__TonWalletDartWrapper');

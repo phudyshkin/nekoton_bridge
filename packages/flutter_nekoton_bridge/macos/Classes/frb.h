@@ -292,8 +292,9 @@ intptr_t init_frb_dart_api_dl(void *obj);
 
 void wire_verify_signature(int64_t port_,
                            struct wire_uint_8_list *public_key,
-                           struct wire_uint_8_list *data_hash,
-                           struct wire_uint_8_list *signature);
+                           struct wire_uint_8_list *data,
+                           struct wire_uint_8_list *signature,
+                           int32_t *signature_id);
 
 void wire_nt_generate_key(int64_t port_, struct wire_MnemonicType *account_type);
 
@@ -372,12 +373,14 @@ void wire_get_boc_hash(int64_t port_, struct wire_uint_8_list *boc);
 
 void wire_pack_into_cell(int64_t port_,
                          struct wire_uint_8_list *params,
-                         struct wire_uint_8_list *tokens);
+                         struct wire_uint_8_list *tokens,
+                         struct wire_uint_8_list *version);
 
 void wire_unpack_from_cell(int64_t port_,
                            struct wire_uint_8_list *params,
                            struct wire_uint_8_list *boc,
-                           bool allow_partial);
+                           bool allow_partial,
+                           struct wire_uint_8_list *version);
 
 void wire_pack_std_smc_addr(int64_t port_,
                             struct wire_uint_8_list *addr,
@@ -817,11 +820,23 @@ void wire_add_token_wallet__method__AccountsStorageImpl(int64_t port_,
                                                         struct wire_uint_8_list *network_group,
                                                         struct wire_uint_8_list *root_token_contract);
 
+void wire_add_token_wallets__method__AccountsStorageImpl(int64_t port_,
+                                                         struct wire_AccountsStorageImpl *that,
+                                                         struct wire_uint_8_list *account_address,
+                                                         struct wire_uint_8_list *network_group,
+                                                         struct wire_StringList *root_token_contracts);
+
 void wire_remove_token_wallet__method__AccountsStorageImpl(int64_t port_,
                                                            struct wire_AccountsStorageImpl *that,
                                                            struct wire_uint_8_list *account_address,
                                                            struct wire_uint_8_list *network_group,
                                                            struct wire_uint_8_list *root_token_contract);
+
+void wire_remove_token_wallets__method__AccountsStorageImpl(int64_t port_,
+                                                            struct wire_AccountsStorageImpl *that,
+                                                            struct wire_uint_8_list *account_address,
+                                                            struct wire_uint_8_list *network_group,
+                                                            struct wire_StringList *root_token_contracts);
 
 void wire_remove_account__method__AccountsStorageImpl(int64_t port_,
                                                       struct wire_AccountsStorageImpl *that,
@@ -1315,7 +1330,9 @@ static int64_t dummy_method_to_enforce_bundling(void) {
     dummy_var ^= ((int64_t) (void*) wire_add_accounts__method__AccountsStorageImpl);
     dummy_var ^= ((int64_t) (void*) wire_rename_account__method__AccountsStorageImpl);
     dummy_var ^= ((int64_t) (void*) wire_add_token_wallet__method__AccountsStorageImpl);
+    dummy_var ^= ((int64_t) (void*) wire_add_token_wallets__method__AccountsStorageImpl);
     dummy_var ^= ((int64_t) (void*) wire_remove_token_wallet__method__AccountsStorageImpl);
+    dummy_var ^= ((int64_t) (void*) wire_remove_token_wallets__method__AccountsStorageImpl);
     dummy_var ^= ((int64_t) (void*) wire_remove_account__method__AccountsStorageImpl);
     dummy_var ^= ((int64_t) (void*) wire_remove_accounts__method__AccountsStorageImpl);
     dummy_var ^= ((int64_t) (void*) wire_clear__method__AccountsStorageImpl);
