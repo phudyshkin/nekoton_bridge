@@ -39,22 +39,22 @@ project(${PROJECT_NAME} LANGUAGES CXX)
 
 # Download the binaries if they are not already present.
 set(LibRoot "${CMAKE_CURRENT_SOURCE_DIR}/${LibraryVersion}")
-set(ArchivePath "${LibRoot}.tar.gz")
-if(NOT EXISTS ${ArchivePath})
-  file(DOWNLOAD
-    "https://github.com/YourGitHubAccount/repo_name/releases/download/${LibraryVersion}/other.tar.gz"
-    ${ArchivePath}
-    TLS_VERIFY ON
-  )
-endif()
+#set(ArchivePath "${LibRoot}.tar.gz")
+#if(NOT EXISTS ${ArchivePath})
+#  file(DOWNLOAD
+#    "https://github.com/YourGitHubAccount/repo_name/releases/download/${LibraryVersion}/other.tar.gz"
+#    ${ArchivePath}
+#    TLS_VERIFY ON
+#  )
+#endif()
 
 # Extract the binaries, overriding any already present.
-file(REMOVE_RECURSE ${LibRoot})
-file(MAKE_DIRECTORY ${LibRoot})
-execute_process(
-  COMMAND ${CMAKE_COMMAND} -E tar xzf ${ArchivePath}
-  WORKING_DIRECTORY ${LibRoot}
-)
+#file(REMOVE_RECURSE ${LibRoot})
+#file(MAKE_DIRECTORY ${LibRoot})
+#execute_process(
+#  COMMAND ${CMAKE_COMMAND} -E tar xzf ${ArchivePath}
+#  WORKING_DIRECTORY ${LibRoot}
+#)
 
 # List of absolute paths to libraries that should be bundled with the plugin.
 # This list could contain prebuilt libraries, or libraries created by an
