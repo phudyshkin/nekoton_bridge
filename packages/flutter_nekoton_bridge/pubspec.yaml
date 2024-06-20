@@ -16,15 +16,11 @@ dependencies:
   reflectable: ^4.0.5
   money2_improver: ^1.3.1
   money2: ^4.0.0
-  nekoton_bridge:
-    git:
-      url: https://github.com/phudyshkin/nekoton_bridge.git
-      path: packages/nekoton_bridge
-      ref: main
+  nekoton_bridge: ^1.19.1
   freezed_annotation: ^2.4.1
   json_annotation: ^4.8.1
   #  for generating mirror hash
-  uuid: ^4.1.0
+  uuid: ^3.0.7
   tuple: ^2.0.1
   crypto: ^3.0.3
 dev_dependencies:
