@@ -11,8 +11,8 @@ use async_trait::async_trait;
 use flutter_rust_bridge::RustOpaque;
 use nekoton::core::models::TransferRecipient;
 use nekoton::core::token_wallet::{
-    get_token_root_details_from_token_wallet, get_token_wallet_details, TokenWallet,
-    TokenWalletSubscriptionHandler,
+    get_token_root_details, get_token_root_details_from_token_wallet, get_token_wallet_details,
+    TokenWallet, TokenWalletSubscriptionHandler,
 };
 use nekoton::transport::Transport;
 use nekoton_abi::create_boc_or_comment_payload;
@@ -43,6 +43,14 @@ pub trait TokenWalletBoxTrait: Send + Sync + UnwindSafe + RefUnwindSafe {
 
     /// Get json-encoded ContractState or throw error.
     async fn contract_state(&self) -> anyhow::Result<String>;
+
+    async fn estimate_min_attached_amount(
+        &self,
+        destination: String,
+        amount: String,
+        notify_receiver: bool,
+        payload: Option<String>,
+    ) -> anyhow::Result<String>;
 
     /// Prepare transferring tokens from this wallet to other.
     /// destination - address of account that should receive token
@@ -145,6 +153,32 @@ impl TokenWalletBoxTrait for TokenWalletBox {
     async fn contract_state(&self) -> anyhow::Result<String> {
         let wallet = self.inner_wallet.lock().await;
         serde_json::to_string(&wallet.contract_state()).handle_error()
+    }
+
+    async fn estimate_min_attached_amount(
+        &self,
+        destination: String,
+        amount: String,
+        notify_receiver: bool,
+        payload: Option<String>,
+    ) -> anyhow::Result<String> {
+        let destination = parse_address(destination)?;
+        let destination = TransferRecipient::OwnerWallet(destination);
+        let tokens = BigUint::from_str(&amount).handle_error()?;
+        let payload = match payload {
+            Some(payload) => create_boc_or_comment_payload(&payload)
+                .handle_error()?
+                .into_cell(),
+            None => ton_types::Cell::default(),
+        };
+
+        let wallet = self.inner_wallet.lock().await;
+        let amount = wallet
+            .estimate_min_attached_amount(destination, tokens, notify_receiver, payload)
+            .await
+            .handle_error()?;
+
+        serde_json::to_string(&amount).handle_error()
     }
 
     /// Prepare transferring tokens from this wallet to other.
@@ -273,10 +307,27 @@ pub async fn token_root_details_from_token_wallet(
         transport.as_ref(),
         &token_wallet,
     )
-    .await
-    .handle_error()?;
+        .await
+        .handle_error()?;
 
     let details = (details.0.to_string(), details.1);
+
+    serde_json::to_string(&details).handle_error()
+}
+
+/// Get details about root contract by address of token root
+/// Return json-encoded RootTokenContractDetails
+/// or throw error.
+pub async fn token_root_details(
+    transport: Arc<dyn Transport>,
+    token_root_address: String,
+) -> anyhow::Result<String> {
+    let root_token_contract = parse_address(token_root_address)?;
+
+    let details =
+        get_token_root_details(clock!().as_ref(), transport.as_ref(), &root_token_contract)
+            .await
+            .handle_error()?;
 
     serde_json::to_string(&details).handle_error()
 }

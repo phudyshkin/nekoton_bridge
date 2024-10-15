@@ -317,6 +317,11 @@ class NekotonBridgePlatform extends FlutterRustBridgeBase<NekotonBridgeWire>
   }
 
   @protected
+  Int32List api2wire_int_32_list(Int32List raw) {
+    return raw;
+  }
+
+  @protected
   List<dynamic> api2wire_jrpc_connection_dart_wrapper(
       JrpcConnectionDartWrapper raw) {
     return [api2wire_ArcJrpcConnectionBoxTrait(raw.innerConnection)];
@@ -680,6 +685,9 @@ class NekotonBridgeWasmModule implements WasmModule {
   external dynamic /* void */ wire_parse_full_account_boc(
       NativePortType port_, String account);
 
+  external dynamic /* void */ wire_compute_storage_fee(NativePortType port_,
+      String config, String account, int utime, bool is_masterchain);
+
   external dynamic /* void */ wire_test_logger_info(
       NativePortType port_, String string);
 
@@ -819,6 +827,14 @@ class NekotonBridgeWasmModule implements WasmModule {
           String address,
           Object timeout);
 
+  external dynamic /* void */
+      wire_simulate_transaction_tree__method__GqlTransportImpl(
+          NativePortType port_,
+          List<dynamic> that,
+          String signed_message,
+          Int32List ignored_compute_phase_codes,
+          Int32List ignored_action_phase_codes);
+
   external dynamic /* void */ wire_new__static_method__ProtoTransportImpl(
       NativePortType port_, List<dynamic> proto_connection);
 
@@ -861,6 +877,14 @@ class NekotonBridgeWasmModule implements WasmModule {
 
   external dynamic /* void */ wire_get_network_id__method__ProtoTransportImpl(
       NativePortType port_, List<dynamic> that);
+
+  external dynamic /* void */
+      wire_simulate_transaction_tree__method__ProtoTransportImpl(
+          NativePortType port_,
+          List<dynamic> that,
+          String signed_message,
+          Int32List ignored_compute_phase_codes,
+          Int32List ignored_action_phase_codes);
 
   external dynamic /* void */ wire_new__static_method__JrpcTransportImpl(
       NativePortType port_, List<dynamic> jrpc_connection);
@@ -906,6 +930,14 @@ class NekotonBridgeWasmModule implements WasmModule {
       NativePortType port_, List<dynamic> that);
 
   external dynamic /* void */
+      wire_simulate_transaction_tree__method__JrpcTransportImpl(
+          NativePortType port_,
+          List<dynamic> that,
+          String signed_message,
+          Int32List ignored_compute_phase_codes,
+          Int32List ignored_action_phase_codes);
+
+  external dynamic /* void */
       wire_subscribe__static_method__TokenWalletDartWrapper(
           NativePortType port_,
           String instance_hash,
@@ -931,6 +963,15 @@ class NekotonBridgeWasmModule implements WasmModule {
   external dynamic /* void */
       wire_contract_state__method__TokenWalletDartWrapper(
           NativePortType port_, List<dynamic> that);
+
+  external dynamic /* void */
+      wire_estimate_min_attached_amount__method__TokenWalletDartWrapper(
+          NativePortType port_,
+          List<dynamic> that,
+          String destination,
+          String amount,
+          bool notify_receiver,
+          String? payload);
 
   external dynamic /* void */
       wire_prepare_transfer__method__TokenWalletDartWrapper(
@@ -959,6 +1000,10 @@ class NekotonBridgeWasmModule implements WasmModule {
   external dynamic /* void */
       wire_get_token_root_details_from_token_wallet__static_method__TokenWalletDartWrapper(
           NativePortType port_, Object transport, String token_wallet_address);
+
+  external dynamic /* void */
+      wire_get_token_root_details__static_method__TokenWalletDartWrapper(
+          NativePortType port_, Object transport, String token_root_address);
 
   external dynamic /* void */ wire_new__static_method__KeystoreDartWrapper(
       NativePortType port_,
@@ -1560,6 +1605,11 @@ class NekotonBridgeWire
   void wire_parse_full_account_boc(NativePortType port_, String account) =>
       wasmModule.wire_parse_full_account_boc(port_, account);
 
+  void wire_compute_storage_fee(NativePortType port_, String config,
+          String account, int utime, bool is_masterchain) =>
+      wasmModule.wire_compute_storage_fee(
+          port_, config, account, utime, is_masterchain);
+
   void wire_test_logger_info(NativePortType port_, String string) =>
       wasmModule.wire_test_logger_info(port_, string);
 
@@ -1729,6 +1779,19 @@ class NekotonBridgeWire
       wasmModule.wire_wait_for_next_block__method__GqlTransportImpl(
           port_, that, current_block_id, address, timeout);
 
+  void wire_simulate_transaction_tree__method__GqlTransportImpl(
+          NativePortType port_,
+          List<dynamic> that,
+          String signed_message,
+          Int32List ignored_compute_phase_codes,
+          Int32List ignored_action_phase_codes) =>
+      wasmModule.wire_simulate_transaction_tree__method__GqlTransportImpl(
+          port_,
+          that,
+          signed_message,
+          ignored_compute_phase_codes,
+          ignored_action_phase_codes);
+
   void wire_new__static_method__ProtoTransportImpl(
           NativePortType port_, List<dynamic> proto_connection) =>
       wasmModule.wire_new__static_method__ProtoTransportImpl(
@@ -1780,6 +1843,19 @@ class NekotonBridgeWire
   void wire_get_network_id__method__ProtoTransportImpl(
           NativePortType port_, List<dynamic> that) =>
       wasmModule.wire_get_network_id__method__ProtoTransportImpl(port_, that);
+
+  void wire_simulate_transaction_tree__method__ProtoTransportImpl(
+          NativePortType port_,
+          List<dynamic> that,
+          String signed_message,
+          Int32List ignored_compute_phase_codes,
+          Int32List ignored_action_phase_codes) =>
+      wasmModule.wire_simulate_transaction_tree__method__ProtoTransportImpl(
+          port_,
+          that,
+          signed_message,
+          ignored_compute_phase_codes,
+          ignored_action_phase_codes);
 
   void wire_new__static_method__JrpcTransportImpl(
           NativePortType port_, List<dynamic> jrpc_connection) =>
@@ -1833,6 +1909,19 @@ class NekotonBridgeWire
           NativePortType port_, List<dynamic> that) =>
       wasmModule.wire_get_network_id__method__JrpcTransportImpl(port_, that);
 
+  void wire_simulate_transaction_tree__method__JrpcTransportImpl(
+          NativePortType port_,
+          List<dynamic> that,
+          String signed_message,
+          Int32List ignored_compute_phase_codes,
+          Int32List ignored_action_phase_codes) =>
+      wasmModule.wire_simulate_transaction_tree__method__JrpcTransportImpl(
+          port_,
+          that,
+          signed_message,
+          ignored_compute_phase_codes,
+          ignored_action_phase_codes);
+
   void wire_subscribe__static_method__TokenWalletDartWrapper(
           NativePortType port_,
           String instance_hash,
@@ -1866,6 +1955,17 @@ class NekotonBridgeWire
           NativePortType port_, List<dynamic> that) =>
       wasmModule.wire_contract_state__method__TokenWalletDartWrapper(
           port_, that);
+
+  void wire_estimate_min_attached_amount__method__TokenWalletDartWrapper(
+          NativePortType port_,
+          List<dynamic> that,
+          String destination,
+          String amount,
+          bool notify_receiver,
+          String? payload) =>
+      wasmModule
+          .wire_estimate_min_attached_amount__method__TokenWalletDartWrapper(
+              port_, that, destination, amount, notify_receiver, payload);
 
   void wire_prepare_transfer__method__TokenWalletDartWrapper(
           NativePortType port_,
@@ -1905,6 +2005,12 @@ class NekotonBridgeWire
       wasmModule
           .wire_get_token_root_details_from_token_wallet__static_method__TokenWalletDartWrapper(
               port_, transport, token_wallet_address);
+
+  void wire_get_token_root_details__static_method__TokenWalletDartWrapper(
+          NativePortType port_, Object transport, String token_root_address) =>
+      wasmModule
+          .wire_get_token_root_details__static_method__TokenWalletDartWrapper(
+              port_, transport, token_root_address);
 
   void wire_new__static_method__KeystoreDartWrapper(
           NativePortType port_,

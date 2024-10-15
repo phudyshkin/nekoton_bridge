@@ -42,7 +42,7 @@ impl GenericContractDartWrapper {
             )
             .await
         )
-        .handle_error()?;
+            .handle_error()?;
 
         Ok(Self {
             inner_contract: contract,

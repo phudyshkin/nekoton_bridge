@@ -168,8 +168,8 @@ impl TonWalletBox {
             contract,
             handler,
         )
-        .await
-        .handle_error()?;
+            .await
+            .handle_error()?;
 
         Ok(RustOpaque::new(Arc::new(TonWalletBox {
             inner_wallet: Arc::new(Mutex::new(ton_wallet)),
@@ -607,10 +607,10 @@ pub async fn ton_wallet_get_custodians(
         &public_key,
         wallet_type,
     )
-    .handle_error()?
-    .into_iter()
-    .map(|e| e.to_hex_string())
-    .collect::<Vec<_>>();
+        .handle_error()?
+        .into_iter()
+        .map(|e| e.to_hex_string())
+        .collect::<Vec<_>>();
 
     Ok(custodians)
 }

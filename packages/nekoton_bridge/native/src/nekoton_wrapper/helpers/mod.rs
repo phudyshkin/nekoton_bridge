@@ -319,9 +319,9 @@ pub fn make_full_contract_state(
             let code_hash = match &state.account.storage.state {
                 ton_block::AccountState::AccountActive {
                     state_init:
-                        ton_block::StateInit {
-                            code: Some(code), ..
-                        },
+                    ton_block::StateInit {
+                        code: Some(code), ..
+                    },
                 } => Some(code.repr_hash().to_hex_string()),
                 _ => None,
             };

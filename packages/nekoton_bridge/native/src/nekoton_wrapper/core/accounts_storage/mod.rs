@@ -37,7 +37,7 @@ pub trait AccountsStorageBoxTrait: Send + Sync + UnwindSafe + RefUnwindSafe {
     /// name - new name of account
     /// Return json-encoded AssetsList or throw error.
     async fn rename_account(&self, account_address: String, name: String)
-        -> anyhow::Result<String>;
+                            -> anyhow::Result<String>;
 
     /// Add token wallet signature to account (add new token to account aka enable it via slider).
     /// account_address - address of account

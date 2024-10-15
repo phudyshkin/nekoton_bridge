@@ -524,7 +524,7 @@ impl KeyStoreApiBoxTrait for KeyStoreApiBox {
             input,
             signature_id,
         )
-        .await?;
+            .await?;
 
         Ok(base64::encode(signature))
     }
@@ -548,7 +548,7 @@ impl KeyStoreApiBoxTrait for KeyStoreApiBox {
             input,
             signature_id,
         )
-        .await?;
+            .await?;
 
         Ok(SignedData {
             data_hash: hex::encode(hash),
@@ -580,7 +580,7 @@ impl KeyStoreApiBoxTrait for KeyStoreApiBox {
             input,
             signature_id,
         )
-        .await?;
+            .await?;
 
         Ok(SignedDataRaw {
             signature: base64::encode(signature),

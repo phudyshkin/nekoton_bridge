@@ -320,6 +320,13 @@ class NekotonBridgePlatform extends FlutterRustBridgeBase<NekotonBridgeWire> {
   }
 
   @protected
+  ffi.Pointer<wire_int_32_list> api2wire_int_32_list(Int32List raw) {
+    final ans = inner.new_int_32_list_0(raw.length);
+    ans.ref.ptr.asTypedList(raw.length).setAll(0, raw);
+    return ans;
+  }
+
+  @protected
   ffi.Pointer<wire_list_dynamic_named_value> api2wire_list_dynamic_named_value(
       List<DynamicNamedValue> raw) {
     final ans = inner.new_list_dynamic_named_value_0(raw.length);
@@ -1874,6 +1881,35 @@ class NekotonBridgeWire implements FlutterRustBridgeWireBase {
   late final _wire_parse_full_account_boc = _wire_parse_full_account_bocPtr
       .asFunction<void Function(int, ffi.Pointer<wire_uint_8_list>)>();
 
+  void wire_compute_storage_fee(
+    int port_,
+    ffi.Pointer<wire_uint_8_list> config,
+    ffi.Pointer<wire_uint_8_list> account,
+    int utime,
+    bool is_masterchain,
+  ) {
+    return _wire_compute_storage_fee(
+      port_,
+      config,
+      account,
+      utime,
+      is_masterchain,
+    );
+  }
+
+  late final _wire_compute_storage_feePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(
+              ffi.Int64,
+              ffi.Pointer<wire_uint_8_list>,
+              ffi.Pointer<wire_uint_8_list>,
+              ffi.Uint32,
+              ffi.Bool)>>('wire_compute_storage_fee');
+  late final _wire_compute_storage_fee =
+      _wire_compute_storage_feePtr.asFunction<
+          void Function(int, ffi.Pointer<wire_uint_8_list>,
+              ffi.Pointer<wire_uint_8_list>, int, bool)>();
+
   void wire_test_logger_info(
     int port_,
     ffi.Pointer<wire_uint_8_list> string,
@@ -2710,6 +2746,41 @@ class NekotonBridgeWire implements FlutterRustBridgeWireBase {
               ffi.Pointer<wire_uint_8_list>,
               int)>();
 
+  void wire_simulate_transaction_tree__method__GqlTransportImpl(
+    int port_,
+    ffi.Pointer<wire_GqlTransportImpl> that,
+    ffi.Pointer<wire_uint_8_list> signed_message,
+    ffi.Pointer<wire_int_32_list> ignored_compute_phase_codes,
+    ffi.Pointer<wire_int_32_list> ignored_action_phase_codes,
+  ) {
+    return _wire_simulate_transaction_tree__method__GqlTransportImpl(
+      port_,
+      that,
+      signed_message,
+      ignored_compute_phase_codes,
+      ignored_action_phase_codes,
+    );
+  }
+
+  late final _wire_simulate_transaction_tree__method__GqlTransportImplPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Void Function(
+                      ffi.Int64,
+                      ffi.Pointer<wire_GqlTransportImpl>,
+                      ffi.Pointer<wire_uint_8_list>,
+                      ffi.Pointer<wire_int_32_list>,
+                      ffi.Pointer<wire_int_32_list>)>>(
+          'wire_simulate_transaction_tree__method__GqlTransportImpl');
+  late final _wire_simulate_transaction_tree__method__GqlTransportImpl =
+      _wire_simulate_transaction_tree__method__GqlTransportImplPtr.asFunction<
+          void Function(
+              int,
+              ffi.Pointer<wire_GqlTransportImpl>,
+              ffi.Pointer<wire_uint_8_list>,
+              ffi.Pointer<wire_int_32_list>,
+              ffi.Pointer<wire_int_32_list>)>();
+
   void wire_new__static_method__ProtoTransportImpl(
     int port_,
     ffi.Pointer<wire_ProtoConnectionDartWrapper> proto_connection,
@@ -2947,6 +3018,41 @@ class NekotonBridgeWire implements FlutterRustBridgeWireBase {
   late final _wire_get_network_id__method__ProtoTransportImpl =
       _wire_get_network_id__method__ProtoTransportImplPtr.asFunction<
           void Function(int, ffi.Pointer<wire_ProtoTransportImpl>)>();
+
+  void wire_simulate_transaction_tree__method__ProtoTransportImpl(
+    int port_,
+    ffi.Pointer<wire_ProtoTransportImpl> that,
+    ffi.Pointer<wire_uint_8_list> signed_message,
+    ffi.Pointer<wire_int_32_list> ignored_compute_phase_codes,
+    ffi.Pointer<wire_int_32_list> ignored_action_phase_codes,
+  ) {
+    return _wire_simulate_transaction_tree__method__ProtoTransportImpl(
+      port_,
+      that,
+      signed_message,
+      ignored_compute_phase_codes,
+      ignored_action_phase_codes,
+    );
+  }
+
+  late final _wire_simulate_transaction_tree__method__ProtoTransportImplPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Void Function(
+                      ffi.Int64,
+                      ffi.Pointer<wire_ProtoTransportImpl>,
+                      ffi.Pointer<wire_uint_8_list>,
+                      ffi.Pointer<wire_int_32_list>,
+                      ffi.Pointer<wire_int_32_list>)>>(
+          'wire_simulate_transaction_tree__method__ProtoTransportImpl');
+  late final _wire_simulate_transaction_tree__method__ProtoTransportImpl =
+      _wire_simulate_transaction_tree__method__ProtoTransportImplPtr.asFunction<
+          void Function(
+              int,
+              ffi.Pointer<wire_ProtoTransportImpl>,
+              ffi.Pointer<wire_uint_8_list>,
+              ffi.Pointer<wire_int_32_list>,
+              ffi.Pointer<wire_int_32_list>)>();
 
   void wire_new__static_method__JrpcTransportImpl(
     int port_,
@@ -3186,6 +3292,41 @@ class NekotonBridgeWire implements FlutterRustBridgeWireBase {
       _wire_get_network_id__method__JrpcTransportImplPtr.asFunction<
           void Function(int, ffi.Pointer<wire_JrpcTransportImpl>)>();
 
+  void wire_simulate_transaction_tree__method__JrpcTransportImpl(
+    int port_,
+    ffi.Pointer<wire_JrpcTransportImpl> that,
+    ffi.Pointer<wire_uint_8_list> signed_message,
+    ffi.Pointer<wire_int_32_list> ignored_compute_phase_codes,
+    ffi.Pointer<wire_int_32_list> ignored_action_phase_codes,
+  ) {
+    return _wire_simulate_transaction_tree__method__JrpcTransportImpl(
+      port_,
+      that,
+      signed_message,
+      ignored_compute_phase_codes,
+      ignored_action_phase_codes,
+    );
+  }
+
+  late final _wire_simulate_transaction_tree__method__JrpcTransportImplPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Void Function(
+                      ffi.Int64,
+                      ffi.Pointer<wire_JrpcTransportImpl>,
+                      ffi.Pointer<wire_uint_8_list>,
+                      ffi.Pointer<wire_int_32_list>,
+                      ffi.Pointer<wire_int_32_list>)>>(
+          'wire_simulate_transaction_tree__method__JrpcTransportImpl');
+  late final _wire_simulate_transaction_tree__method__JrpcTransportImpl =
+      _wire_simulate_transaction_tree__method__JrpcTransportImplPtr.asFunction<
+          void Function(
+              int,
+              ffi.Pointer<wire_JrpcTransportImpl>,
+              ffi.Pointer<wire_uint_8_list>,
+              ffi.Pointer<wire_int_32_list>,
+              ffi.Pointer<wire_int_32_list>)>();
+
   void wire_subscribe__static_method__TokenWalletDartWrapper(
     int port_,
     ffi.Pointer<wire_uint_8_list> instance_hash,
@@ -3334,6 +3475,46 @@ class NekotonBridgeWire implements FlutterRustBridgeWireBase {
   late final _wire_contract_state__method__TokenWalletDartWrapper =
       _wire_contract_state__method__TokenWalletDartWrapperPtr.asFunction<
           void Function(int, ffi.Pointer<wire_TokenWalletDartWrapper>)>();
+
+  void wire_estimate_min_attached_amount__method__TokenWalletDartWrapper(
+    int port_,
+    ffi.Pointer<wire_TokenWalletDartWrapper> that,
+    ffi.Pointer<wire_uint_8_list> destination,
+    ffi.Pointer<wire_uint_8_list> amount,
+    bool notify_receiver,
+    ffi.Pointer<wire_uint_8_list> payload,
+  ) {
+    return _wire_estimate_min_attached_amount__method__TokenWalletDartWrapper(
+      port_,
+      that,
+      destination,
+      amount,
+      notify_receiver,
+      payload,
+    );
+  }
+
+  late final _wire_estimate_min_attached_amount__method__TokenWalletDartWrapperPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Void Function(
+                      ffi.Int64,
+                      ffi.Pointer<wire_TokenWalletDartWrapper>,
+                      ffi.Pointer<wire_uint_8_list>,
+                      ffi.Pointer<wire_uint_8_list>,
+                      ffi.Bool,
+                      ffi.Pointer<wire_uint_8_list>)>>(
+          'wire_estimate_min_attached_amount__method__TokenWalletDartWrapper');
+  late final _wire_estimate_min_attached_amount__method__TokenWalletDartWrapper =
+      _wire_estimate_min_attached_amount__method__TokenWalletDartWrapperPtr
+          .asFunction<
+              void Function(
+                  int,
+                  ffi.Pointer<wire_TokenWalletDartWrapper>,
+                  ffi.Pointer<wire_uint_8_list>,
+                  ffi.Pointer<wire_uint_8_list>,
+                  bool,
+                  ffi.Pointer<wire_uint_8_list>)>();
 
   void wire_prepare_transfer__method__TokenWalletDartWrapper(
     int port_,
@@ -3491,6 +3672,30 @@ class NekotonBridgeWire implements FlutterRustBridgeWireBase {
           'wire_get_token_root_details_from_token_wallet__static_method__TokenWalletDartWrapper');
   late final _wire_get_token_root_details_from_token_wallet__static_method__TokenWalletDartWrapper =
       _wire_get_token_root_details_from_token_wallet__static_method__TokenWalletDartWrapperPtr
+          .asFunction<
+              void Function(int, wire_ArcTransportBoxTrait,
+                  ffi.Pointer<wire_uint_8_list>)>();
+
+  void wire_get_token_root_details__static_method__TokenWalletDartWrapper(
+    int port_,
+    wire_ArcTransportBoxTrait transport,
+    ffi.Pointer<wire_uint_8_list> token_root_address,
+  ) {
+    return _wire_get_token_root_details__static_method__TokenWalletDartWrapper(
+      port_,
+      transport,
+      token_root_address,
+    );
+  }
+
+  late final _wire_get_token_root_details__static_method__TokenWalletDartWrapperPtr =
+      _lookup<
+              ffi.NativeFunction<
+                  ffi.Void Function(ffi.Int64, wire_ArcTransportBoxTrait,
+                      ffi.Pointer<wire_uint_8_list>)>>(
+          'wire_get_token_root_details__static_method__TokenWalletDartWrapper');
+  late final _wire_get_token_root_details__static_method__TokenWalletDartWrapper =
+      _wire_get_token_root_details__static_method__TokenWalletDartWrapperPtr
           .asFunction<
               void Function(int, wire_ArcTransportBoxTrait,
                   ffi.Pointer<wire_uint_8_list>)>();
@@ -5905,6 +6110,21 @@ class NekotonBridgeWire implements FlutterRustBridgeWireBase {
       _new_box_autoadd_unsigned_message_impl_0Ptr
           .asFunction<ffi.Pointer<wire_UnsignedMessageImpl> Function()>();
 
+  ffi.Pointer<wire_int_32_list> new_int_32_list_0(
+    int len,
+  ) {
+    return _new_int_32_list_0(
+      len,
+    );
+  }
+
+  late final _new_int_32_list_0Ptr = _lookup<
+          ffi
+          .NativeFunction<ffi.Pointer<wire_int_32_list> Function(ffi.Int32)>>(
+      'new_int_32_list_0');
+  late final _new_int_32_list_0 = _new_int_32_list_0Ptr
+      .asFunction<ffi.Pointer<wire_int_32_list> Function(int)>();
+
   ffi.Pointer<wire_list_dynamic_named_value> new_list_dynamic_named_value_0(
     int len,
   ) {
@@ -6652,6 +6872,13 @@ final class wire_ArcTransportBoxTrait extends ffi.Struct {
 
 final class wire_GqlTransportImpl extends ffi.Struct {
   external wire_ArcTransportBoxTrait inner_transport;
+}
+
+final class wire_int_32_list extends ffi.Struct {
+  external ffi.Pointer<ffi.Int32> ptr;
+
+  @ffi.Int32()
+  external int len;
 }
 
 final class wire_ArcProtoConnectionBoxTrait extends ffi.Struct {

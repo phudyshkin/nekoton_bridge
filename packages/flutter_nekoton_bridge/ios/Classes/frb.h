@@ -148,6 +148,11 @@ typedef struct wire_GqlTransportImpl {
   struct wire_ArcTransportBoxTrait inner_transport;
 } wire_GqlTransportImpl;
 
+typedef struct wire_int_32_list {
+  int32_t *ptr;
+  int32_t len;
+} wire_int_32_list;
+
 typedef struct wire_ArcProtoConnectionBoxTrait {
   const void *ptr;
 } wire_ArcProtoConnectionBoxTrait;
@@ -444,6 +449,12 @@ void wire_make_full_account_boc(int64_t port_, struct wire_uint_8_list *account_
 
 void wire_parse_full_account_boc(int64_t port_, struct wire_uint_8_list *account);
 
+void wire_compute_storage_fee(int64_t port_,
+                              struct wire_uint_8_list *config,
+                              struct wire_uint_8_list *account,
+                              uint32_t utime,
+                              bool is_masterchain);
+
 void wire_test_logger_info(int64_t port_, struct wire_uint_8_list *string);
 
 void wire_test_logger_debug(int64_t port_, struct wire_uint_8_list *string);
@@ -570,6 +581,12 @@ void wire_wait_for_next_block__method__GqlTransportImpl(int64_t port_,
                                                         struct wire_uint_8_list *address,
                                                         uint64_t timeout);
 
+void wire_simulate_transaction_tree__method__GqlTransportImpl(int64_t port_,
+                                                              struct wire_GqlTransportImpl *that,
+                                                              struct wire_uint_8_list *signed_message,
+                                                              struct wire_int_32_list *ignored_compute_phase_codes,
+                                                              struct wire_int_32_list *ignored_action_phase_codes);
+
 void wire_new__static_method__ProtoTransportImpl(int64_t port_,
                                                  struct wire_ProtoConnectionDartWrapper *proto_connection);
 
@@ -610,6 +627,12 @@ void wire_get_blockchain_config__method__ProtoTransportImpl(int64_t port_,
 
 void wire_get_network_id__method__ProtoTransportImpl(int64_t port_,
                                                      struct wire_ProtoTransportImpl *that);
+
+void wire_simulate_transaction_tree__method__ProtoTransportImpl(int64_t port_,
+                                                                struct wire_ProtoTransportImpl *that,
+                                                                struct wire_uint_8_list *signed_message,
+                                                                struct wire_int_32_list *ignored_compute_phase_codes,
+                                                                struct wire_int_32_list *ignored_action_phase_codes);
 
 void wire_new__static_method__JrpcTransportImpl(int64_t port_,
                                                 struct wire_JrpcConnectionDartWrapper *jrpc_connection);
@@ -652,6 +675,12 @@ void wire_get_blockchain_config__method__JrpcTransportImpl(int64_t port_,
 void wire_get_network_id__method__JrpcTransportImpl(int64_t port_,
                                                     struct wire_JrpcTransportImpl *that);
 
+void wire_simulate_transaction_tree__method__JrpcTransportImpl(int64_t port_,
+                                                               struct wire_JrpcTransportImpl *that,
+                                                               struct wire_uint_8_list *signed_message,
+                                                               struct wire_int_32_list *ignored_compute_phase_codes,
+                                                               struct wire_int_32_list *ignored_action_phase_codes);
+
 void wire_subscribe__static_method__TokenWalletDartWrapper(int64_t port_,
                                                            struct wire_uint_8_list *instance_hash,
                                                            struct wire_uint_8_list *owner,
@@ -675,6 +704,13 @@ void wire_balance__method__TokenWalletDartWrapper(int64_t port_,
 
 void wire_contract_state__method__TokenWalletDartWrapper(int64_t port_,
                                                          struct wire_TokenWalletDartWrapper *that);
+
+void wire_estimate_min_attached_amount__method__TokenWalletDartWrapper(int64_t port_,
+                                                                       struct wire_TokenWalletDartWrapper *that,
+                                                                       struct wire_uint_8_list *destination,
+                                                                       struct wire_uint_8_list *amount,
+                                                                       bool notify_receiver,
+                                                                       struct wire_uint_8_list *payload);
 
 void wire_prepare_transfer__method__TokenWalletDartWrapper(int64_t port_,
                                                            struct wire_TokenWalletDartWrapper *that,
@@ -702,6 +738,10 @@ void wire_get_token_wallet_details__static_method__TokenWalletDartWrapper(int64_
 void wire_get_token_root_details_from_token_wallet__static_method__TokenWalletDartWrapper(int64_t port_,
                                                                                           struct wire_ArcTransportBoxTrait transport,
                                                                                           struct wire_uint_8_list *token_wallet_address);
+
+void wire_get_token_root_details__static_method__TokenWalletDartWrapper(int64_t port_,
+                                                                        struct wire_ArcTransportBoxTrait transport,
+                                                                        struct wire_uint_8_list *token_root_address);
 
 void wire_new__static_method__KeystoreDartWrapper(int64_t port_,
                                                   struct wire_StorageDartWrapper *storage,
@@ -1107,6 +1147,8 @@ uint64_t *new_box_autoadd_u64_0(uint64_t value);
 
 struct wire_UnsignedMessageImpl *new_box_autoadd_unsigned_message_impl_0(void);
 
+struct wire_int_32_list *new_int_32_list_0(int32_t len);
+
 struct wire_list_dynamic_named_value *new_list_dynamic_named_value_0(int32_t len);
 
 struct wire_list_dynamic_value *new_list_dynamic_value_0(int32_t len);
@@ -1229,6 +1271,7 @@ static int64_t dummy_method_to_enforce_bundling(void) {
     dummy_var ^= ((int64_t) (void*) wire_encode_internal_message);
     dummy_var ^= ((int64_t) (void*) wire_make_full_account_boc);
     dummy_var ^= ((int64_t) (void*) wire_parse_full_account_boc);
+    dummy_var ^= ((int64_t) (void*) wire_compute_storage_fee);
     dummy_var ^= ((int64_t) (void*) wire_test_logger_info);
     dummy_var ^= ((int64_t) (void*) wire_test_logger_debug);
     dummy_var ^= ((int64_t) (void*) wire_test_logger_warn);
@@ -1273,6 +1316,7 @@ static int64_t dummy_method_to_enforce_bundling(void) {
     dummy_var ^= ((int64_t) (void*) wire_get_latest_block__method__GqlTransportImpl);
     dummy_var ^= ((int64_t) (void*) wire_get_block__method__GqlTransportImpl);
     dummy_var ^= ((int64_t) (void*) wire_wait_for_next_block__method__GqlTransportImpl);
+    dummy_var ^= ((int64_t) (void*) wire_simulate_transaction_tree__method__GqlTransportImpl);
     dummy_var ^= ((int64_t) (void*) wire_new__static_method__ProtoTransportImpl);
     dummy_var ^= ((int64_t) (void*) wire_get_contract_state__method__ProtoTransportImpl);
     dummy_var ^= ((int64_t) (void*) wire_get_full_contract_state__method__ProtoTransportImpl);
@@ -1283,6 +1327,7 @@ static int64_t dummy_method_to_enforce_bundling(void) {
     dummy_var ^= ((int64_t) (void*) wire_get_signature_id__method__ProtoTransportImpl);
     dummy_var ^= ((int64_t) (void*) wire_get_blockchain_config__method__ProtoTransportImpl);
     dummy_var ^= ((int64_t) (void*) wire_get_network_id__method__ProtoTransportImpl);
+    dummy_var ^= ((int64_t) (void*) wire_simulate_transaction_tree__method__ProtoTransportImpl);
     dummy_var ^= ((int64_t) (void*) wire_new__static_method__JrpcTransportImpl);
     dummy_var ^= ((int64_t) (void*) wire_get_contract_state__method__JrpcTransportImpl);
     dummy_var ^= ((int64_t) (void*) wire_get_full_contract_state__method__JrpcTransportImpl);
@@ -1293,6 +1338,7 @@ static int64_t dummy_method_to_enforce_bundling(void) {
     dummy_var ^= ((int64_t) (void*) wire_get_signature_id__method__JrpcTransportImpl);
     dummy_var ^= ((int64_t) (void*) wire_get_blockchain_config__method__JrpcTransportImpl);
     dummy_var ^= ((int64_t) (void*) wire_get_network_id__method__JrpcTransportImpl);
+    dummy_var ^= ((int64_t) (void*) wire_simulate_transaction_tree__method__JrpcTransportImpl);
     dummy_var ^= ((int64_t) (void*) wire_subscribe__static_method__TokenWalletDartWrapper);
     dummy_var ^= ((int64_t) (void*) wire_owner__method__TokenWalletDartWrapper);
     dummy_var ^= ((int64_t) (void*) wire_address__method__TokenWalletDartWrapper);
@@ -1300,12 +1346,14 @@ static int64_t dummy_method_to_enforce_bundling(void) {
     dummy_var ^= ((int64_t) (void*) wire_version__method__TokenWalletDartWrapper);
     dummy_var ^= ((int64_t) (void*) wire_balance__method__TokenWalletDartWrapper);
     dummy_var ^= ((int64_t) (void*) wire_contract_state__method__TokenWalletDartWrapper);
+    dummy_var ^= ((int64_t) (void*) wire_estimate_min_attached_amount__method__TokenWalletDartWrapper);
     dummy_var ^= ((int64_t) (void*) wire_prepare_transfer__method__TokenWalletDartWrapper);
     dummy_var ^= ((int64_t) (void*) wire_refresh__method__TokenWalletDartWrapper);
     dummy_var ^= ((int64_t) (void*) wire_preload_transactions__method__TokenWalletDartWrapper);
     dummy_var ^= ((int64_t) (void*) wire_handle_block__method__TokenWalletDartWrapper);
     dummy_var ^= ((int64_t) (void*) wire_get_token_wallet_details__static_method__TokenWalletDartWrapper);
     dummy_var ^= ((int64_t) (void*) wire_get_token_root_details_from_token_wallet__static_method__TokenWalletDartWrapper);
+    dummy_var ^= ((int64_t) (void*) wire_get_token_root_details__static_method__TokenWalletDartWrapper);
     dummy_var ^= ((int64_t) (void*) wire_new__static_method__KeystoreDartWrapper);
     dummy_var ^= ((int64_t) (void*) wire_get_entries__method__KeystoreDartWrapper);
     dummy_var ^= ((int64_t) (void*) wire_add_key__method__KeystoreDartWrapper);
@@ -1422,6 +1470,7 @@ static int64_t dummy_method_to_enforce_bundling(void) {
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_transaction_execution_options_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_u64_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_unsigned_message_impl_0);
+    dummy_var ^= ((int64_t) (void*) new_int_32_list_0);
     dummy_var ^= ((int64_t) (void*) new_list_dynamic_named_value_0);
     dummy_var ^= ((int64_t) (void*) new_list_dynamic_value_0);
     dummy_var ^= ((int64_t) (void*) new_list_key_signer_0);

@@ -83,11 +83,43 @@ void main() {
                 '0:ecfb1d0edbcbe0409763fa8ad8ad7f2727749f6cf29e0e6bcba9fdc752d3ae01'),
       );
       expect(wallet.rootTokenContract, stEverRootContract);
-      expect(wallet.contractState.balance, BigInt.parse('61294235'));
+      expect(wallet.contractState.balance, BigInt.parse('0'));
       expect(wallet.symbol.decimals, 9);
       expect(wallet.symbol.rootTokenContract, stEverRootContract);
       expect(wallet.symbol.name, 'STEVER');
       expect(wallet.version, TokenWalletVersion.tip3);
+    });
+
+    testWidgets('TokenWallet estimateMinAttachedAmount',
+        (WidgetTester tester) async {
+      await tester.pumpAndSettleWithTimeout();
+
+      const destination = Address(
+        address:
+            '0:deaa615aad3828255ce6c4c5495a0590740f2ecdc187cfb434da8e4552cf8f3f',
+      );
+      const owner = Address(
+        address:
+            '0:f9f575258120bff21afd8c798a5c9e9a2ef0b251e11d9c85fbf43bec968a57c6',
+      );
+      // USDT token root
+      const rootTokenContract = Address(
+        address:
+            '0:a519f99bb5d6d51ef958ed24d337ad75a1c770885dcd42d51d6663f9fcdacfb2',
+      );
+      final wallet = await TokenWallet.subscribe(
+        transport: transport,
+        owner: owner,
+        rootTokenContract: rootTokenContract,
+      );
+
+      final amount = await wallet.estimateMinAttachedAmount(
+        destination: destination,
+        amount: BigInt.parse('10000'),
+      );
+
+      expect(amount, isNotNull);
+      expect(amount.isValidInt, isTrue);
     });
 
     testWidgets('TokenWallet prepareTransfer', (WidgetTester tester) async {
@@ -162,6 +194,27 @@ void main() {
       expect(details.item2.symbol, 'STEVER');
     });
 
+    testWidgets('TokenWallet getTokenRootDetails', (WidgetTester tester) async {
+      await tester.pumpAndSettleWithTimeout();
+
+      final details = await TokenWallet.getTokenRootDetails(
+        transport: transport,
+        tokenRoot: const Address(
+            address:
+                '0:09c0dda26e4e3f3a80a5a730e86bed8a557d3aaa1bf8e40be0e48ac544307477'),
+      );
+
+      expect(
+        details.ownerAddress,
+        const Address(
+            address:
+                '0:f9f575258120bff21afd8c798a5c9e9a2ef0b251e11d9c85fbf43bec968a57c6'),
+      );
+      expect(details.version, TokenWalletVersion.tip3);
+      expect(details.symbol, 'TEST');
+      expect(details.decimals, 9);
+    });
+
     testWidgets('TokenWallet refresh', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
@@ -180,7 +233,7 @@ void main() {
                 '0:ecfb1d0edbcbe0409763fa8ad8ad7f2727749f6cf29e0e6bcba9fdc752d3ae01'),
       );
       expect(wallet.rootTokenContract, stEverRootContract);
-      expect(wallet.contractState.balance, BigInt.parse('61294235'));
+      expect(wallet.contractState.balance, BigInt.parse('0'));
       expect(wallet.symbol.decimals, 9);
       expect(wallet.symbol.rootTokenContract, stEverRootContract);
       expect(wallet.symbol.name, 'STEVER');
@@ -200,7 +253,7 @@ void main() {
                 '0:ecfb1d0edbcbe0409763fa8ad8ad7f2727749f6cf29e0e6bcba9fdc752d3ae01'),
       );
       expect(wallet.rootTokenContract, stEverRootContract);
-      expect(wallet.contractState.balance, BigInt.parse('61294235'));
+      expect(wallet.contractState.balance, BigInt.parse('0'));
       expect(wallet.symbol.decimals, 9);
       expect(wallet.symbol.rootTokenContract, stEverRootContract);
       expect(wallet.symbol.name, 'STEVER');
@@ -237,7 +290,7 @@ void main() {
                     '0:ecfb1d0edbcbe0409763fa8ad8ad7f2727749f6cf29e0e6bcba9fdc752d3ae01'),
           );
           expect(wallet.rootTokenContract, stEverRootContract);
-          expect(wallet.contractState.balance, BigInt.parse('61294235'));
+          expect(wallet.contractState.balance, BigInt.parse('0'));
           expect(wallet.symbol.decimals, 9);
           expect(wallet.symbol.rootTokenContract, stEverRootContract);
           expect(wallet.symbol.name, 'STEVER');
@@ -263,11 +316,11 @@ void main() {
         );
 
         expect(wallet.symbol.name, 'STEVER');
-        expect(wallet.currency.code, 'STEVER');
+        expect(wallet.currency.isoCode, 'STEVER');
         expect(wallet.currency.symbol, 'STEVER');
         expect(Currencies().find('STEVER'), isNotNull);
 
-        expect(wallet.moneyBalance.currency.code, 'STEVER');
+        expect(wallet.moneyBalance.currency.isoCode, 'STEVER');
       },
     );
   });

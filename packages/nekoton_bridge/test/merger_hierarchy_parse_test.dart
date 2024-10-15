@@ -183,7 +183,7 @@ void main() {
   group('Test hierarchy converting to string', () {
     test('Convert plain hierarchy not public', () {
       final nekoton =
-          ModuleHierarchy(moduleName: 'nekoton_wrapper', isRoot: false);
+      ModuleHierarchy(moduleName: 'nekoton_wrapper', isRoot: false);
       nekoton.directImports.add('SomeModule');
       final crate = ModuleHierarchy(moduleName: 'crate', isRoot: true);
       crate.subModules['nekoton_wrapper'] = nekoton;
@@ -205,7 +205,7 @@ SomeModule,
 
     test('Convert plain hierarchy public', () {
       final nekoton =
-          ModuleHierarchy(moduleName: 'nekoton_wrapper', isRoot: false);
+      ModuleHierarchy(moduleName: 'nekoton_wrapper', isRoot: false);
       nekoton.directImports.add('SomeModule');
       final crate = ModuleHierarchy(moduleName: 'crate', isRoot: true);
       crate.subModules['nekoton_wrapper'] = nekoton;
@@ -238,7 +238,7 @@ SomeModule,
       models.directImports.add('ModelType');
 
       final nekoton =
-          ModuleHierarchy(moduleName: 'nekoton_wrapper', isRoot: false);
+      ModuleHierarchy(moduleName: 'nekoton_wrapper', isRoot: false);
       nekoton.directImports.add('SomeType');
       nekoton.subModules['crypto'] = crypto;
       nekoton.subModules['models'] = models;

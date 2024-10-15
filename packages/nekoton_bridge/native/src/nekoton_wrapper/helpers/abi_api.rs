@@ -4,7 +4,7 @@ use crate::clock;
 use crate::nekoton_wrapper::crypto::crypto_api::UnsignedMessageImpl;
 use crate::nekoton_wrapper::crypto::models::UnsignedMessageBox;
 use crate::nekoton_wrapper::helpers::models::{
-    DecodedEvent, DecodedInput, DecodedOutput, DecodedTransaction, ExecutionOutput,
+    DecodedEvent, DecodedInput, DecodedOutput, DecodedTransaction, ExecutionOutput, StorageFeeInfo,
 };
 use crate::nekoton_wrapper::helpers::{
     make_boc, make_boc_with_hash, make_full_contract_state, parse_account_stuff, parse_cell,
@@ -18,6 +18,7 @@ use nekoton::core::utils::make_labs_unsigned_message;
 use nekoton::crypto::SignedMessage;
 use nekoton_abi::{guess_method_by_input, insert_state_init_data, make_abi_tokens, FunctionExt};
 use nekoton_utils::Clock;
+use serde::{Deserialize, Serialize};
 use std::borrow::Cow;
 use std::collections::HashMap;
 use std::convert::TryFrom;
@@ -110,8 +111,8 @@ pub fn get_expected_address(
                 &public_key,
                 init_data,
             )
-            .handle_error()?
-            .into_cell(),
+                .handle_error()?
+                .into_cell(),
         )
     } else {
         None
@@ -254,7 +255,7 @@ pub fn create_external_message(
         Cow::Owned(method.to_owned()),
         input,
     )
-    .handle_error()?;
+        .handle_error()?;
 
     Ok(UnsignedMessageImpl {
         inner_message: UnsignedMessageBox::create(unsigned_message),
@@ -359,14 +360,14 @@ pub fn decode_transaction(
     contract_abi: String,
     method: Option<String>,
 ) -> anyhow::Result<String> {
-    let transaction = serde_json::from_str::<Transaction>(&transaction).handle_error()?;
+    let transaction = serde_json::from_str::<ProviderTransaction>(&transaction).handle_error()?;
     let contract_abi = parse_contract_abi(contract_abi)?;
     let method = parse_method_name(method)?;
 
     let internal = transaction.in_msg.src.is_some();
 
     let in_msg_body = match transaction.in_msg.body {
-        Some(body) => SliceData::load_cell(body.data)?,
+        Some(body) => parse_slice(body)?,
         None => return Ok(serde_json::Value::Null.to_string()),
     };
 
@@ -389,7 +390,7 @@ pub fn decode_transaction(
             };
 
             Some(match e.body.to_owned() {
-                Some(body) => Ok(SliceData::load_cell(body.data).ok()?),
+                Some(body) => Ok(parse_slice(body).ok()?),
                 None => Err("Expected message body").handle_error(),
             })
         })
@@ -412,7 +413,7 @@ pub fn decode_transaction_events(
     transaction: String,
     contract_abi: String,
 ) -> anyhow::Result<String> {
-    let transaction = serde_json::from_str::<Transaction>(&transaction).handle_error()?;
+    let transaction = serde_json::from_str::<ProviderTransaction>(&transaction).handle_error()?;
     let contract_abi = parse_contract_abi(contract_abi)?;
 
     let ext_out_msgs = transaction
@@ -424,7 +425,7 @@ pub fn decode_transaction_events(
             };
 
             Some(match e.body.to_owned() {
-                Some(body) => Ok(SliceData::load_cell(body.data).ok()?),
+                Some(body) => Ok(parse_slice(body).ok()?),
                 None => Err("Expected message body").handle_error(),
             })
         })
@@ -763,7 +764,7 @@ pub fn unpack_contract_fields(
         &contract.abi_version,
         allow_partial,
     )
-    .handle_error()?;
+        .handle_error()?;
 
     Ok(Some(serde_json::to_string(&make_abi_tokens(&tokens)?)?))
 }
@@ -809,7 +810,7 @@ pub fn create_raw_external_message(
         message,
         expire_at: expire_at.timestamp,
     })
-    .handle_error()
+        .handle_error()
 }
 
 /// Returns base-64 encoded Message or throws error
@@ -902,4 +903,71 @@ pub fn parse_full_account_boc(account: String) -> anyhow::Result<Option<String>>
     };
 
     make_full_contract_state(account)
+}
+
+pub fn compute_storage_fee(
+    config: String,
+    account: String,
+    utime: u32,
+    is_masterchain: bool,
+) -> anyhow::Result<String> {
+    use nekoton_abi::num_traits::*;
+    // use serde::{Deserialize, Serialize};
+
+    let account = parse_account_stuff(account)?;
+    let config = ton_executor::BlockchainConfig::with_config(
+        ton_block::ConfigParams::construct_from_base64(&config)?,
+        0,
+    )?;
+    let utime = std::cmp::max(utime, account.storage_stat.last_paid);
+    let gas_config = config.get_gas_config(is_masterchain);
+
+    let mut account_status = match &account.storage.state {
+        ton_block::AccountState::AccountUninit => "Uninit",
+        ton_block::AccountState::AccountFrozen { .. } => "Frozen",
+        ton_block::AccountState::AccountActive { .. } => "Active",
+    };
+
+    let storage_fee = config.calc_storage_fee(&account.storage_stat, is_masterchain, utime)?;
+    let mut storage_fee_debt = account.storage_stat.due_payment;
+    let total_fee = storage_fee + storage_fee_debt.unwrap_or_default();
+
+    if let Some(total_fee) = total_fee.checked_sub(&account.storage.balance.grams) {
+        storage_fee_debt = Some(total_fee);
+
+        if account_status == "Active"
+            && total_fee > ton_block::Grams::from(gas_config.freeze_due_limit)
+        {
+            account_status = "Frozen";
+        } else if (account_status == "Uninit" || account_status == "Frozen")
+            && total_fee > ton_block::Grams::from(gas_config.delete_due_limit)
+        {
+            account_status = "Nonexist";
+        }
+    }
+
+    let data = serde_json::to_string(&StorageFeeInfo {
+        storage_fee: storage_fee.to_string(),
+        storage_fee_debt: storage_fee_debt.map(|e| e.to_string()),
+        account_status: account_status.to_owned(),
+        freeze_due_limit: gas_config.freeze_due_limit.to_string(),
+        delete_due_limit: gas_config.delete_due_limit.to_string(),
+    })?;
+
+    Ok(data)
+}
+
+#[derive(Serialize, Deserialize)]
+struct ProviderTransaction {
+    #[serde(rename = "inMessage")]
+    in_msg: ProviderMessage,
+    #[serde(rename = "outMessages")]
+    out_msgs: Vec<ProviderMessage>,
+}
+
+#[derive(Serialize, Deserialize)]
+struct ProviderMessage {
+    src: Option<String>,
+    dst: Option<String>,
+    body: Option<String>,
 }

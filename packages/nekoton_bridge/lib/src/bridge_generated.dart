@@ -343,6 +343,15 @@ abstract class NekotonBridge {
 
   FlutterRustBridgeTaskConstMeta get kParseFullAccountBocConstMeta;
 
+  Future<String> computeStorageFee(
+      {required String config,
+      required String account,
+      required int utime,
+      required bool isMasterchain,
+      dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta get kComputeStorageFeeConstMeta;
+
   ///----------------------------
   /// CONTENT OF src/utils/tests_api.rs
   ///----------------------------
@@ -607,6 +616,16 @@ abstract class NekotonBridge {
   FlutterRustBridgeTaskConstMeta
       get kWaitForNextBlockMethodGqlTransportImplConstMeta;
 
+  Future<String> simulateTransactionTreeMethodGqlTransportImpl(
+      {required GqlTransportImpl that,
+      required String signedMessage,
+      required Int32List ignoredComputePhaseCodes,
+      required Int32List ignoredActionPhaseCodes,
+      dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta
+      get kSimulateTransactionTreeMethodGqlTransportImplConstMeta;
+
   Future<ProtoTransportImpl> newStaticMethodProtoTransportImpl(
       {required ProtoConnectionDartWrapper protoConnection, dynamic hint});
 
@@ -694,6 +713,16 @@ abstract class NekotonBridge {
   FlutterRustBridgeTaskConstMeta
       get kGetNetworkIdMethodProtoTransportImplConstMeta;
 
+  Future<String> simulateTransactionTreeMethodProtoTransportImpl(
+      {required ProtoTransportImpl that,
+      required String signedMessage,
+      required Int32List ignoredComputePhaseCodes,
+      required Int32List ignoredActionPhaseCodes,
+      dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta
+      get kSimulateTransactionTreeMethodProtoTransportImplConstMeta;
+
   Future<JrpcTransportImpl> newStaticMethodJrpcTransportImpl(
       {required JrpcConnectionDartWrapper jrpcConnection, dynamic hint});
 
@@ -776,6 +805,16 @@ abstract class NekotonBridge {
   FlutterRustBridgeTaskConstMeta
       get kGetNetworkIdMethodJrpcTransportImplConstMeta;
 
+  Future<String> simulateTransactionTreeMethodJrpcTransportImpl(
+      {required JrpcTransportImpl that,
+      required String signedMessage,
+      required Int32List ignoredComputePhaseCodes,
+      required Int32List ignoredActionPhaseCodes,
+      dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta
+      get kSimulateTransactionTreeMethodJrpcTransportImplConstMeta;
+
   /// Create TokenWallet by subscribing to its instance.
   /// owner - address of account that is owner of wallet
   /// root_token_contract - address of contract in blockchain
@@ -832,6 +871,17 @@ abstract class NekotonBridge {
 
   FlutterRustBridgeTaskConstMeta
       get kContractStateMethodTokenWalletDartWrapperConstMeta;
+
+  Future<String> estimateMinAttachedAmountMethodTokenWalletDartWrapper(
+      {required TokenWalletDartWrapper that,
+      required String destination,
+      required String amount,
+      required bool notifyReceiver,
+      String? payload,
+      dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta
+      get kEstimateMinAttachedAmountMethodTokenWalletDartWrapperConstMeta;
 
   /// Prepare transferring tokens from this wallet to other.
   /// destination - address of account that should receive token
@@ -910,6 +960,17 @@ abstract class NekotonBridge {
 
   FlutterRustBridgeTaskConstMeta
       get kGetTokenRootDetailsFromTokenWalletStaticMethodTokenWalletDartWrapperConstMeta;
+
+  /// Get details about root contract by address of TokenWallet
+  /// Return json-encoded RootTokenContractDetails
+  /// or throw error.
+  Future<String> getTokenRootDetailsStaticMethodTokenWalletDartWrapper(
+      {required ArcTransportBoxTrait transport,
+      required String tokenRootAddress,
+      dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta
+      get kGetTokenRootDetailsStaticMethodTokenWalletDartWrapperConstMeta;
 
   /// Create KeyStore or throw error
   Future<KeystoreDartWrapper> newStaticMethodKeystoreDartWrapper(
@@ -2497,6 +2558,18 @@ class GqlTransportImpl {
         address: address,
         timeout: timeout,
       );
+
+  Future<String> simulateTransactionTree(
+          {required String signedMessage,
+          required Int32List ignoredComputePhaseCodes,
+          required Int32List ignoredActionPhaseCodes,
+          dynamic hint}) =>
+      bridge.simulateTransactionTreeMethodGqlTransportImpl(
+        that: this,
+        signedMessage: signedMessage,
+        ignoredComputePhaseCodes: ignoredComputePhaseCodes,
+        ignoredActionPhaseCodes: ignoredActionPhaseCodes,
+      );
 }
 
 ///----------------------------
@@ -2618,6 +2691,18 @@ class JrpcTransportImpl {
   Future<int> getNetworkId({dynamic hint}) =>
       bridge.getNetworkIdMethodJrpcTransportImpl(
         that: this,
+      );
+
+  Future<String> simulateTransactionTree(
+          {required String signedMessage,
+          required Int32List ignoredComputePhaseCodes,
+          required Int32List ignoredActionPhaseCodes,
+          dynamic hint}) =>
+      bridge.simulateTransactionTreeMethodJrpcTransportImpl(
+        that: this,
+        signedMessage: signedMessage,
+        ignoredComputePhaseCodes: ignoredComputePhaseCodes,
+        ignoredActionPhaseCodes: ignoredActionPhaseCodes,
       );
 }
 
@@ -3104,6 +3189,18 @@ class ProtoTransportImpl {
       bridge.getNetworkIdMethodProtoTransportImpl(
         that: this,
       );
+
+  Future<String> simulateTransactionTree(
+          {required String signedMessage,
+          required Int32List ignoredComputePhaseCodes,
+          required Int32List ignoredActionPhaseCodes,
+          dynamic hint}) =>
+      bridge.simulateTransactionTreeMethodProtoTransportImpl(
+        that: this,
+        signedMessage: signedMessage,
+        ignoredComputePhaseCodes: ignoredComputePhaseCodes,
+        ignoredActionPhaseCodes: ignoredActionPhaseCodes,
+      );
 }
 
 /// Structure that is used with signing data
@@ -3266,6 +3363,20 @@ class TokenWalletDartWrapper {
         that: this,
       );
 
+  Future<String> estimateMinAttachedAmount(
+          {required String destination,
+          required String amount,
+          required bool notifyReceiver,
+          String? payload,
+          dynamic hint}) =>
+      bridge.estimateMinAttachedAmountMethodTokenWalletDartWrapper(
+        that: this,
+        destination: destination,
+        amount: amount,
+        notifyReceiver: notifyReceiver,
+        payload: payload,
+      );
+
   /// Prepare transferring tokens from this wallet to other.
   /// destination - address of account that should receive token
   /// amount - amount of tokens that should be transferred
@@ -3344,6 +3455,17 @@ class TokenWalletDartWrapper {
               transport: transport,
               tokenWalletAddress: tokenWalletAddress,
               hint: hint);
+
+  /// Get details about root contract by address of TokenWallet
+  /// Return json-encoded RootTokenContractDetails
+  /// or throw error.
+  static Future<String> getTokenRootDetails(
+          {required NekotonBridge bridge,
+          required ArcTransportBoxTrait transport,
+          required String tokenRootAddress,
+          dynamic hint}) =>
+      bridge.getTokenRootDetailsStaticMethodTokenWalletDartWrapper(
+          transport: transport, tokenRootAddress: tokenRootAddress, hint: hint);
 }
 
 class TonWalletDartWrapper {
@@ -4545,6 +4667,32 @@ class NekotonBridgeImpl implements NekotonBridge {
         argNames: ["account"],
       );
 
+  Future<String> computeStorageFee(
+      {required String config,
+      required String account,
+      required int utime,
+      required bool isMasterchain,
+      dynamic hint}) {
+    var arg0 = _platform.api2wire_String(config);
+    var arg1 = _platform.api2wire_String(account);
+    var arg2 = api2wire_u32(utime);
+    var arg3 = isMasterchain;
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) => _platform.inner
+          .wire_compute_storage_fee(port_, arg0, arg1, arg2, arg3),
+      parseSuccessData: _wire2api_String,
+      constMeta: kComputeStorageFeeConstMeta,
+      argValues: [config, account, utime, isMasterchain],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta get kComputeStorageFeeConstMeta =>
+      const FlutterRustBridgeTaskConstMeta(
+        debugName: "compute_storage_fee",
+        argNames: ["config", "account", "utime", "isMasterchain"],
+      );
+
   Future<void> testLoggerInfo({required String string, dynamic hint}) {
     var arg0 = _platform.api2wire_String(string);
     return _platform.executeNormal(FlutterRustBridgeTask(
@@ -5390,6 +5538,44 @@ class NekotonBridgeImpl implements NekotonBridge {
             argNames: ["that", "currentBlockId", "address", "timeout"],
           );
 
+  Future<String> simulateTransactionTreeMethodGqlTransportImpl(
+      {required GqlTransportImpl that,
+      required String signedMessage,
+      required Int32List ignoredComputePhaseCodes,
+      required Int32List ignoredActionPhaseCodes,
+      dynamic hint}) {
+    var arg0 = _platform.api2wire_box_autoadd_gql_transport_impl(that);
+    var arg1 = _platform.api2wire_String(signedMessage);
+    var arg2 = _platform.api2wire_int_32_list(ignoredComputePhaseCodes);
+    var arg3 = _platform.api2wire_int_32_list(ignoredActionPhaseCodes);
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) => _platform.inner
+          .wire_simulate_transaction_tree__method__GqlTransportImpl(
+              port_, arg0, arg1, arg2, arg3),
+      parseSuccessData: _wire2api_String,
+      constMeta: kSimulateTransactionTreeMethodGqlTransportImplConstMeta,
+      argValues: [
+        that,
+        signedMessage,
+        ignoredComputePhaseCodes,
+        ignoredActionPhaseCodes
+      ],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta
+      get kSimulateTransactionTreeMethodGqlTransportImplConstMeta =>
+          const FlutterRustBridgeTaskConstMeta(
+            debugName: "simulate_transaction_tree__method__GqlTransportImpl",
+            argNames: [
+              "that",
+              "signedMessage",
+              "ignoredComputePhaseCodes",
+              "ignoredActionPhaseCodes"
+            ],
+          );
+
   Future<ProtoTransportImpl> newStaticMethodProtoTransportImpl(
       {required ProtoConnectionDartWrapper protoConnection, dynamic hint}) {
     var arg0 = _platform
@@ -5620,6 +5806,44 @@ class NekotonBridgeImpl implements NekotonBridge {
           const FlutterRustBridgeTaskConstMeta(
             debugName: "get_network_id__method__ProtoTransportImpl",
             argNames: ["that"],
+          );
+
+  Future<String> simulateTransactionTreeMethodProtoTransportImpl(
+      {required ProtoTransportImpl that,
+      required String signedMessage,
+      required Int32List ignoredComputePhaseCodes,
+      required Int32List ignoredActionPhaseCodes,
+      dynamic hint}) {
+    var arg0 = _platform.api2wire_box_autoadd_proto_transport_impl(that);
+    var arg1 = _platform.api2wire_String(signedMessage);
+    var arg2 = _platform.api2wire_int_32_list(ignoredComputePhaseCodes);
+    var arg3 = _platform.api2wire_int_32_list(ignoredActionPhaseCodes);
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) => _platform.inner
+          .wire_simulate_transaction_tree__method__ProtoTransportImpl(
+              port_, arg0, arg1, arg2, arg3),
+      parseSuccessData: _wire2api_String,
+      constMeta: kSimulateTransactionTreeMethodProtoTransportImplConstMeta,
+      argValues: [
+        that,
+        signedMessage,
+        ignoredComputePhaseCodes,
+        ignoredActionPhaseCodes
+      ],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta
+      get kSimulateTransactionTreeMethodProtoTransportImplConstMeta =>
+          const FlutterRustBridgeTaskConstMeta(
+            debugName: "simulate_transaction_tree__method__ProtoTransportImpl",
+            argNames: [
+              "that",
+              "signedMessage",
+              "ignoredComputePhaseCodes",
+              "ignoredActionPhaseCodes"
+            ],
           );
 
   Future<JrpcTransportImpl> newStaticMethodJrpcTransportImpl(
@@ -5854,6 +6078,44 @@ class NekotonBridgeImpl implements NekotonBridge {
             argNames: ["that"],
           );
 
+  Future<String> simulateTransactionTreeMethodJrpcTransportImpl(
+      {required JrpcTransportImpl that,
+      required String signedMessage,
+      required Int32List ignoredComputePhaseCodes,
+      required Int32List ignoredActionPhaseCodes,
+      dynamic hint}) {
+    var arg0 = _platform.api2wire_box_autoadd_jrpc_transport_impl(that);
+    var arg1 = _platform.api2wire_String(signedMessage);
+    var arg2 = _platform.api2wire_int_32_list(ignoredComputePhaseCodes);
+    var arg3 = _platform.api2wire_int_32_list(ignoredActionPhaseCodes);
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) => _platform.inner
+          .wire_simulate_transaction_tree__method__JrpcTransportImpl(
+              port_, arg0, arg1, arg2, arg3),
+      parseSuccessData: _wire2api_String,
+      constMeta: kSimulateTransactionTreeMethodJrpcTransportImplConstMeta,
+      argValues: [
+        that,
+        signedMessage,
+        ignoredComputePhaseCodes,
+        ignoredActionPhaseCodes
+      ],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta
+      get kSimulateTransactionTreeMethodJrpcTransportImplConstMeta =>
+          const FlutterRustBridgeTaskConstMeta(
+            debugName: "simulate_transaction_tree__method__JrpcTransportImpl",
+            argNames: [
+              "that",
+              "signedMessage",
+              "ignoredComputePhaseCodes",
+              "ignoredActionPhaseCodes"
+            ],
+          );
+
   Future<TokenWalletDartWrapper> subscribeStaticMethodTokenWalletDartWrapper(
       {required String instanceHash,
       required String owner,
@@ -6005,6 +6267,44 @@ class NekotonBridgeImpl implements NekotonBridge {
           const FlutterRustBridgeTaskConstMeta(
             debugName: "contract_state__method__TokenWalletDartWrapper",
             argNames: ["that"],
+          );
+
+  Future<String> estimateMinAttachedAmountMethodTokenWalletDartWrapper(
+      {required TokenWalletDartWrapper that,
+      required String destination,
+      required String amount,
+      required bool notifyReceiver,
+      String? payload,
+      dynamic hint}) {
+    var arg0 = _platform.api2wire_box_autoadd_token_wallet_dart_wrapper(that);
+    var arg1 = _platform.api2wire_String(destination);
+    var arg2 = _platform.api2wire_String(amount);
+    var arg3 = notifyReceiver;
+    var arg4 = _platform.api2wire_opt_String(payload);
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) => _platform.inner
+          .wire_estimate_min_attached_amount__method__TokenWalletDartWrapper(
+              port_, arg0, arg1, arg2, arg3, arg4),
+      parseSuccessData: _wire2api_String,
+      constMeta:
+          kEstimateMinAttachedAmountMethodTokenWalletDartWrapperConstMeta,
+      argValues: [that, destination, amount, notifyReceiver, payload],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta
+      get kEstimateMinAttachedAmountMethodTokenWalletDartWrapperConstMeta =>
+          const FlutterRustBridgeTaskConstMeta(
+            debugName:
+                "estimate_min_attached_amount__method__TokenWalletDartWrapper",
+            argNames: [
+              "that",
+              "destination",
+              "amount",
+              "notifyReceiver",
+              "payload"
+            ],
           );
 
   Future<String> prepareTransferMethodTokenWalletDartWrapper(
@@ -6171,6 +6471,32 @@ class NekotonBridgeImpl implements NekotonBridge {
             debugName:
                 "get_token_root_details_from_token_wallet__static_method__TokenWalletDartWrapper",
             argNames: ["transport", "tokenWalletAddress"],
+          );
+
+  Future<String> getTokenRootDetailsStaticMethodTokenWalletDartWrapper(
+      {required ArcTransportBoxTrait transport,
+      required String tokenRootAddress,
+      dynamic hint}) {
+    var arg0 = _platform.api2wire_ArcTransportBoxTrait(transport);
+    var arg1 = _platform.api2wire_String(tokenRootAddress);
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) => _platform.inner
+          .wire_get_token_root_details__static_method__TokenWalletDartWrapper(
+              port_, arg0, arg1),
+      parseSuccessData: _wire2api_String,
+      constMeta:
+          kGetTokenRootDetailsStaticMethodTokenWalletDartWrapperConstMeta,
+      argValues: [transport, tokenRootAddress],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta
+      get kGetTokenRootDetailsStaticMethodTokenWalletDartWrapperConstMeta =>
+          const FlutterRustBridgeTaskConstMeta(
+            debugName:
+                "get_token_root_details__static_method__TokenWalletDartWrapper",
+            argNames: ["transport", "tokenRootAddress"],
           );
 
   Future<KeystoreDartWrapper> newStaticMethodKeystoreDartWrapper(

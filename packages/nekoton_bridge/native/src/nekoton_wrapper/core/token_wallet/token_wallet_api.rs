@@ -1,7 +1,8 @@
 #![allow(clippy::too_many_arguments)]
 use crate::async_run;
 use crate::nekoton_wrapper::core::token_wallet::{
-    token_root_details_from_token_wallet, token_wallet_details, TokenWalletBox, TokenWalletBoxTrait,
+    token_root_details, token_root_details_from_token_wallet, token_wallet_details, TokenWalletBox,
+    TokenWalletBoxTrait,
 };
 
 use crate::nekoton_wrapper::transport::TransportBoxTrait;
@@ -37,7 +38,7 @@ impl TokenWalletDartWrapper {
             )
             .await
         )
-        .handle_error()?;
+            .handle_error()?;
 
         Ok(Self {
             inner_wallet: wallet,
@@ -74,6 +75,20 @@ impl TokenWalletDartWrapper {
     /// Get json-encoded ContractState or throw error.
     pub fn contract_state(&self) -> anyhow::Result<String> {
         async_run!(self.inner_wallet.contract_state().await)
+    }
+
+    pub fn estimate_min_attached_amount(
+        &self,
+        destination: String,
+        amount: String,
+        notify_receiver: bool,
+        payload: Option<String>,
+    ) -> anyhow::Result<String> {
+        async_run!(
+            self.inner_wallet
+                .estimate_min_attached_amount(destination, amount, notify_receiver, payload)
+                .await
+        )
     }
 
     /// Prepare transferring tokens from this wallet to other.
@@ -151,6 +166,16 @@ impl TokenWalletDartWrapper {
             token_root_details_from_token_wallet(transport.get_transport(), token_wallet_address,)
                 .await
         )
+    }
+
+    /// Get details about root contract by address of TokenWallet
+    /// Return json-encoded RootTokenContractDetails
+    /// or throw error.
+    pub fn get_token_root_details(
+        transport: RustOpaque<Arc<dyn TransportBoxTrait>>,
+        token_root_address: String,
+    ) -> anyhow::Result<String> {
+        async_run!(token_root_details(transport.get_transport(), token_root_address,).await)
     }
 }
 

@@ -173,7 +173,7 @@ impl TonWalletDartWrapper {
                 .prepare_deploy_with_multiple_owners(expiration, custodians, req_confirms)
                 .await
         )
-        .map(|m| UnsignedMessageImpl { inner_message: m })
+            .map(|m| UnsignedMessageImpl { inner_message: m })
     }
 
     /// Prepare transferring tokens from this wallet to other.
@@ -208,7 +208,7 @@ impl TonWalletDartWrapper {
                 )
                 .await
         )
-        .map(|m| UnsignedMessageImpl { inner_message: m })
+            .map(|m| UnsignedMessageImpl { inner_message: m })
     }
 
     /// Prepare transaction for confirmation.
@@ -229,7 +229,7 @@ impl TonWalletDartWrapper {
                 .prepare_confirm_transaction(contract_state, public_key, transaction_id, expiration)
                 .await
         )
-        .map(|m| UnsignedMessageImpl { inner_message: m })
+            .map(|m| UnsignedMessageImpl { inner_message: m })
     }
 
     /// Calculate fees for transaction.
