@@ -7,7 +7,7 @@ cd $BUILD_DIR
 
 # Install build dependencies
 cargo install cargo-zigbuild
-cargo install cargo-xwin
+#cargo install cargo-xwin
 
 zig_build () {
     local TARGET="$1"
@@ -33,12 +33,13 @@ win_build () {
 LINUX_LIBNAME=libnekoton_bridge.so
 zig_build aarch64-unknown-linux-gnu linux-arm64 $LINUX_LIBNAME
 zig_build x86_64-unknown-linux-gnu linux-x64 $LINUX_LIBNAME
-WINDOWS_LIBNAME=nekoton_bridge.dll
-win_build aarch64-pc-windows-msvc windows-arm64 $WINDOWS_LIBNAME
-win_build x86_64-pc-windows-msvc windows-x64 $WINDOWS_LIBNAME
+#WINDOWS_LIBNAME=nekoton_bridge.dll
+#win_build aarch64-pc-windows-msvc windows-arm64 $WINDOWS_LIBNAME
+#win_build x86_64-pc-windows-msvc windows-x64 $WINDOWS_LIBNAME
 
 # Archive the dynamic libs
-tar -czvf other.tar.gz linux-* windows-*
-
+# tar -czvf other.tar.gz linux-* windows-*
+tar -czvf other.tar.gz linux-*
 # Cleanup
-rm -rf linux-* windows-*
+# rm -rf linux-* windows-*
+rm -rf linux-*
