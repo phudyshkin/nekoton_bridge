@@ -28,17 +28,19 @@ impl TokenWalletDartWrapper {
         owner: String,
         root_token_contract: String,
         transport: RustOpaque<Arc<dyn TransportBoxTrait>>,
+        preload_transactions: bool,
     ) -> anyhow::Result<TokenWalletDartWrapper> {
         let wallet = async_run!(
             TokenWalletBox::subscribe(
                 transport.get_transport(),
                 owner,
                 root_token_contract,
-                Arc::new(TokenWalletSubscriptionHandlerImpl { instance_hash })
+                Arc::new(TokenWalletSubscriptionHandlerImpl { instance_hash }),
+                preload_transactions,
             )
             .await
         )
-            .handle_error()?;
+        .handle_error()?;
 
         Ok(Self {
             inner_wallet: wallet,

@@ -231,6 +231,14 @@ abstract class NekotonBridge {
 
   FlutterRustBridgeTaskConstMeta get kRepackAddressConstMeta;
 
+  String packAddress(
+      {required String address,
+      required bool isUrlSafe,
+      required bool bounceable,
+      dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta get kPackAddressConstMeta;
+
   /// Extract public key from boc and return it or throw error
   Future<String> extractPublicKey({required String boc, dynamic hint});
 
@@ -823,6 +831,7 @@ abstract class NekotonBridge {
       required String owner,
       required String rootTokenContract,
       required ArcTransportBoxTrait transport,
+      required bool preloadTransactions,
       dynamic hint});
 
   FlutterRustBridgeTaskConstMeta
@@ -1335,6 +1344,152 @@ abstract class NekotonBridge {
   FlutterRustBridgeTaskConstMeta
       get kVerifyDataStaticMethodAccountsStorageImplConstMeta;
 
+  /// Create JettonWallet by subscribing to its instance.
+  /// owner - address of account that is owner of wallet
+  /// root_token_contract - address of contract in blockchain
+  Future<JettonWalletDartWrapper> subscribeStaticMethodJettonWalletDartWrapper(
+      {required String instanceHash,
+      required String owner,
+      required String rootTokenContract,
+      required ArcTransportBoxTrait transport,
+      required GqlConnectionDartWrapper gqlConnection,
+      required bool preloadTransactions,
+      dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta
+      get kSubscribeStaticMethodJettonWalletDartWrapperConstMeta;
+
+  /// Get address of owner of wallet.
+  Future<String> ownerMethodJettonWalletDartWrapper(
+      {required JettonWalletDartWrapper that, dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta
+      get kOwnerMethodJettonWalletDartWrapperConstMeta;
+
+  /// Get address of wallet.
+  Future<String> addressMethodJettonWalletDartWrapper(
+      {required JettonWalletDartWrapper that, dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta
+      get kAddressMethodJettonWalletDartWrapperConstMeta;
+
+  /// Get balance of wallet.
+  /// Return string representation of rust BigUInt
+  Future<String> balanceMethodJettonWalletDartWrapper(
+      {required JettonWalletDartWrapper that, dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta
+      get kBalanceMethodJettonWalletDartWrapperConstMeta;
+
+  /// Get json-encoded ContractState or throw error.
+  Future<String> contractStateMethodJettonWalletDartWrapper(
+      {required JettonWalletDartWrapper that, dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta
+      get kContractStateMethodJettonWalletDartWrapperConstMeta;
+
+  Future<String> estimateMinAttachedAmountMethodJettonWalletDartWrapper(
+      {required JettonWalletDartWrapper that,
+      required String destination,
+      dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta
+      get kEstimateMinAttachedAmountMethodJettonWalletDartWrapperConstMeta;
+
+  /// Prepare transferring tokens from this wallet to other.
+  /// destination - address of account that should receive token
+  /// amount - amount of tokens that should be transferred
+  /// notify_receiver - if receiver should be notifier by blockchain
+  /// payload - payload of transfer aka comment
+  /// attached_amount - string representation of rust u64, default 400000000. How many native tokens
+  ///   should be attached to transfer.
+  /// Return json-encoded InternalMessage or throw error.
+  Future<String> prepareTransferMethodJettonWalletDartWrapper(
+      {required JettonWalletDartWrapper that,
+      required String amount,
+      required String destination,
+      required String remainingGasTo,
+      String? customPayload,
+      required String callbackValue,
+      String? callbackPayload,
+      String? attachedAmount,
+      dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta
+      get kPrepareTransferMethodJettonWalletDartWrapperConstMeta;
+
+  /// Refresh wallet and update its data.
+  /// Returns true or throw error.
+  Future<bool> refreshMethodJettonWalletDartWrapper(
+      {required JettonWalletDartWrapper that, dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta
+      get kRefreshMethodJettonWalletDartWrapperConstMeta;
+
+  /// Preload transactions of wallet.
+  /// from_lt - offset for loading data, string representation of u64
+  /// Returns true or throw error.
+  Future<bool> preloadTransactionsMethodJettonWalletDartWrapper(
+      {required JettonWalletDartWrapper that,
+      required String fromLt,
+      dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta
+      get kPreloadTransactionsMethodJettonWalletDartWrapperConstMeta;
+
+  /// Handle block of blockchain.
+  /// block - base64-encoded Block.
+  /// Return true or throw error.
+  Future<bool> handleBlockMethodJettonWalletDartWrapper(
+      {required JettonWalletDartWrapper that,
+      required String block,
+      dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta
+      get kHandleBlockMethodJettonWalletDartWrapperConstMeta;
+
+  /// Get details about token wallet by address of wallet
+  /// address - address of wallet
+  /// Return json-encoded list with 2 positions:
+  /// 0: JettonWalletDetails
+  /// 1: RootJettonContractDetails
+  /// or throw error
+  Future<String> getJettonWalletDetailsStaticMethodJettonWalletDartWrapper(
+      {required ArcTransportBoxTrait transport,
+      required GqlConnectionDartWrapper gqlConnection,
+      required String address,
+      dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta
+      get kGetJettonWalletDetailsStaticMethodJettonWalletDartWrapperConstMeta;
+
+  /// Get details about root contract by address of JettonWallet
+  /// Return json-encoded list with 2 positions:
+  /// 0: Address of root contract
+  /// 1: RootJettonContractDetails of root contract
+  /// or throw error.
+  Future<String>
+      getJettonRootDetailsFromJettonWalletStaticMethodJettonWalletDartWrapper(
+          {required ArcTransportBoxTrait transport,
+          required GqlConnectionDartWrapper gqlConnection,
+          required String tokenWalletAddress,
+          dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta
+      get kGetJettonRootDetailsFromJettonWalletStaticMethodJettonWalletDartWrapperConstMeta;
+
+  /// Get details about root contract by address of JettonWallet
+  /// Return json-encoded RootJettonContractDetails
+  /// or throw error.
+  Future<String> getJettonRootDetailsStaticMethodJettonWalletDartWrapper(
+      {required ArcTransportBoxTrait transport,
+      required GqlConnectionDartWrapper gqlConnection,
+      required String tokenRootAddress,
+      dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta
+      get kGetJettonRootDetailsStaticMethodJettonWalletDartWrapperConstMeta;
+
   /// Create GenericContract by subscribing to its instance.
   /// address - address of contract
   /// preload_transactions - if transactions must be loaded during creation
@@ -1572,6 +1727,7 @@ abstract class NekotonBridge {
           required String expiration,
           required List<String> custodians,
           required int reqConfirms,
+          int? expirationTime,
           dynamic hint});
 
   FlutterRustBridgeTaskConstMeta
@@ -1776,6 +1932,10 @@ abstract class NekotonBridge {
   ShareFnType get shareOpaqueArcGqlConnectionBoxTrait;
   OpaqueTypeFinalizer get ArcGqlConnectionBoxTraitFinalizer;
 
+  DropFnType get dropOpaqueArcJettonWalletBoxTrait;
+  ShareFnType get shareOpaqueArcJettonWalletBoxTrait;
+  OpaqueTypeFinalizer get ArcJettonWalletBoxTraitFinalizer;
+
   DropFnType get dropOpaqueArcJrpcConnectionBoxTrait;
   ShareFnType get shareOpaqueArcJrpcConnectionBoxTrait;
   OpaqueTypeFinalizer get ArcJrpcConnectionBoxTraitFinalizer;
@@ -1859,6 +2019,22 @@ class ArcGqlConnectionBoxTrait extends FrbOpaque {
   @override
   OpaqueTypeFinalizer get staticFinalizer =>
       bridge.ArcGqlConnectionBoxTraitFinalizer;
+}
+
+@sealed
+class ArcJettonWalletBoxTrait extends FrbOpaque {
+  final NekotonBridge bridge;
+  ArcJettonWalletBoxTrait.fromRaw(int ptr, int size, this.bridge)
+      : super.unsafe(ptr, size);
+  @override
+  DropFnType get dropFn => bridge.dropOpaqueArcJettonWalletBoxTrait;
+
+  @override
+  ShareFnType get shareFn => bridge.shareOpaqueArcJettonWalletBoxTrait;
+
+  @override
+  OpaqueTypeFinalizer get staticFinalizer =>
+      bridge.ArcJettonWalletBoxTraitFinalizer;
 }
 
 @sealed
@@ -2570,6 +2746,176 @@ class GqlTransportImpl {
         ignoredComputePhaseCodes: ignoredComputePhaseCodes,
         ignoredActionPhaseCodes: ignoredActionPhaseCodes,
       );
+}
+
+///----------------------------
+/// CONTENT OF src/nekoton_wrapper/core/jetton_wallet/jetton_wallet_api.rs
+///----------------------------
+class JettonWalletDartWrapper {
+  final NekotonBridge bridge;
+  final ArcJettonWalletBoxTrait innerWallet;
+
+  const JettonWalletDartWrapper({
+    required this.bridge,
+    required this.innerWallet,
+  });
+
+  /// Create JettonWallet by subscribing to its instance.
+  /// owner - address of account that is owner of wallet
+  /// root_token_contract - address of contract in blockchain
+  static Future<JettonWalletDartWrapper> subscribe(
+          {required NekotonBridge bridge,
+          required String instanceHash,
+          required String owner,
+          required String rootTokenContract,
+          required ArcTransportBoxTrait transport,
+          required GqlConnectionDartWrapper gqlConnection,
+          required bool preloadTransactions,
+          dynamic hint}) =>
+      bridge.subscribeStaticMethodJettonWalletDartWrapper(
+          instanceHash: instanceHash,
+          owner: owner,
+          rootTokenContract: rootTokenContract,
+          transport: transport,
+          gqlConnection: gqlConnection,
+          preloadTransactions: preloadTransactions,
+          hint: hint);
+
+  /// Get address of owner of wallet.
+  Future<String> owner({dynamic hint}) =>
+      bridge.ownerMethodJettonWalletDartWrapper(
+        that: this,
+      );
+
+  /// Get address of wallet.
+  Future<String> address({dynamic hint}) =>
+      bridge.addressMethodJettonWalletDartWrapper(
+        that: this,
+      );
+
+  /// Get balance of wallet.
+  /// Return string representation of rust BigUInt
+  Future<String> balance({dynamic hint}) =>
+      bridge.balanceMethodJettonWalletDartWrapper(
+        that: this,
+      );
+
+  /// Get json-encoded ContractState or throw error.
+  Future<String> contractState({dynamic hint}) =>
+      bridge.contractStateMethodJettonWalletDartWrapper(
+        that: this,
+      );
+
+  Future<String> estimateMinAttachedAmount(
+          {required String destination, dynamic hint}) =>
+      bridge.estimateMinAttachedAmountMethodJettonWalletDartWrapper(
+        that: this,
+        destination: destination,
+      );
+
+  /// Prepare transferring tokens from this wallet to other.
+  /// destination - address of account that should receive token
+  /// amount - amount of tokens that should be transferred
+  /// notify_receiver - if receiver should be notifier by blockchain
+  /// payload - payload of transfer aka comment
+  /// attached_amount - string representation of rust u64, default 400000000. How many native tokens
+  ///   should be attached to transfer.
+  /// Return json-encoded InternalMessage or throw error.
+  Future<String> prepareTransfer(
+          {required String amount,
+          required String destination,
+          required String remainingGasTo,
+          String? customPayload,
+          required String callbackValue,
+          String? callbackPayload,
+          String? attachedAmount,
+          dynamic hint}) =>
+      bridge.prepareTransferMethodJettonWalletDartWrapper(
+        that: this,
+        amount: amount,
+        destination: destination,
+        remainingGasTo: remainingGasTo,
+        customPayload: customPayload,
+        callbackValue: callbackValue,
+        callbackPayload: callbackPayload,
+        attachedAmount: attachedAmount,
+      );
+
+  /// Refresh wallet and update its data.
+  /// Returns true or throw error.
+  Future<bool> refresh({dynamic hint}) =>
+      bridge.refreshMethodJettonWalletDartWrapper(
+        that: this,
+      );
+
+  /// Preload transactions of wallet.
+  /// from_lt - offset for loading data, string representation of u64
+  /// Returns true or throw error.
+  Future<bool> preloadTransactions({required String fromLt, dynamic hint}) =>
+      bridge.preloadTransactionsMethodJettonWalletDartWrapper(
+        that: this,
+        fromLt: fromLt,
+      );
+
+  /// Handle block of blockchain.
+  /// block - base64-encoded Block.
+  /// Return true or throw error.
+  Future<bool> handleBlock({required String block, dynamic hint}) =>
+      bridge.handleBlockMethodJettonWalletDartWrapper(
+        that: this,
+        block: block,
+      );
+
+  /// Get details about token wallet by address of wallet
+  /// address - address of wallet
+  /// Return json-encoded list with 2 positions:
+  /// 0: JettonWalletDetails
+  /// 1: RootJettonContractDetails
+  /// or throw error
+  static Future<String> getJettonWalletDetails(
+          {required NekotonBridge bridge,
+          required ArcTransportBoxTrait transport,
+          required GqlConnectionDartWrapper gqlConnection,
+          required String address,
+          dynamic hint}) =>
+      bridge.getJettonWalletDetailsStaticMethodJettonWalletDartWrapper(
+          transport: transport,
+          gqlConnection: gqlConnection,
+          address: address,
+          hint: hint);
+
+  /// Get details about root contract by address of JettonWallet
+  /// Return json-encoded list with 2 positions:
+  /// 0: Address of root contract
+  /// 1: RootJettonContractDetails of root contract
+  /// or throw error.
+  static Future<String> getJettonRootDetailsFromJettonWallet(
+          {required NekotonBridge bridge,
+          required ArcTransportBoxTrait transport,
+          required GqlConnectionDartWrapper gqlConnection,
+          required String tokenWalletAddress,
+          dynamic hint}) =>
+      bridge
+          .getJettonRootDetailsFromJettonWalletStaticMethodJettonWalletDartWrapper(
+              transport: transport,
+              gqlConnection: gqlConnection,
+              tokenWalletAddress: tokenWalletAddress,
+              hint: hint);
+
+  /// Get details about root contract by address of JettonWallet
+  /// Return json-encoded RootJettonContractDetails
+  /// or throw error.
+  static Future<String> getJettonRootDetails(
+          {required NekotonBridge bridge,
+          required ArcTransportBoxTrait transport,
+          required GqlConnectionDartWrapper gqlConnection,
+          required String tokenRootAddress,
+          dynamic hint}) =>
+      bridge.getJettonRootDetailsStaticMethodJettonWalletDartWrapper(
+          transport: transport,
+          gqlConnection: gqlConnection,
+          tokenRootAddress: tokenRootAddress,
+          hint: hint);
 }
 
 ///----------------------------
@@ -3317,12 +3663,14 @@ class TokenWalletDartWrapper {
           required String owner,
           required String rootTokenContract,
           required ArcTransportBoxTrait transport,
+          required bool preloadTransactions,
           dynamic hint}) =>
       bridge.subscribeStaticMethodTokenWalletDartWrapper(
           instanceHash: instanceHash,
           owner: owner,
           rootTokenContract: rootTokenContract,
           transport: transport,
+          preloadTransactions: preloadTransactions,
           hint: hint);
 
   /// Get address of owner of wallet.
@@ -3603,12 +3951,14 @@ class TonWalletDartWrapper {
           {required String expiration,
           required List<String> custodians,
           required int reqConfirms,
+          int? expirationTime,
           dynamic hint}) =>
       bridge.prepareDeployWithMultipleOwnersMethodTonWalletDartWrapper(
         that: this,
         expiration: expiration,
         custodians: custodians,
         reqConfirms: reqConfirms,
+        expirationTime: expirationTime,
       );
 
   /// Prepare transferring tokens from this wallet to other.
@@ -4365,6 +4715,29 @@ class NekotonBridgeImpl implements NekotonBridge {
       const FlutterRustBridgeTaskConstMeta(
         debugName: "repack_address",
         argNames: ["address"],
+      );
+
+  String packAddress(
+      {required String address,
+      required bool isUrlSafe,
+      required bool bounceable,
+      dynamic hint}) {
+    var arg0 = _platform.api2wire_String(address);
+    var arg1 = isUrlSafe;
+    var arg2 = bounceable;
+    return _platform.executeSync(FlutterRustBridgeSyncTask(
+      callFfi: () => _platform.inner.wire_pack_address(arg0, arg1, arg2),
+      parseSuccessData: _wire2api_String,
+      constMeta: kPackAddressConstMeta,
+      argValues: [address, isUrlSafe, bounceable],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta get kPackAddressConstMeta =>
+      const FlutterRustBridgeTaskConstMeta(
+        debugName: "pack_address",
+        argNames: ["address", "isUrlSafe", "bounceable"],
       );
 
   Future<String> extractPublicKey({required String boc, dynamic hint}) {
@@ -6121,18 +6494,26 @@ class NekotonBridgeImpl implements NekotonBridge {
       required String owner,
       required String rootTokenContract,
       required ArcTransportBoxTrait transport,
+      required bool preloadTransactions,
       dynamic hint}) {
     var arg0 = _platform.api2wire_String(instanceHash);
     var arg1 = _platform.api2wire_String(owner);
     var arg2 = _platform.api2wire_String(rootTokenContract);
     var arg3 = _platform.api2wire_ArcTransportBoxTrait(transport);
+    var arg4 = preloadTransactions;
     return _platform.executeNormal(FlutterRustBridgeTask(
       callFfi: (port_) => _platform.inner
           .wire_subscribe__static_method__TokenWalletDartWrapper(
-              port_, arg0, arg1, arg2, arg3),
+              port_, arg0, arg1, arg2, arg3, arg4),
       parseSuccessData: (d) => _wire2api_token_wallet_dart_wrapper(d),
       constMeta: kSubscribeStaticMethodTokenWalletDartWrapperConstMeta,
-      argValues: [instanceHash, owner, rootTokenContract, transport],
+      argValues: [
+        instanceHash,
+        owner,
+        rootTokenContract,
+        transport,
+        preloadTransactions
+      ],
       hint: hint,
     ));
   }
@@ -6145,7 +6526,8 @@ class NekotonBridgeImpl implements NekotonBridge {
               "instanceHash",
               "owner",
               "rootTokenContract",
-              "transport"
+              "transport",
+              "preloadTransactions"
             ],
           );
 
@@ -7320,6 +7702,369 @@ class NekotonBridgeImpl implements NekotonBridge {
             argNames: ["data"],
           );
 
+  Future<JettonWalletDartWrapper> subscribeStaticMethodJettonWalletDartWrapper(
+      {required String instanceHash,
+      required String owner,
+      required String rootTokenContract,
+      required ArcTransportBoxTrait transport,
+      required GqlConnectionDartWrapper gqlConnection,
+      required bool preloadTransactions,
+      dynamic hint}) {
+    var arg0 = _platform.api2wire_String(instanceHash);
+    var arg1 = _platform.api2wire_String(owner);
+    var arg2 = _platform.api2wire_String(rootTokenContract);
+    var arg3 = _platform.api2wire_ArcTransportBoxTrait(transport);
+    var arg4 = _platform
+        .api2wire_box_autoadd_gql_connection_dart_wrapper(gqlConnection);
+    var arg5 = preloadTransactions;
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) => _platform.inner
+          .wire_subscribe__static_method__JettonWalletDartWrapper(
+              port_, arg0, arg1, arg2, arg3, arg4, arg5),
+      parseSuccessData: (d) => _wire2api_jetton_wallet_dart_wrapper(d),
+      constMeta: kSubscribeStaticMethodJettonWalletDartWrapperConstMeta,
+      argValues: [
+        instanceHash,
+        owner,
+        rootTokenContract,
+        transport,
+        gqlConnection,
+        preloadTransactions
+      ],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta
+      get kSubscribeStaticMethodJettonWalletDartWrapperConstMeta =>
+          const FlutterRustBridgeTaskConstMeta(
+            debugName: "subscribe__static_method__JettonWalletDartWrapper",
+            argNames: [
+              "instanceHash",
+              "owner",
+              "rootTokenContract",
+              "transport",
+              "gqlConnection",
+              "preloadTransactions"
+            ],
+          );
+
+  Future<String> ownerMethodJettonWalletDartWrapper(
+      {required JettonWalletDartWrapper that, dynamic hint}) {
+    var arg0 = _platform.api2wire_box_autoadd_jetton_wallet_dart_wrapper(that);
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) => _platform.inner
+          .wire_owner__method__JettonWalletDartWrapper(port_, arg0),
+      parseSuccessData: _wire2api_String,
+      constMeta: kOwnerMethodJettonWalletDartWrapperConstMeta,
+      argValues: [that],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta
+      get kOwnerMethodJettonWalletDartWrapperConstMeta =>
+          const FlutterRustBridgeTaskConstMeta(
+            debugName: "owner__method__JettonWalletDartWrapper",
+            argNames: ["that"],
+          );
+
+  Future<String> addressMethodJettonWalletDartWrapper(
+      {required JettonWalletDartWrapper that, dynamic hint}) {
+    var arg0 = _platform.api2wire_box_autoadd_jetton_wallet_dart_wrapper(that);
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) => _platform.inner
+          .wire_address__method__JettonWalletDartWrapper(port_, arg0),
+      parseSuccessData: _wire2api_String,
+      constMeta: kAddressMethodJettonWalletDartWrapperConstMeta,
+      argValues: [that],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta
+      get kAddressMethodJettonWalletDartWrapperConstMeta =>
+          const FlutterRustBridgeTaskConstMeta(
+            debugName: "address__method__JettonWalletDartWrapper",
+            argNames: ["that"],
+          );
+
+  Future<String> balanceMethodJettonWalletDartWrapper(
+      {required JettonWalletDartWrapper that, dynamic hint}) {
+    var arg0 = _platform.api2wire_box_autoadd_jetton_wallet_dart_wrapper(that);
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) => _platform.inner
+          .wire_balance__method__JettonWalletDartWrapper(port_, arg0),
+      parseSuccessData: _wire2api_String,
+      constMeta: kBalanceMethodJettonWalletDartWrapperConstMeta,
+      argValues: [that],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta
+      get kBalanceMethodJettonWalletDartWrapperConstMeta =>
+          const FlutterRustBridgeTaskConstMeta(
+            debugName: "balance__method__JettonWalletDartWrapper",
+            argNames: ["that"],
+          );
+
+  Future<String> contractStateMethodJettonWalletDartWrapper(
+      {required JettonWalletDartWrapper that, dynamic hint}) {
+    var arg0 = _platform.api2wire_box_autoadd_jetton_wallet_dart_wrapper(that);
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) => _platform.inner
+          .wire_contract_state__method__JettonWalletDartWrapper(port_, arg0),
+      parseSuccessData: _wire2api_String,
+      constMeta: kContractStateMethodJettonWalletDartWrapperConstMeta,
+      argValues: [that],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta
+      get kContractStateMethodJettonWalletDartWrapperConstMeta =>
+          const FlutterRustBridgeTaskConstMeta(
+            debugName: "contract_state__method__JettonWalletDartWrapper",
+            argNames: ["that"],
+          );
+
+  Future<String> estimateMinAttachedAmountMethodJettonWalletDartWrapper(
+      {required JettonWalletDartWrapper that,
+      required String destination,
+      dynamic hint}) {
+    var arg0 = _platform.api2wire_box_autoadd_jetton_wallet_dart_wrapper(that);
+    var arg1 = _platform.api2wire_String(destination);
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) => _platform.inner
+          .wire_estimate_min_attached_amount__method__JettonWalletDartWrapper(
+              port_, arg0, arg1),
+      parseSuccessData: _wire2api_String,
+      constMeta:
+          kEstimateMinAttachedAmountMethodJettonWalletDartWrapperConstMeta,
+      argValues: [that, destination],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta
+      get kEstimateMinAttachedAmountMethodJettonWalletDartWrapperConstMeta =>
+          const FlutterRustBridgeTaskConstMeta(
+            debugName:
+                "estimate_min_attached_amount__method__JettonWalletDartWrapper",
+            argNames: ["that", "destination"],
+          );
+
+  Future<String> prepareTransferMethodJettonWalletDartWrapper(
+      {required JettonWalletDartWrapper that,
+      required String amount,
+      required String destination,
+      required String remainingGasTo,
+      String? customPayload,
+      required String callbackValue,
+      String? callbackPayload,
+      String? attachedAmount,
+      dynamic hint}) {
+    var arg0 = _platform.api2wire_box_autoadd_jetton_wallet_dart_wrapper(that);
+    var arg1 = _platform.api2wire_String(amount);
+    var arg2 = _platform.api2wire_String(destination);
+    var arg3 = _platform.api2wire_String(remainingGasTo);
+    var arg4 = _platform.api2wire_opt_String(customPayload);
+    var arg5 = _platform.api2wire_String(callbackValue);
+    var arg6 = _platform.api2wire_opt_String(callbackPayload);
+    var arg7 = _platform.api2wire_opt_String(attachedAmount);
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) => _platform.inner
+          .wire_prepare_transfer__method__JettonWalletDartWrapper(
+              port_, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7),
+      parseSuccessData: _wire2api_String,
+      constMeta: kPrepareTransferMethodJettonWalletDartWrapperConstMeta,
+      argValues: [
+        that,
+        amount,
+        destination,
+        remainingGasTo,
+        customPayload,
+        callbackValue,
+        callbackPayload,
+        attachedAmount
+      ],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta
+      get kPrepareTransferMethodJettonWalletDartWrapperConstMeta =>
+          const FlutterRustBridgeTaskConstMeta(
+            debugName: "prepare_transfer__method__JettonWalletDartWrapper",
+            argNames: [
+              "that",
+              "amount",
+              "destination",
+              "remainingGasTo",
+              "customPayload",
+              "callbackValue",
+              "callbackPayload",
+              "attachedAmount"
+            ],
+          );
+
+  Future<bool> refreshMethodJettonWalletDartWrapper(
+      {required JettonWalletDartWrapper that, dynamic hint}) {
+    var arg0 = _platform.api2wire_box_autoadd_jetton_wallet_dart_wrapper(that);
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) => _platform.inner
+          .wire_refresh__method__JettonWalletDartWrapper(port_, arg0),
+      parseSuccessData: _wire2api_bool,
+      constMeta: kRefreshMethodJettonWalletDartWrapperConstMeta,
+      argValues: [that],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta
+      get kRefreshMethodJettonWalletDartWrapperConstMeta =>
+          const FlutterRustBridgeTaskConstMeta(
+            debugName: "refresh__method__JettonWalletDartWrapper",
+            argNames: ["that"],
+          );
+
+  Future<bool> preloadTransactionsMethodJettonWalletDartWrapper(
+      {required JettonWalletDartWrapper that,
+      required String fromLt,
+      dynamic hint}) {
+    var arg0 = _platform.api2wire_box_autoadd_jetton_wallet_dart_wrapper(that);
+    var arg1 = _platform.api2wire_String(fromLt);
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) => _platform.inner
+          .wire_preload_transactions__method__JettonWalletDartWrapper(
+              port_, arg0, arg1),
+      parseSuccessData: _wire2api_bool,
+      constMeta: kPreloadTransactionsMethodJettonWalletDartWrapperConstMeta,
+      argValues: [that, fromLt],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta
+      get kPreloadTransactionsMethodJettonWalletDartWrapperConstMeta =>
+          const FlutterRustBridgeTaskConstMeta(
+            debugName: "preload_transactions__method__JettonWalletDartWrapper",
+            argNames: ["that", "fromLt"],
+          );
+
+  Future<bool> handleBlockMethodJettonWalletDartWrapper(
+      {required JettonWalletDartWrapper that,
+      required String block,
+      dynamic hint}) {
+    var arg0 = _platform.api2wire_box_autoadd_jetton_wallet_dart_wrapper(that);
+    var arg1 = _platform.api2wire_String(block);
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) => _platform.inner
+          .wire_handle_block__method__JettonWalletDartWrapper(
+              port_, arg0, arg1),
+      parseSuccessData: _wire2api_bool,
+      constMeta: kHandleBlockMethodJettonWalletDartWrapperConstMeta,
+      argValues: [that, block],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta
+      get kHandleBlockMethodJettonWalletDartWrapperConstMeta =>
+          const FlutterRustBridgeTaskConstMeta(
+            debugName: "handle_block__method__JettonWalletDartWrapper",
+            argNames: ["that", "block"],
+          );
+
+  Future<String> getJettonWalletDetailsStaticMethodJettonWalletDartWrapper(
+      {required ArcTransportBoxTrait transport,
+      required GqlConnectionDartWrapper gqlConnection,
+      required String address,
+      dynamic hint}) {
+    var arg0 = _platform.api2wire_ArcTransportBoxTrait(transport);
+    var arg1 = _platform
+        .api2wire_box_autoadd_gql_connection_dart_wrapper(gqlConnection);
+    var arg2 = _platform.api2wire_String(address);
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) => _platform.inner
+          .wire_get_jetton_wallet_details__static_method__JettonWalletDartWrapper(
+              port_, arg0, arg1, arg2),
+      parseSuccessData: _wire2api_String,
+      constMeta:
+          kGetJettonWalletDetailsStaticMethodJettonWalletDartWrapperConstMeta,
+      argValues: [transport, gqlConnection, address],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta
+      get kGetJettonWalletDetailsStaticMethodJettonWalletDartWrapperConstMeta =>
+          const FlutterRustBridgeTaskConstMeta(
+            debugName:
+                "get_jetton_wallet_details__static_method__JettonWalletDartWrapper",
+            argNames: ["transport", "gqlConnection", "address"],
+          );
+
+  Future<String>
+      getJettonRootDetailsFromJettonWalletStaticMethodJettonWalletDartWrapper(
+          {required ArcTransportBoxTrait transport,
+          required GqlConnectionDartWrapper gqlConnection,
+          required String tokenWalletAddress,
+          dynamic hint}) {
+    var arg0 = _platform.api2wire_ArcTransportBoxTrait(transport);
+    var arg1 = _platform
+        .api2wire_box_autoadd_gql_connection_dart_wrapper(gqlConnection);
+    var arg2 = _platform.api2wire_String(tokenWalletAddress);
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) => _platform.inner
+          .wire_get_jetton_root_details_from_jetton_wallet__static_method__JettonWalletDartWrapper(
+              port_, arg0, arg1, arg2),
+      parseSuccessData: _wire2api_String,
+      constMeta:
+          kGetJettonRootDetailsFromJettonWalletStaticMethodJettonWalletDartWrapperConstMeta,
+      argValues: [transport, gqlConnection, tokenWalletAddress],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta
+      get kGetJettonRootDetailsFromJettonWalletStaticMethodJettonWalletDartWrapperConstMeta =>
+          const FlutterRustBridgeTaskConstMeta(
+            debugName:
+                "get_jetton_root_details_from_jetton_wallet__static_method__JettonWalletDartWrapper",
+            argNames: ["transport", "gqlConnection", "tokenWalletAddress"],
+          );
+
+  Future<String> getJettonRootDetailsStaticMethodJettonWalletDartWrapper(
+      {required ArcTransportBoxTrait transport,
+      required GqlConnectionDartWrapper gqlConnection,
+      required String tokenRootAddress,
+      dynamic hint}) {
+    var arg0 = _platform.api2wire_ArcTransportBoxTrait(transport);
+    var arg1 = _platform
+        .api2wire_box_autoadd_gql_connection_dart_wrapper(gqlConnection);
+    var arg2 = _platform.api2wire_String(tokenRootAddress);
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) => _platform.inner
+          .wire_get_jetton_root_details__static_method__JettonWalletDartWrapper(
+              port_, arg0, arg1, arg2),
+      parseSuccessData: _wire2api_String,
+      constMeta:
+          kGetJettonRootDetailsStaticMethodJettonWalletDartWrapperConstMeta,
+      argValues: [transport, gqlConnection, tokenRootAddress],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta
+      get kGetJettonRootDetailsStaticMethodJettonWalletDartWrapperConstMeta =>
+          const FlutterRustBridgeTaskConstMeta(
+            debugName:
+                "get_jetton_root_details__static_method__JettonWalletDartWrapper",
+            argNames: ["transport", "gqlConnection", "tokenRootAddress"],
+          );
+
   Future<GenericContractDartWrapper>
       subscribeStaticMethodGenericContractDartWrapper(
           {required String instanceHash,
@@ -7913,19 +8658,21 @@ class NekotonBridgeImpl implements NekotonBridge {
           required String expiration,
           required List<String> custodians,
           required int reqConfirms,
+          int? expirationTime,
           dynamic hint}) {
     var arg0 = _platform.api2wire_box_autoadd_ton_wallet_dart_wrapper(that);
     var arg1 = _platform.api2wire_String(expiration);
     var arg2 = _platform.api2wire_StringList(custodians);
     var arg3 = api2wire_u8(reqConfirms);
+    var arg4 = _platform.api2wire_opt_box_autoadd_u32(expirationTime);
     return _platform.executeNormal(FlutterRustBridgeTask(
       callFfi: (port_) => _platform.inner
           .wire_prepare_deploy_with_multiple_owners__method__TonWalletDartWrapper(
-              port_, arg0, arg1, arg2, arg3),
+              port_, arg0, arg1, arg2, arg3, arg4),
       parseSuccessData: (d) => _wire2api_unsigned_message_impl(d),
       constMeta:
           kPrepareDeployWithMultipleOwnersMethodTonWalletDartWrapperConstMeta,
-      argValues: [that, expiration, custodians, reqConfirms],
+      argValues: [that, expiration, custodians, reqConfirms, expirationTime],
       hint: hint,
     ));
   }
@@ -7935,7 +8682,13 @@ class NekotonBridgeImpl implements NekotonBridge {
           const FlutterRustBridgeTaskConstMeta(
             debugName:
                 "prepare_deploy_with_multiple_owners__method__TonWalletDartWrapper",
-            argNames: ["that", "expiration", "custodians", "reqConfirms"],
+            argNames: [
+              "that",
+              "expiration",
+              "custodians",
+              "reqConfirms",
+              "expirationTime"
+            ],
           );
 
   Future<UnsignedMessageImpl> prepareTransferMethodTonWalletDartWrapper(
@@ -8459,6 +9212,13 @@ class NekotonBridgeImpl implements NekotonBridge {
   OpaqueTypeFinalizer get ArcGqlConnectionBoxTraitFinalizer =>
       _platform.ArcGqlConnectionBoxTraitFinalizer;
 
+  DropFnType get dropOpaqueArcJettonWalletBoxTrait =>
+      _platform.inner.drop_opaque_ArcJettonWalletBoxTrait;
+  ShareFnType get shareOpaqueArcJettonWalletBoxTrait =>
+      _platform.inner.share_opaque_ArcJettonWalletBoxTrait;
+  OpaqueTypeFinalizer get ArcJettonWalletBoxTraitFinalizer =>
+      _platform.ArcJettonWalletBoxTraitFinalizer;
+
   DropFnType get dropOpaqueArcJrpcConnectionBoxTrait =>
       _platform.inner.drop_opaque_ArcJrpcConnectionBoxTrait;
   ShareFnType get shareOpaqueArcJrpcConnectionBoxTrait =>
@@ -8537,6 +9297,10 @@ class NekotonBridgeImpl implements NekotonBridge {
 
   ArcGqlConnectionBoxTrait _wire2api_ArcGqlConnectionBoxTrait(dynamic raw) {
     return ArcGqlConnectionBoxTrait.fromRaw(raw[0], raw[1], this);
+  }
+
+  ArcJettonWalletBoxTrait _wire2api_ArcJettonWalletBoxTrait(dynamic raw) {
+    return ArcJettonWalletBoxTrait.fromRaw(raw[0], raw[1], this);
   }
 
   ArcJrpcConnectionBoxTrait _wire2api_ArcJrpcConnectionBoxTrait(dynamic raw) {
@@ -8765,6 +9529,16 @@ class NekotonBridgeImpl implements NekotonBridge {
 
   int _wire2api_i8(dynamic raw) {
     return raw as int;
+  }
+
+  JettonWalletDartWrapper _wire2api_jetton_wallet_dart_wrapper(dynamic raw) {
+    final arr = raw as List<dynamic>;
+    if (arr.length != 1)
+      throw Exception('unexpected arr length: expect 1 but see ${arr.length}');
+    return JettonWalletDartWrapper(
+      bridge: this,
+      innerWallet: _wire2api_ArcJettonWalletBoxTrait(arr[0]),
+    );
   }
 
   JrpcConnectionDartWrapper _wire2api_jrpc_connection_dart_wrapper(

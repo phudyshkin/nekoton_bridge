@@ -1,3 +1,93 @@
+## 2.2.0
+
+ - Graduate package to a stable release. See pre-releases prior to this version for changelog entries.
+
+## 2.2.0-dev.0
+
+ - **FEAT**: update `nekoton`. ([56addc96](https://github.com/broxus/nekoton_bridge/commit/56addc96b5690f8d81fd4e5ff97bd2dc83df05f9))
+
+## 2.1.0
+
+ - **FEAT**: update `nekoton`, add jetton `update_library_cell` support;. ([69576615](https://github.com/broxus/nekoton_bridge/commit/695766159ca82faf1c255755e48bfdbd949f6798))
+
+## 2.0.2
+
+ - **FIX**: specify nekoton rev. ([9a60c737](https://github.com/broxus/nekoton_bridge/commit/9a60c737f5d9fd67c0787419eced008f9695d86d))
+
+## 2.0.1
+
+ - Graduate package to a stable release. See pre-releases prior to this version for changelog entries.
+
+## 2.0.1-dev.10
+
+ - **FEAT**: token wallet preload transactions ([#286](https://github.com/broxus/nekoton_bridge/issues/286)). ([ff55c7a8](https://github.com/broxus/nekoton_bridge/commit/ff55c7a84d9b5e19ec2f137d26b81ba94ed721d6))
+
+## 2.0.1-dev.9
+
+ - **FEAT**: add ton wallet callbacks (`on_details_changed`, `on_custodians_changed`, `on_unconfirmed_transactions_changed`). ([3b146cd4](https://github.com/broxus/nekoton_bridge/commit/3b146cd4fef3f524e0c1c5f518a32444eff1e3f3))
+
+## 2.0.1-dev.8
+
+ - **FIX**: rust-format. ([383d26d7](https://github.com/broxus/nekoton_bridge/commit/383d26d7ce88aee825fda8bbb6b8e434cab7b054))
+
+## 2.0.1-dev.7
+
+ - **FEAT**: add `pack_address`. ([47cf1763](https://github.com/broxus/nekoton_bridge/commit/47cf176373028c08dd24a51632d829d6987a0b5b))
+
+## 2.0.1-dev.6
+
+ - **FEAT**: add jetton wallet support ([#276](https://github.com/broxus/nekoton_bridge/issues/276)). ([6120e3c6](https://github.com/broxus/nekoton_bridge/commit/6120e3c638214a5271aa9a901beccd48fe910ff4))
+
+## 2.0.1-dev.5
+
+ - **FIX**: downgrade `money2` package. ([c5a70412](https://github.com/broxus/nekoton_bridge/commit/c5a7041219809b71b266620fbb3fd9279b309e2e))
+
+## 2.0.1-dev.4
+
+ - **FEAT**: add expiration time to multisig ([#267](https://github.com/broxus/nekoton_bridge/issues/267)). ([3cbf41ce](https://github.com/broxus/nekoton_bridge/commit/3cbf41ce902197784a9f20115965f46e76372317))
+
+## 2.0.1-dev.2
+
+ - **FIX**: force `nekoton_bridge` version bump. ([8bb103d4](https://github.com/broxus/nekoton_bridge/commit/8bb103d42fc76c7d40138ba0cfede899a6165255))
+
+## 2.0.1-dev.0
+
+ - **REFACTOR**: use struct to parse json string. ([35999f74](https://github.com/broxus/nekoton_bridge/commit/35999f74c5613f9888b523f6e94a2658a8a32fb6))
+ - **FIX**: Transaction json parse. ([b1977e8e](https://github.com/broxus/nekoton_bridge/commit/b1977e8ef950206f4da5db57cc3ad49f43b1bd50))
+
+## 2.0.0
+
+ - Graduate package to a stable release. See pre-releases prior to this version for changelog entries.
+
+## 2.0.0-dev.1
+
+Using money2_improver from git and money2: 5.2.1
+
+## 1.20.0-dev.5
+
+ - **FIX**: `estimate_min_attached_amount` payload fix. ([3c53957e](https://github.com/broxus/nekoton_bridge/commit/3c53957ef0c86ffa487d995142d5a4499bb33acc))
+
+## 1.20.0-dev.4
+
+ - **FIX**: rust format. ([2bb48093](https://github.com/broxus/nekoton_bridge/commit/2bb48093775e1a54e50e87a504a7442d2c1bba38))
+ - **FEAT**: add `simulateTransactionTree` method. ([2df468c3](https://github.com/broxus/nekoton_bridge/commit/2df468c350e1bf336ed87cce69121c38655c85f6))
+
+## 1.20.0-dev.3
+
+ - **FIX**: update nekoton. ([bfc8837d](https://github.com/broxus/nekoton_bridge/commit/bfc8837d4fc94e8a8247341c4a8fbc8cfe1c1727))
+
+## 1.20.0-dev.2
+
+ - **FEAT**: `estimate_min_attached_amount` method ([#250](https://github.com/broxus/nekoton_bridge/issues/250)). ([f2b75c60](https://github.com/broxus/nekoton_bridge/commit/f2b75c6030a4d6e42b8f328ea2e2fbb112647dda))
+
+## 1.20.0-dev.1
+
+ - **FEAT**: add `token_root_details` method ([#248](https://github.com/broxus/nekoton_bridge/issues/248)). ([b8d962b6](https://github.com/broxus/nekoton_bridge/commit/b8d962b68ecca51c50b906613ddad29132a4dcf5))
+
+## 1.20.0-dev.0
+
+ - **FEAT**: add compute_storage_fee ([#245](https://github.com/broxus/nekoton_bridge/issues/245)). ([02e762a8](https://github.com/broxus/nekoton_bridge/commit/02e762a8ca2595e98056a4dae65c97cf07569df0))
+
 ## 1.19.1
 
  - **FIX**: abi methods ([#241](https://github.com/broxus/nekoton_bridge/issues/241)). ([d3f908aa](https://github.com/broxus/nekoton_bridge/commit/d3f908aada544a80b26d68a948eb349cc2591fc9))

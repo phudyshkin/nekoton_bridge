@@ -97,14 +97,21 @@ impl TokenWalletBox {
         owner: String,
         root_token_contract: String,
         handler: Arc<dyn TokenWalletSubscriptionHandler>,
+        preload_transactions: bool,
     ) -> anyhow::Result<RustOpaque<Arc<dyn TokenWalletBoxTrait>>> {
         let owner = parse_address(owner)?;
         let root_token_contract = parse_address(root_token_contract)?;
 
-        let token_wallet =
-            TokenWallet::subscribe(clock!(), transport, owner, root_token_contract, handler)
-                .await
-                .handle_error()?;
+        let token_wallet = TokenWallet::subscribe(
+            clock!(),
+            transport,
+            owner,
+            root_token_contract,
+            handler,
+            preload_transactions,
+        )
+        .await
+        .handle_error()?;
 
         Ok(RustOpaque::new(Arc::new(TokenWalletBox {
             inner_wallet: Arc::new(Mutex::new(token_wallet)),
@@ -307,8 +314,8 @@ pub async fn token_root_details_from_token_wallet(
         transport.as_ref(),
         &token_wallet,
     )
-        .await
-        .handle_error()?;
+    .await
+    .handle_error()?;
 
     let details = (details.0.to_string(), details.1);
 

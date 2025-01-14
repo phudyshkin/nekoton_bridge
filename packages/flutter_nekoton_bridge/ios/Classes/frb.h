@@ -255,6 +255,14 @@ typedef struct wire_AccountsStorageImpl {
   struct wire_ArcAccountsStorageBoxTrait inner_storage;
 } wire_AccountsStorageImpl;
 
+typedef struct wire_ArcJettonWalletBoxTrait {
+  const void *ptr;
+} wire_ArcJettonWalletBoxTrait;
+
+typedef struct wire_JettonWalletDartWrapper {
+  struct wire_ArcJettonWalletBoxTrait inner_wallet;
+} wire_JettonWalletDartWrapper;
+
 typedef struct wire_ArcGenericContractBoxTrait {
   const void *ptr;
 } wire_ArcGenericContractBoxTrait;
@@ -397,6 +405,10 @@ void wire_unpack_std_smc_addr(int64_t port_, struct wire_uint_8_list *packed, bo
 void wire_validate_address(int64_t port_, struct wire_uint_8_list *address);
 
 void wire_repack_address(int64_t port_, struct wire_uint_8_list *address);
+
+WireSyncReturn wire_pack_address(struct wire_uint_8_list *address,
+                                 bool is_url_safe,
+                                 bool bounceable);
 
 void wire_extract_public_key(int64_t port_, struct wire_uint_8_list *boc);
 
@@ -685,7 +697,8 @@ void wire_subscribe__static_method__TokenWalletDartWrapper(int64_t port_,
                                                            struct wire_uint_8_list *instance_hash,
                                                            struct wire_uint_8_list *owner,
                                                            struct wire_uint_8_list *root_token_contract,
-                                                           struct wire_ArcTransportBoxTrait transport);
+                                                           struct wire_ArcTransportBoxTrait transport,
+                                                           bool preload_transactions);
 
 void wire_owner__method__TokenWalletDartWrapper(int64_t port_,
                                                 struct wire_TokenWalletDartWrapper *that);
@@ -893,6 +906,66 @@ void wire_reload__method__AccountsStorageImpl(int64_t port_, struct wire_Account
 void wire_verify_data__static_method__AccountsStorageImpl(int64_t port_,
                                                           struct wire_uint_8_list *data);
 
+void wire_subscribe__static_method__JettonWalletDartWrapper(int64_t port_,
+                                                            struct wire_uint_8_list *instance_hash,
+                                                            struct wire_uint_8_list *owner,
+                                                            struct wire_uint_8_list *root_token_contract,
+                                                            struct wire_ArcTransportBoxTrait transport,
+                                                            struct wire_GqlConnectionDartWrapper *gql_connection,
+                                                            bool preload_transactions);
+
+void wire_owner__method__JettonWalletDartWrapper(int64_t port_,
+                                                 struct wire_JettonWalletDartWrapper *that);
+
+void wire_address__method__JettonWalletDartWrapper(int64_t port_,
+                                                   struct wire_JettonWalletDartWrapper *that);
+
+void wire_balance__method__JettonWalletDartWrapper(int64_t port_,
+                                                   struct wire_JettonWalletDartWrapper *that);
+
+void wire_contract_state__method__JettonWalletDartWrapper(int64_t port_,
+                                                          struct wire_JettonWalletDartWrapper *that);
+
+void wire_estimate_min_attached_amount__method__JettonWalletDartWrapper(int64_t port_,
+                                                                        struct wire_JettonWalletDartWrapper *that,
+                                                                        struct wire_uint_8_list *destination);
+
+void wire_prepare_transfer__method__JettonWalletDartWrapper(int64_t port_,
+                                                            struct wire_JettonWalletDartWrapper *that,
+                                                            struct wire_uint_8_list *amount,
+                                                            struct wire_uint_8_list *destination,
+                                                            struct wire_uint_8_list *remaining_gas_to,
+                                                            struct wire_uint_8_list *custom_payload,
+                                                            struct wire_uint_8_list *callback_value,
+                                                            struct wire_uint_8_list *callback_payload,
+                                                            struct wire_uint_8_list *attached_amount);
+
+void wire_refresh__method__JettonWalletDartWrapper(int64_t port_,
+                                                   struct wire_JettonWalletDartWrapper *that);
+
+void wire_preload_transactions__method__JettonWalletDartWrapper(int64_t port_,
+                                                                struct wire_JettonWalletDartWrapper *that,
+                                                                struct wire_uint_8_list *from_lt);
+
+void wire_handle_block__method__JettonWalletDartWrapper(int64_t port_,
+                                                        struct wire_JettonWalletDartWrapper *that,
+                                                        struct wire_uint_8_list *block);
+
+void wire_get_jetton_wallet_details__static_method__JettonWalletDartWrapper(int64_t port_,
+                                                                            struct wire_ArcTransportBoxTrait transport,
+                                                                            struct wire_GqlConnectionDartWrapper *gql_connection,
+                                                                            struct wire_uint_8_list *address);
+
+void wire_get_jetton_root_details_from_jetton_wallet__static_method__JettonWalletDartWrapper(int64_t port_,
+                                                                                             struct wire_ArcTransportBoxTrait transport,
+                                                                                             struct wire_GqlConnectionDartWrapper *gql_connection,
+                                                                                             struct wire_uint_8_list *token_wallet_address);
+
+void wire_get_jetton_root_details__static_method__JettonWalletDartWrapper(int64_t port_,
+                                                                          struct wire_ArcTransportBoxTrait transport,
+                                                                          struct wire_GqlConnectionDartWrapper *gql_connection,
+                                                                          struct wire_uint_8_list *token_root_address);
+
 void wire_subscribe__static_method__GenericContractDartWrapper(int64_t port_,
                                                                struct wire_uint_8_list *instance_hash,
                                                                struct wire_uint_8_list *address,
@@ -990,7 +1063,8 @@ void wire_prepare_deploy_with_multiple_owners__method__TonWalletDartWrapper(int6
                                                                             struct wire_TonWalletDartWrapper *that,
                                                                             struct wire_uint_8_list *expiration,
                                                                             struct wire_StringList *custodians,
-                                                                            uint8_t req_confirms);
+                                                                            uint8_t req_confirms,
+                                                                            uint32_t *expiration_time);
 
 void wire_prepare_transfer__method__TonWalletDartWrapper(int64_t port_,
                                                          struct wire_TonWalletDartWrapper *that,
@@ -1079,6 +1153,8 @@ struct wire_ArcGenericContractBoxTrait new_ArcGenericContractBoxTrait(void);
 
 struct wire_ArcGqlConnectionBoxTrait new_ArcGqlConnectionBoxTrait(void);
 
+struct wire_ArcJettonWalletBoxTrait new_ArcJettonWalletBoxTrait(void);
+
 struct wire_ArcJrpcConnectionBoxTrait new_ArcJrpcConnectionBoxTrait(void);
 
 struct wire_ArcKeyStoreApiBoxTrait new_ArcKeyStoreApiBoxTrait(void);
@@ -1117,6 +1193,8 @@ struct wire_GqlTransportImpl *new_box_autoadd_gql_transport_impl_0(void);
 
 int32_t *new_box_autoadd_i32_0(int32_t value);
 
+struct wire_JettonWalletDartWrapper *new_box_autoadd_jetton_wallet_dart_wrapper_0(void);
+
 struct wire_JrpcConnectionDartWrapper *new_box_autoadd_jrpc_connection_dart_wrapper_0(void);
 
 struct wire_JrpcTransportImpl *new_box_autoadd_jrpc_transport_impl_0(void);
@@ -1143,6 +1221,8 @@ struct wire_TonWalletDartWrapper *new_box_autoadd_ton_wallet_dart_wrapper_0(void
 
 struct wire_TransactionExecutionOptions *new_box_autoadd_transaction_execution_options_0(void);
 
+uint32_t *new_box_autoadd_u32_0(uint32_t value);
+
 uint64_t *new_box_autoadd_u64_0(uint64_t value);
 
 struct wire_UnsignedMessageImpl *new_box_autoadd_unsigned_message_impl_0(void);
@@ -1168,6 +1248,10 @@ const void *share_opaque_ArcGenericContractBoxTrait(const void *ptr);
 void drop_opaque_ArcGqlConnectionBoxTrait(const void *ptr);
 
 const void *share_opaque_ArcGqlConnectionBoxTrait(const void *ptr);
+
+void drop_opaque_ArcJettonWalletBoxTrait(const void *ptr);
+
+const void *share_opaque_ArcJettonWalletBoxTrait(const void *ptr);
 
 void drop_opaque_ArcJrpcConnectionBoxTrait(const void *ptr);
 
@@ -1258,6 +1342,7 @@ static int64_t dummy_method_to_enforce_bundling(void) {
     dummy_var ^= ((int64_t) (void*) wire_unpack_std_smc_addr);
     dummy_var ^= ((int64_t) (void*) wire_validate_address);
     dummy_var ^= ((int64_t) (void*) wire_repack_address);
+    dummy_var ^= ((int64_t) (void*) wire_pack_address);
     dummy_var ^= ((int64_t) (void*) wire_extract_public_key);
     dummy_var ^= ((int64_t) (void*) wire_code_to_tvc);
     dummy_var ^= ((int64_t) (void*) wire_merge_tvc);
@@ -1386,6 +1471,19 @@ static int64_t dummy_method_to_enforce_bundling(void) {
     dummy_var ^= ((int64_t) (void*) wire_clear__method__AccountsStorageImpl);
     dummy_var ^= ((int64_t) (void*) wire_reload__method__AccountsStorageImpl);
     dummy_var ^= ((int64_t) (void*) wire_verify_data__static_method__AccountsStorageImpl);
+    dummy_var ^= ((int64_t) (void*) wire_subscribe__static_method__JettonWalletDartWrapper);
+    dummy_var ^= ((int64_t) (void*) wire_owner__method__JettonWalletDartWrapper);
+    dummy_var ^= ((int64_t) (void*) wire_address__method__JettonWalletDartWrapper);
+    dummy_var ^= ((int64_t) (void*) wire_balance__method__JettonWalletDartWrapper);
+    dummy_var ^= ((int64_t) (void*) wire_contract_state__method__JettonWalletDartWrapper);
+    dummy_var ^= ((int64_t) (void*) wire_estimate_min_attached_amount__method__JettonWalletDartWrapper);
+    dummy_var ^= ((int64_t) (void*) wire_prepare_transfer__method__JettonWalletDartWrapper);
+    dummy_var ^= ((int64_t) (void*) wire_refresh__method__JettonWalletDartWrapper);
+    dummy_var ^= ((int64_t) (void*) wire_preload_transactions__method__JettonWalletDartWrapper);
+    dummy_var ^= ((int64_t) (void*) wire_handle_block__method__JettonWalletDartWrapper);
+    dummy_var ^= ((int64_t) (void*) wire_get_jetton_wallet_details__static_method__JettonWalletDartWrapper);
+    dummy_var ^= ((int64_t) (void*) wire_get_jetton_root_details_from_jetton_wallet__static_method__JettonWalletDartWrapper);
+    dummy_var ^= ((int64_t) (void*) wire_get_jetton_root_details__static_method__JettonWalletDartWrapper);
     dummy_var ^= ((int64_t) (void*) wire_subscribe__static_method__GenericContractDartWrapper);
     dummy_var ^= ((int64_t) (void*) wire_address__method__GenericContractDartWrapper);
     dummy_var ^= ((int64_t) (void*) wire_contract_state__method__GenericContractDartWrapper);
@@ -1436,6 +1534,7 @@ static int64_t dummy_method_to_enforce_bundling(void) {
     dummy_var ^= ((int64_t) (void*) new_ArcAccountsStorageBoxTrait);
     dummy_var ^= ((int64_t) (void*) new_ArcGenericContractBoxTrait);
     dummy_var ^= ((int64_t) (void*) new_ArcGqlConnectionBoxTrait);
+    dummy_var ^= ((int64_t) (void*) new_ArcJettonWalletBoxTrait);
     dummy_var ^= ((int64_t) (void*) new_ArcJrpcConnectionBoxTrait);
     dummy_var ^= ((int64_t) (void*) new_ArcKeyStoreApiBoxTrait);
     dummy_var ^= ((int64_t) (void*) new_ArcLedgerConnectionBoxTrait);
@@ -1455,6 +1554,7 @@ static int64_t dummy_method_to_enforce_bundling(void) {
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_gql_connection_dart_wrapper_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_gql_transport_impl_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_i32_0);
+    dummy_var ^= ((int64_t) (void*) new_box_autoadd_jetton_wallet_dart_wrapper_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_jrpc_connection_dart_wrapper_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_jrpc_transport_impl_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_key_signer_0);
@@ -1468,6 +1568,7 @@ static int64_t dummy_method_to_enforce_bundling(void) {
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_token_wallet_dart_wrapper_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_ton_wallet_dart_wrapper_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_transaction_execution_options_0);
+    dummy_var ^= ((int64_t) (void*) new_box_autoadd_u32_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_u64_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_unsigned_message_impl_0);
     dummy_var ^= ((int64_t) (void*) new_int_32_list_0);
@@ -1481,6 +1582,8 @@ static int64_t dummy_method_to_enforce_bundling(void) {
     dummy_var ^= ((int64_t) (void*) share_opaque_ArcGenericContractBoxTrait);
     dummy_var ^= ((int64_t) (void*) drop_opaque_ArcGqlConnectionBoxTrait);
     dummy_var ^= ((int64_t) (void*) share_opaque_ArcGqlConnectionBoxTrait);
+    dummy_var ^= ((int64_t) (void*) drop_opaque_ArcJettonWalletBoxTrait);
+    dummy_var ^= ((int64_t) (void*) share_opaque_ArcJettonWalletBoxTrait);
     dummy_var ^= ((int64_t) (void*) drop_opaque_ArcJrpcConnectionBoxTrait);
     dummy_var ^= ((int64_t) (void*) share_opaque_ArcJrpcConnectionBoxTrait);
     dummy_var ^= ((int64_t) (void*) drop_opaque_ArcKeyStoreApiBoxTrait);

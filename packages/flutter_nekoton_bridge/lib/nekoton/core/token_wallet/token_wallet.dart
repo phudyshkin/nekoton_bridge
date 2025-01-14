@@ -5,7 +5,6 @@ import 'package:flutter_nekoton_bridge/flutter_nekoton_bridge.dart';
 import 'package:flutter_nekoton_bridge/rust_to_dart/reflector.dart';
 import 'package:reflectable/mirrors.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:tuple/tuple.dart';
 
 import 'token_wallet.reflectable.dart';
 
@@ -24,13 +23,16 @@ class TokenWallet extends RustToDartMirrorInterface
 
   /// Flag that display [onStateChanged] that [wallet] was initialized.
   bool _isInitialized = false;
+  bool _isTransactionsPreloaded = false;
 
   /// Controllers that contains data that emits from rust.
   final _onBalanceChangedController = BehaviorSubject<BigInt>();
   final _onMoneyBalanceChangedController = BehaviorSubject<Money>();
   final _onTransactionsFoundController = BehaviorSubject<
-      Tuple2<List<TransactionWithData<TokenWalletTransaction?>>,
-          TransactionsBatchInfo>>();
+      (
+        List<TransactionWithData<TokenWalletTransaction?>>,
+        TransactionsBatchInfo
+      )>();
 
   /// Description information about wallet that could be changed and updated
   /// during [_updateData]. It means, that fields could be changed after any
@@ -60,6 +62,8 @@ class TokenWallet extends RustToDartMirrorInterface
   late final Currency currency;
   late final TokenWalletVersion version;
 
+  bool get isTransactionsPreloaded => _isTransactionsPreloaded;
+
   TokenWallet._(this.transport, this.rootTokenContract);
 
   /// Create TokenWallet by subscribing to its instance.
@@ -69,20 +73,25 @@ class TokenWallet extends RustToDartMirrorInterface
     required Transport transport,
     required Address owner,
     required Address rootTokenContract,
+    bool preloadTransactions = false,
   }) async {
     final instance = TokenWallet._(transport, rootTokenContract);
 
-    final lib = createLib();
-    instance.wallet = await lib.subscribeStaticMethodTokenWalletDartWrapper(
-      instanceHash: instance.instanceHash,
-      transport: transport.transportBox,
-      rootTokenContract: rootTokenContract.address,
-      owner: owner.address,
-    );
+    return transport.use(() async {
+      final lib = createLib();
+      instance.wallet = await lib.subscribeStaticMethodTokenWalletDartWrapper(
+        instanceHash: instance.instanceHash,
+        transport: transport.transportBox,
+        rootTokenContract: rootTokenContract.address,
+        owner: owner.address,
+        preloadTransactions: preloadTransactions,
+      );
 
-    await instance._initInstance();
+      await instance._initInstance();
+      instance._isTransactionsPreloaded = preloadTransactions;
 
-    return instance;
+      return instance;
+    });
   }
 
   /// If any error occurs during first initialization of wallet, it will dispose
@@ -125,9 +134,10 @@ class TokenWallet extends RustToDartMirrorInterface
   ///
   /// To update data of this stream, wallet must be refreshed via [refresh].
   Stream<
-      Tuple2<List<TransactionWithData<TokenWalletTransaction?>>,
-          TransactionsBatchInfo>> get onTransactionsFoundStream =>
-      _onTransactionsFoundController.stream;
+      (
+        List<TransactionWithData<TokenWalletTransaction?>>,
+        TransactionsBatchInfo
+      )> get onTransactionsFoundStream => _onTransactionsFoundController.stream;
 
   /// Get address of owner of wallet.
   Future<Address> _getOwner() async => Address(address: await wallet.owner());
@@ -217,12 +227,14 @@ class TokenWallet extends RustToDartMirrorInterface
   /// May throw error.
   @override
   Future<void> refresh() async {
-    if (_isRefreshing || transport.disposed) return;
+    if (_isRefreshing || transport.disposed || avoidCall) return;
 
     try {
       _isRefreshing = true;
-      await wallet.refresh();
-      await _updateData();
+      transport.use(() async {
+        await wallet.refresh();
+        await _updateData();
+      });
     } finally {
       _isRefreshing = false;
     }
@@ -235,8 +247,13 @@ class TokenWallet extends RustToDartMirrorInterface
   /// Preload transactions of wallet.
   /// [fromLt] - offset for loading data, string representation of u64
   /// May throw error.
-  Future<void> preloadTransactions({required String fromLt}) async {
-    await wallet.preloadTransactions(fromLt: fromLt);
+  Future<void> preloadTransactions([String? fromLt]) async {
+    if (avoidCall) return;
+
+    _isTransactionsPreloaded = true;
+    await wallet.preloadTransactions(
+      fromLt: fromLt ?? contractState.lastTransactionId?.lt ?? '0',
+    );
     await _updateData();
   }
 
@@ -244,6 +261,8 @@ class TokenWallet extends RustToDartMirrorInterface
   /// [block] - base64-encoded Block that could be got from [GqlTransport.getBlock]
   /// May throw error.
   Future<void> handleBlock({required String block}) async {
+    if (avoidCall) return;
+
     await wallet.handleBlock(block: block);
     await _updateData();
   }
@@ -253,19 +272,20 @@ class TokenWallet extends RustToDartMirrorInterface
   /// 0: TokenWalletDetails
   /// 1: RootTokenContractDetails
   /// or throw error
-  static Future<Tuple2<TokenWalletDetails, RootTokenContractDetails>>
+  static Future<(TokenWalletDetails, RootTokenContractDetails)>
       getTokenWalletDetails({
     required Transport transport,
     required Address address,
   }) async {
-    final lib = createLib();
-    final encoded =
-        await lib.getTokenWalletDetailsStaticMethodTokenWalletDartWrapper(
-      address: address.address,
-      transport: transport.transportBox,
-    );
+    final encoded = await transport.use(() async {
+      final lib = createLib();
+      return lib.getTokenWalletDetailsStaticMethodTokenWalletDartWrapper(
+        address: address.address,
+        transport: transport.transportBox,
+      );
+    });
     final decoded = jsonDecode(encoded) as List<dynamic>;
-    return Tuple2(
+    return (
       TokenWalletDetails.fromJson(decoded.first as Map<String, dynamic>),
       RootTokenContractDetails.fromJson(decoded.last as Map<String, dynamic>),
     );
@@ -275,19 +295,21 @@ class TokenWallet extends RustToDartMirrorInterface
   /// 0: Address of root contract
   /// 1: RootTokenContractDetails of root contract
   /// or throw error.
-  static Future<Tuple2<Address, RootTokenContractDetails>>
+  static Future<(Address, RootTokenContractDetails)>
       getTokenRootDetailsFromTokenWallet({
     required Transport transport,
     required Address address,
   }) async {
-    final lib = createLib();
-    final encoded = await lib
-        .getTokenRootDetailsFromTokenWalletStaticMethodTokenWalletDartWrapper(
-      tokenWalletAddress: address.address,
-      transport: transport.transportBox,
-    );
+    final encoded = await transport.use(() async {
+      final lib = createLib();
+      return lib
+          .getTokenRootDetailsFromTokenWalletStaticMethodTokenWalletDartWrapper(
+        tokenWalletAddress: address.address,
+        transport: transport.transportBox,
+      );
+    });
     final decoded = jsonDecode(encoded) as List<dynamic>;
-    return Tuple2(
+    return (
       Address(address: (decoded.first as String)),
       RootTokenContractDetails.fromJson(decoded.last as Map<String, dynamic>),
     );
@@ -301,12 +323,13 @@ class TokenWallet extends RustToDartMirrorInterface
     required Transport transport,
     required Address tokenRoot,
   }) async {
-    final lib = createLib();
-    final encoded =
-        await lib.getTokenRootDetailsStaticMethodTokenWalletDartWrapper(
-      tokenRootAddress: tokenRoot.address,
-      transport: transport.transportBox,
-    );
+    final encoded = await transport.use(() async {
+      final lib = createLib();
+      return lib.getTokenRootDetailsStaticMethodTokenWalletDartWrapper(
+        tokenRootAddress: tokenRoot.address,
+        transport: transport.transportBox,
+      );
+    });
     return RootTokenContractDetails.fromJson(jsonDecode(encoded));
   }
 
@@ -338,7 +361,7 @@ class TokenWallet extends RustToDartMirrorInterface
         .toList();
     final batchInfoJson = json.last as Map<String, dynamic>;
     final batchInfo = TransactionsBatchInfo.fromJson(batchInfoJson);
-    _onTransactionsFoundController.add(Tuple2(transactions, batchInfo));
+    _onTransactionsFoundController.add((transactions, batchInfo));
   }
 
   /// Method that updates all internal data and notify subscribers about it.

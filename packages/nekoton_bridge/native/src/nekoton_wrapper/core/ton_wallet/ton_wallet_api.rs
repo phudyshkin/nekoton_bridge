@@ -13,7 +13,8 @@ pub use nekoton::core::models::{
     ContractState, PendingTransaction, PollingMethod, Transaction, TransactionAdditionalInfo,
     TransactionWithData, TransactionsBatchInfo,
 };
-use nekoton::core::ton_wallet::TonWalletSubscriptionHandler;
+use nekoton::core::ton_wallet::{TonWalletDetails, TonWalletSubscriptionHandler};
+use nekoton::models::MultisigPendingTransaction;
 use std::sync::Arc;
 
 #[frb(mirror(PollingMethod))]
@@ -167,13 +168,19 @@ impl TonWalletDartWrapper {
         expiration: String,
         custodians: Vec<String>,
         req_confirms: u8,
+        expiration_time: Option<u32>,
     ) -> anyhow::Result<UnsignedMessageImpl> {
         async_run!(
             self.inner_wallet
-                .prepare_deploy_with_multiple_owners(expiration, custodians, req_confirms)
+                .prepare_deploy_with_multiple_owners(
+                    expiration,
+                    custodians,
+                    req_confirms,
+                    expiration_time
+                )
                 .await
         )
-            .map(|m| UnsignedMessageImpl { inner_message: m })
+        .map(|m| UnsignedMessageImpl { inner_message: m })
     }
 
     /// Prepare transferring tokens from this wallet to other.
@@ -208,7 +215,7 @@ impl TonWalletDartWrapper {
                 )
                 .await
         )
-            .map(|m| UnsignedMessageImpl { inner_message: m })
+        .map(|m| UnsignedMessageImpl { inner_message: m })
     }
 
     /// Prepare transaction for confirmation.
@@ -229,7 +236,7 @@ impl TonWalletDartWrapper {
                 .prepare_confirm_transaction(contract_state, public_key, transaction_id, expiration)
                 .await
         )
-            .map(|m| UnsignedMessageImpl { inner_message: m })
+        .map(|m| UnsignedMessageImpl { inner_message: m })
     }
 
     /// Calculate fees for transaction.
@@ -366,6 +373,46 @@ impl TonWalletSubscriptionHandler for TonWalletSubscriptionHandlerImpl {
         let stub = caller::DartCallStub {
             instance_hash: self.instance_hash.clone(),
             fn_name: String::from("onTransactionsFound"),
+            args: vec![caller::DynamicValue::String(payload)],
+            named_args: vec![],
+        };
+        caller::call(stub, false);
+    }
+
+    fn on_details_changed(&self, details: TonWalletDetails) {
+        let payload = serde_json::to_string(&details).unwrap();
+        let stub = caller::DartCallStub {
+            instance_hash: self.instance_hash.clone(),
+            fn_name: String::from("onDetailsChanged"),
+            args: vec![caller::DynamicValue::String(payload)],
+            named_args: vec![],
+        };
+        caller::call(stub, false);
+    }
+
+    fn on_custodians_changed(&self, custodians: &[ton_types::UInt256]) {
+        let payload = custodians
+            .iter()
+            .map(|item| item.to_hex_string())
+            .collect::<Vec<String>>();
+        let payload = serde_json::to_string(&payload).unwrap();
+        let stub = caller::DartCallStub {
+            instance_hash: self.instance_hash.clone(),
+            fn_name: String::from("onCustodiansChanged"),
+            args: vec![caller::DynamicValue::String(payload)],
+            named_args: vec![],
+        };
+        caller::call(stub, false);
+    }
+
+    fn on_unconfirmed_transactions_changed(
+        &self,
+        unconfirmed_transactions: &[MultisigPendingTransaction],
+    ) {
+        let payload = serde_json::to_string(unconfirmed_transactions).unwrap();
+        let stub = caller::DartCallStub {
+            instance_hash: self.instance_hash.clone(),
+            fn_name: String::from("onUnconfirmedTransactionsChanged"),
             args: vec![caller::DynamicValue::String(payload)],
             named_args: vec![],
         };

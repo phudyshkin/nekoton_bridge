@@ -7,6 +7,8 @@ import 'package:flutter_nekoton_bridge/example_related/caller_wrapper.dart'
     as prefix3;
 import 'package:flutter_nekoton_bridge/nekoton/core/generic_contract/generic_contract.dart'
     as prefix9;
+import 'package:flutter_nekoton_bridge/nekoton/core/jetton_wallet/jetton_wallet.dart'
+    as prefix11;
 import 'package:flutter_nekoton_bridge/nekoton/core/token_wallet/token_wallet.dart'
     as prefix10;
 import 'package:flutter_nekoton_bridge/nekoton/external/gql_connection.dart'
@@ -92,12 +94,13 @@ final _data = <r.Reflectable, r.ReflectorData>{
               r'onMessageExpired': 11,
               r'onStateChanged': 11,
               r'onTransactionsFound': 11,
+              r'onDetailsChanged': 11,
+              r'onCustodiansChanged': 11,
+              r'onUnconfirmedTransactionsChanged': 11,
               r'initializeMirror': 0,
               r'wallet': 0,
               r'wallet=': 11,
               r'transport': 0,
-              r'details': 0,
-              r'details=': 11,
               r'publicKey': 0,
               r'publicKey=': 11,
               r'address': 0,
@@ -107,6 +110,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
               r'workchain': 0,
               r'workchain=': 11,
               r'custodians': 0,
+              r'details': 0,
               r'contractState': 0,
               r'pendingTransactions': 0,
               r'pollingMethod': 0,
@@ -472,7 +476,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
               r'estimateMinAttachedAmount': 20,
               r'prepareTransfer': 21,
               r'refresh': 0,
-              r'preloadTransactions': 8,
+              r'preloadTransactions': 22,
               r'handleBlock': 9,
               r'onBalanceChanged': 11,
               r'onTransactionsFound': 11,
@@ -494,6 +498,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
               r'version': 0,
               r'version=': 11,
               r'moneyBalance': 0,
+              r'isTransactionsPreloaded': 0,
               r'contractState': 0,
               r'fieldUpdatesStream': 0,
               r'onBalanceChangedStream': 0,
@@ -503,7 +508,72 @@ final _data = <r.Reflectable, r.ReflectorData>{
               r'subscribe': 19,
               r'getTokenWalletDetails': 1,
               r'getTokenRootDetailsFromTokenWallet': 1,
-              r'getTokenRootDetails': 22
+              r'getTokenRootDetails': 23
+            }),
+        r.NonGenericClassMirrorImpl(
+            r'JettonWallet',
+            r'.JettonWallet',
+            134217735,
+            10,
+            const prefix0.Reflector(),
+            const <int>[-1],
+            null,
+            null,
+            -1,
+            {
+              r'subscribe': () => prefix11.JettonWallet.subscribe,
+              r'getJettonWalletDetails': () =>
+                  prefix11.JettonWallet.getJettonWalletDetails,
+              r'getJettonRootDetailsFromJettonWallet': () =>
+                  prefix11.JettonWallet.getJettonRootDetailsFromJettonWallet,
+              r'getJettonRootDetails': () =>
+                  prefix11.JettonWallet.getJettonRootDetails
+            },
+            {},
+            {},
+            -1,
+            -1,
+            const <int>[-1],
+            null,
+            {
+              r'==': 11,
+              r'toString': 0,
+              r'noSuchMethod': 11,
+              r'hashCode': 0,
+              r'runtimeType': 0,
+              r'init': 0,
+              r'dispose': 0,
+              r'instanceHash': 0,
+              r'avoidCall': 0,
+              r'getContractState': 0,
+              r'estimateMinAttachedAmount': 5,
+              r'prepareTransfer': 25,
+              r'refresh': 0,
+              r'preloadTransactions': 22,
+              r'handleBlock': 9,
+              r'onBalanceChanged': 11,
+              r'onTransactionsFound': 11,
+              r'initializeMirror': 0,
+              r'wallet': 0,
+              r'wallet=': 11,
+              r'transport': 0,
+              r'balance': 0,
+              r'balance=': 11,
+              r'rootTokenContract': 0,
+              r'tokenAddress': 0,
+              r'tokenAddress=': 11,
+              r'owner': 0,
+              r'owner=': 11,
+              r'isTransactionsPreloaded': 0,
+              r'contractState': 0,
+              r'fieldUpdatesStream': 0,
+              r'onBalanceChangedStream': 0,
+              r'onTransactionsFoundStream': 0,
+              r'refreshDescription': 0,
+              r'subscribe': 24,
+              r'getJettonWalletDetails': 26,
+              r'getJettonRootDetailsFromJettonWallet': 26,
+              r'getJettonRootDetails': 27
             })
       ],
       null,
@@ -518,9 +588,10 @@ final _data = <r.Reflectable, r.ReflectorData>{
         prefix7.LedgerConnection,
         prefix8.Storage,
         prefix9.GenericContract,
-        prefix10.TokenWallet
+        prefix10.TokenWallet,
+        prefix11.JettonWallet
       ],
-      10,
+      11,
       {
         r'==': (dynamic instance) => (x) => instance == x,
         r'toString': (dynamic instance) => instance.toString,
@@ -555,15 +626,20 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r'onStateChanged': (dynamic instance) => instance.onStateChanged,
         r'onTransactionsFound': (dynamic instance) =>
             instance.onTransactionsFound,
+        r'onDetailsChanged': (dynamic instance) => instance.onDetailsChanged,
+        r'onCustodiansChanged': (dynamic instance) =>
+            instance.onCustodiansChanged,
+        r'onUnconfirmedTransactionsChanged': (dynamic instance) =>
+            instance.onUnconfirmedTransactionsChanged,
         r'initializeMirror': (dynamic instance) => instance.initializeMirror,
         r'wallet': (dynamic instance) => instance.wallet,
         r'transport': (dynamic instance) => instance.transport,
-        r'details': (dynamic instance) => instance.details,
         r'publicKey': (dynamic instance) => instance.publicKey,
         r'address': (dynamic instance) => instance.address,
         r'walletType': (dynamic instance) => instance.walletType,
         r'workchain': (dynamic instance) => instance.workchain,
         r'custodians': (dynamic instance) => instance.custodians,
+        r'details': (dynamic instance) => instance.details,
         r'contractState': (dynamic instance) => instance.contractState,
         r'pendingTransactions': (dynamic instance) =>
             instance.pendingTransactions,
@@ -616,6 +692,8 @@ final _data = <r.Reflectable, r.ReflectorData>{
         r'currency': (dynamic instance) => instance.currency,
         r'version': (dynamic instance) => instance.version,
         r'moneyBalance': (dynamic instance) => instance.moneyBalance,
+        r'isTransactionsPreloaded': (dynamic instance) =>
+            instance.isTransactionsPreloaded,
         r'onBalanceChangedStream': (dynamic instance) =>
             instance.onBalanceChangedStream,
         r'onMoneyBalanceChangedStream': (dynamic instance) =>
@@ -623,7 +701,6 @@ final _data = <r.Reflectable, r.ReflectorData>{
       },
       {
         r'wallet=': (dynamic instance, value) => instance.wallet = value,
-        r'details=': (dynamic instance, value) => instance.details = value,
         r'publicKey=': (dynamic instance, value) => instance.publicKey = value,
         r'address=': (dynamic instance, value) => instance.address = value,
         r'walletType=': (dynamic instance, value) =>
@@ -667,7 +744,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         const [
           0,
           0,
-          const [#expiration, #custodians, #reqConfirms]
+          const [#expiration, #custodians, #reqConfirms, #expirationTime]
         ],
         const [
           0,
@@ -716,7 +793,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         const [
           0,
           0,
-          const [#post, #get, #settings, #name, #group]
+          const [#client, #settings, #name, #group]
         ],
         const [
           0,
@@ -746,7 +823,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
         const [
           0,
           0,
-          const [#transport, #owner, #rootTokenContract]
+          const [#transport, #owner, #rootTokenContract, #preloadTransactions]
         ],
         const [
           0,
@@ -764,10 +841,45 @@ final _data = <r.Reflectable, r.ReflectorData>{
             #payload
           ]
         ],
+        const [1, 1, null],
         const [
           0,
           0,
           const [#transport, #tokenRoot]
+        ],
+        const [
+          0,
+          0,
+          const [
+            #transport,
+            #gqlConnection,
+            #owner,
+            #rootTokenContract,
+            #preloadTransactions
+          ]
+        ],
+        const [
+          0,
+          0,
+          const [
+            #amount,
+            #destination,
+            #remainingGasTo,
+            #callbackValue,
+            #customPayload,
+            #callbackPayload,
+            #attachedAmount
+          ]
+        ],
+        const [
+          0,
+          0,
+          const [#transport, #gqlConnection, #address]
+        ],
+        const [
+          0,
+          0,
+          const [#transport, #gqlConnection, #tokenRoot]
         ]
       ])
 };
