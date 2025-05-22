@@ -25,7 +25,7 @@ scripts:
     description: Format a specific package in this project.
 
   build:
-    run: melos run build:apple && melos run build:android
+    run: melos run build:ios && melos run build:android
     description: Build all native libraries for the project.
 
   codegen:
@@ -36,9 +36,13 @@ scripts:
     run: bash scripts/git-check.sh
     description: Check if some code changed during build
 
-  build:apple:
-    run: bash scripts/build-apple.sh
-    description: Build the XCFramework for iOS and macOS.
+  build:ios:
+    run: bash scripts/build-ios.sh
+    description: Build the XCFramework for iOS.
+    
+  build:macos:
+    run: bash scripts/build-macos.sh
+    description: Build the XCFramework for MacOS.
 
   build:android:
     run: bash scripts/build-android.sh
