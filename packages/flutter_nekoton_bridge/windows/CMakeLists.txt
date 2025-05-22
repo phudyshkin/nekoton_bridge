@@ -1,4 +1,4 @@
-set(LibraryVersion "nekoton_bridge-v1.19.1") # generated; do not edit
+set(LibraryVersion "nekoton_bridge-v2.8.2") # generated; do not edit
 # # installed that includes CMake 3.14 or later. You should not increase this
 # # version, as doing so will cause the plugin to fail to compile for some
 # # customers of the plugin.
@@ -60,6 +60,6 @@ set(LibRoot "${CMAKE_CURRENT_SOURCE_DIR}/${LibraryVersion}")
 # This list could contain prebuilt libraries, or libraries created by an
 # external build triggered from this build file.
 set(flutter_nekoton_bridge_bundled_libraries
-  "${LibRoot}/${FLUTTER_TARGET_PLATFORM}/nekoton_bridge.dll"
+  "${LibRoot}/${FLUTTER_TARGET_PLATFORM}/flutter_nekoton_bridge.dll"
   PARENT_SCOPE
 )
