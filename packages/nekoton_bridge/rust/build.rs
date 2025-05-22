@@ -13,6 +13,7 @@ fn main() -> anyhow::Result<()> {
     rerun_except(&["**/*_api.rs"]).unwrap();
 
     // Create merged file for generation
+    // not work on windows. Comment this code and Use copy/paste generated from macos
     let mut codegen = std::process::Command::new("dart")
         .arg("run")
         .arg("../bin/merger.dart")
