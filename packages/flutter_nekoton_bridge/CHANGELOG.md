@@ -1,3 +1,265 @@
+## 2.9.4
+
+ - **FIX**(EWM-427): update message hash after `refreshTimeout`. ([dbc1dafe](https://github.com/broxus/nekoton_bridge/commit/dbc1dafed1748f78a0f84482f99935633025e92d))
+
+## 2.9.3
+
+ - **FIX**(EWM-427): update message hash after `refreshTimeout`. ([dbc1dafe](https://github.com/broxus/nekoton_bridge/commit/dbc1dafed1748f78a0f84482f99935633025e92d))
+ - **FIX**(EWM-427): implement immutable `refresh_timeout`. ([1c8b1103](https://github.com/broxus/nekoton_bridge/commit/1c8b1103ef76e5617bafcf2b4b190f25eab63e76))
+
+## 2.9.2
+
+ - Graduate package to a stable release. See pre-releases prior to this version for changelog entries.
+
+## 2.9.2-dev.1
+
+ - **FIX**: update StorageDartWrapper API to use synchronous constructor and adjust related function signatures. ([556ebdc1](https://github.com/broxus/nekoton_bridge/commit/556ebdc138b055f3b460b10c3e8bcfc102e6e444))
+
+## 2.9.2-dev.0
+
+ - **FIX**(EWM-496): remove tokio runtime & refactor async rust. ([cc7caeaf](https://github.com/broxus/nekoton_bridge/commit/cc7caeafab1b587c47f805c63b36c7127a882936))
+
+## 2.9.1
+
+ - **FIX**: `RawContractState` add private constructor. ([82581163](https://github.com/broxus/nekoton_bridge/commit/82581163818cbba1ffd78a8b4a7f92bb52788b8a))
+
+## 2.9.0
+
+ - **FIX**: `RawContractState` add private constructor. ([82581163](https://github.com/broxus/nekoton_bridge/commit/82581163818cbba1ffd78a8b4a7f92bb52788b8a))
+ - **FEAT**(EWM-508): add exists check method for raw_contract_state. ([70ad0d95](https://github.com/broxus/nekoton_bridge/commit/70ad0d953d9daf275914cbd93da7bceae55bd0c0))
+
+## 2.8.1
+
+ - **FIX**(EWM-508): add NotExistingContract model to fix broken contract state. ([7b197368](https://github.com/broxus/nekoton_bridge/commit/7b1973686d73f7c05f7d3a7a9b1ce5cf69a978d0))
+
+## 2.8.0
+
+ - Graduate package to a stable release. See pre-releases prior to this version for changelog entries.
+
+## 2.8.0-dev.1
+
+ - **FEAT**: update payload parsing to support jetton transfers. ([1ca7f1f3](https://github.com/broxus/nekoton_bridge/commit/1ca7f1f315ed16b004db40cef3102f37cb9d05f4))
+
+## 2.8.0-dev.0
+
+ - **FEAT**: add encodeComment function ([#346](https://github.com/broxus/nekoton_bridge/issues/346)). ([d4b0e1fd](https://github.com/broxus/nekoton_bridge/commit/d4b0e1fd3fb31f8c24c838f9e7dd1105183326e3))
+
+## 2.7.0
+
+ - **FEAT**(EWM-484): add WalletV3R1 and WalletV3R2 types to wallet models. ([38f0fac9](https://github.com/broxus/nekoton_bridge/commit/38f0fac93eb0834785af02d15f0ef8789c07c352))
+
+## 2.6.0
+
+ - **FIX**(SPARX-FQ): improve mutex usage. ([1e6a053f](https://github.com/broxus/nekoton_bridge/commit/1e6a053f57563ffb74c20bc0d781833c375e7f3f))
+ - **FEAT**: add makeStateInit method to TonWallet and update related tests. ([b099d504](https://github.com/broxus/nekoton_bridge/commit/b099d504040002178f9451afba64d050c95b2e06))
+
+## 2.5.0
+
+ - Graduate package to a stable release. See pre-releases prior to this version for changelog entries.
+
+## 2.5.0-dev.5
+
+ - Update a dependency to the latest release.
+
+## 2.5.0-dev.4
+
+ - **FIX**(SPARX-80): prevent unnecessary calls in wallet event handlers. ([a50d03e2](https://github.com/broxus/nekoton_bridge/commit/a50d03e218e07d3d0f8b6e26865fd850cb386926))
+ - **FEAT**: update nekoton and mnemonic format. ([1460bc24](https://github.com/broxus/nekoton_bridge/commit/1460bc2497464e416e4f22119c278e9bbeca9174))
+
+## 2.5.0-dev.3
+
+ - **REFACTOR**: `FeeFactors` model & `getFeeFactors` methods. ([e9760638](https://github.com/broxus/nekoton_bridge/commit/e976063801f05510515dcd1ae600311fe7418c88))
+ - **FEAT**: add TonWalletTransferParams model; update `prepare_transfer` method;. ([a66f1a11](https://github.com/broxus/nekoton_bridge/commit/a66f1a1183370c441291d213cf954021a51c7e4c))
+
+## 2.5.0-dev.2
+
+ - **FIX**: update nekoton & remove gqlConnection parameter from JettonWallet methods. ([71778866](https://github.com/broxus/nekoton_bridge/commit/717788663fce536f1e28603919bec5894a9d965c))
+ - **FEAT**: update fee method ([#327](https://github.com/broxus/nekoton_bridge/issues/327)). ([f621674d](https://github.com/broxus/nekoton_bridge/commit/f621674d143ff90442fb971414eef4bf7fe5ceef))
+
+## 2.5.0-dev.1
+
+ - **FEAT**: change async functions to synchronous in mnemonic API. ([e147f7b7](https://github.com/broxus/nekoton_bridge/commit/e147f7b70298f5b1c7aa921b9518d06899485d06))
+
+## 2.5.0-dev.0
+
+ - **FEAT**: implemented moving from u64 to u128 ([#323](https://github.com/broxus/nekoton_bridge/issues/323)). ([c4c3234c](https://github.com/broxus/nekoton_bridge/commit/c4c3234c2a9d09ce5c43fa78af119fa041f15583))
+
+## 2.4.2
+
+ - **FIX**: add address validation and update related methods. ([cbfa998f](https://github.com/broxus/nekoton_bridge/commit/cbfa998fdd4861d25cc995ecb65b03d8b663e7c9))
+
+## 2.4.1
+
+ - **FIX**: make overrideBalance nullable in TransactionExecutionOptions model. ([4e6ab696](https://github.com/broxus/nekoton_bridge/commit/4e6ab696c9e337101b7069b20cfe960a3117764c))
+
+## 2.4.0
+
+ - **FEAT**: add execution options to estimateFees and update related models ([#317](https://github.com/broxus/nekoton_bridge/issues/317)). ([48106400](https://github.com/broxus/nekoton_bridge/commit/48106400aa4929d1c48e7f60dd20e00659114db2))
+
+## 2.3.1
+
+ - **FIX**: downgrade rxdart version to 0.27.7 in flutter_nekoton_bridge. ([197b0b9f](https://github.com/broxus/nekoton_bridge/commit/197b0b9ffaf633c3d387d251d441d5ad71fe5c31))
+
+## 2.3.0
+
+ - Graduate package to a stable release. See pre-releases prior to this version for changelog entries.
+
+## 2.3.0-dev.4
+
+ - **FIX**(ios): rename nekoton_bridge to flutter_nekoton_bridge. ([c30e409f](https://github.com/broxus/nekoton_bridge/commit/c30e409ff982cce2a0c2025061a6489ee78271af))
+
+## 2.3.0-dev.3
+
+ - Update a dependency to the latest release.
+
+## 2.3.0-dev.2
+
+ - **FIX**: restrict `money2` version to avoid json serialization issues. ([3ac64f36](https://github.com/broxus/nekoton_bridge/commit/3ac64f3636078f53b42c6f54c2d5443e3b951aa5))
+ - **FEAT**: update `flutter_rust_bridge` ([#297](https://github.com/broxus/nekoton_bridge/issues/297)). ([f5803e51](https://github.com/broxus/nekoton_bridge/commit/f5803e51d85cb423a8563ce02ebd35c6a92ca4b1))
+ - **FEAT**: enhance Address model with new methods and integration tests. ([9e2bf7e7](https://github.com/broxus/nekoton_bridge/commit/9e2bf7e7ca55b141c6563e11c9e9a6a5f6e66d7c))
+ - **FEAT**: update `flutter_rust_bridge`. ([017a2403](https://github.com/broxus/nekoton_bridge/commit/017a2403d247c1eab81a7af3f34ccf04dcf3a22b))
+
+## 2.3.0-dev.1
+
+ - **FEAT**: enhance Address model with new methods and integration tests. ([9e2bf7e7](https://github.com/broxus/nekoton_bridge/commit/9e2bf7e7ca55b141c6563e11c9e9a6a5f6e66d7c))
+
+## 2.3.0-dev.0
+
+ - **FEAT**: update `flutter_rust_bridge`. ([017a2403](https://github.com/broxus/nekoton_bridge/commit/017a2403d247c1eab81a7af3f34ccf04dcf3a22b))
+
+## 2.2.3
+
+ - **FIX**: force version bump. ([945da3ee](https://github.com/broxus/nekoton_bridge/commit/945da3eedf79480f890fdf645f296b54dc36c72a))
+
+## 2.2.1
+
+ - **FIX**: check if contract was disposed. ([18828705](https://github.com/broxus/nekoton_bridge/commit/18828705bae9d83d34fd8e6dccf01b1bd84c663c))
+
+## 2.2.0
+
+ - Graduate package to a stable release. See pre-releases prior to this version for changelog entries.
+
+## 2.2.0-dev.0
+
+ - **FEAT**: update `nekoton`. ([56addc96](https://github.com/broxus/nekoton_bridge/commit/56addc96b5690f8d81fd4e5ff97bd2dc83df05f9))
+
+## 2.1.0
+
+ - **FEAT**: update `nekoton`, add jetton `update_library_cell` support;. ([69576615](https://github.com/broxus/nekoton_bridge/commit/695766159ca82faf1c255755e48bfdbd949f6798))
+
+## 2.0.2
+
+ - Update a dependency to the latest release.
+
+## 2.0.1
+
+ - Graduate package to a stable release. See pre-releases prior to this version for changelog entries.
+
+## 2.0.1-dev.14
+
+ - **FEAT**: token wallet preload transactions ([#286](https://github.com/broxus/nekoton_bridge/issues/286)). ([ff55c7a8](https://github.com/broxus/nekoton_bridge/commit/ff55c7a84d9b5e19ec2f137d26b81ba94ed721d6))
+
+## 2.0.1-dev.13
+
+ - **FEAT**: add ton wallet callbacks (`on_details_changed`, `on_custodians_changed`, `on_unconfirmed_transactions_changed`). ([3b146cd4](https://github.com/broxus/nekoton_bridge/commit/3b146cd4fef3f524e0c1c5f518a32444eff1e3f3))
+
+## 2.0.1-dev.12
+
+ - **FIX**: add `ton_wallet_transfer` wallet interaction method. ([7eeb6e02](https://github.com/broxus/nekoton_bridge/commit/7eeb6e024b55a206adacaa1bc156614477b615da))
+
+## 2.0.1-dev.11
+
+ - **FIX**: ton `KnownPayload` support. ([e8628199](https://github.com/broxus/nekoton_bridge/commit/e8628199a642edc9477a93b3844a935846550b49))
+
+## 2.0.1-dev.10
+
+ - **FIX**: `JettonIncomingTransfer` field fix; add TON wallet types;. ([49a64af7](https://github.com/broxus/nekoton_bridge/commit/49a64af76be1550bf6b717adfab2bc2dc87fab92))
+ - **FEAT**: add `pack_address`. ([47cf1763](https://github.com/broxus/nekoton_bridge/commit/47cf176373028c08dd24a51632d829d6987a0b5b))
+
+## 2.0.1-dev.9
+
+> Note: This release has breaking changes.
+
+ - **FEAT**: combine token & jetton transaction models. ([d22f1c48](https://github.com/broxus/nekoton_bridge/commit/d22f1c4886932666d8128fb6d9bb501f907434fd))
+ - **BREAKING** **REFACTOR**: remove `tuple`. ([11d9efed](https://github.com/broxus/nekoton_bridge/commit/11d9efed69398b72beba14fedaa00213d82da7bc))
+
+## 2.0.1-dev.8
+
+ - **FEAT**: add jetton wallet support ([#276](https://github.com/broxus/nekoton_bridge/issues/276)). ([6120e3c6](https://github.com/broxus/nekoton_bridge/commit/6120e3c638214a5271aa9a901beccd48fe910ff4))
+
+## 2.0.1-dev.7
+
+ - **FEAT**: transport http client. ([67411462](https://github.com/broxus/nekoton_bridge/commit/67411462831486246d6e597f1d2af6d810632117))
+
+## 2.0.1-dev.6
+
+ - **FIX**: downgrade `money2` package. ([c5a70412](https://github.com/broxus/nekoton_bridge/commit/c5a7041219809b71b266620fbb3fd9279b309e2e))
+ - **FIX**: tests. ([04e17cc7](https://github.com/broxus/nekoton_bridge/commit/04e17cc763e29d6929292c202c7e2a6d016b7d5f))
+
+## 2.0.1-dev.5
+
+ - **FEAT**: use transport mutex in ton/token wallets. ([5eaa8283](https://github.com/broxus/nekoton_bridge/commit/5eaa8283d8d657c12101cf507b8713519e5d75f0))
+ - **FEAT**: add transport mutex. ([0eaf93a2](https://github.com/broxus/nekoton_bridge/commit/0eaf93a28a5665018324a177151bc0da1da17c6a))
+
+## 2.0.1-dev.4
+
+ - **FEAT**: add expiration time to multisig ([#267](https://github.com/broxus/nekoton_bridge/issues/267)). ([3cbf41ce](https://github.com/broxus/nekoton_bridge/commit/3cbf41ce902197784a9f20115965f46e76372317))
+
+## 2.0.1-dev.2
+
+ - **FIX**: force `nekoton_bridge` version bump. ([8bb103d4](https://github.com/broxus/nekoton_bridge/commit/8bb103d42fc76c7d40138ba0cfede899a6165255))
+
+## 2.0.1-dev.1
+
+ - **FIX**: Transaction json parse. ([b1977e8e](https://github.com/broxus/nekoton_bridge/commit/b1977e8ef950206f4da5db57cc3ad49f43b1bd50))
+ - **FIX**: android build. ([a68fe9b9](https://github.com/broxus/nekoton_bridge/commit/a68fe9b90e91a65109df7919cb3fb1f0523cbbaa))
+
+## 2.0.1-dev.0
+
+ - **FIX**: pubspec.yaml. ([69d3f686](https://github.com/broxus/nekoton_bridge/commit/69d3f686b07bc9b27dd77d2b5e3a4f0646ea7de2))
+
+## 2.0.0
+
+ - Graduate package to a stable release. See pre-releases prior to this version for changelog entries.
+
+## 2.0.0-dev.1
+
+Using money2_improver from git and money2: 5.2.1
+
+## 1.28.0-dev.7
+
+ - Update a dependency to the latest release.
+
+
+## 1.28.0-dev.6
+
+ - **FIX**: rollback codegen files. ([99c57171](https://github.com/broxus/nekoton_bridge/commit/99c57171a4c6dd24f66ebf326e5b041e7406fe22))
+ - **FEAT**: add `simulateTransactionTree` method. ([2df468c3](https://github.com/broxus/nekoton_bridge/commit/2df468c350e1bf336ed87cce69121c38655c85f6))
+
+## 1.28.0-dev.5
+
+ - **FIX**: update nekoton. ([bfc8837d](https://github.com/broxus/nekoton_bridge/commit/bfc8837d4fc94e8a8247341c4a8fbc8cfe1c1727))
+
+## 1.28.0-dev.4
+
+ - **FIX**: `estimate_min_attached_amount` return type. ([7fbcb2a1](https://github.com/broxus/nekoton_bridge/commit/7fbcb2a11bb5e3b52cb8b58f9ee56e7651bbcd99))
+
+## 1.28.0-dev.3
+
+ - **FEAT**: `estimate_min_attached_amount` method ([#250](https://github.com/broxus/nekoton_bridge/issues/250)). ([f2b75c60](https://github.com/broxus/nekoton_bridge/commit/f2b75c6030a4d6e42b8f328ea2e2fbb112647dda))
+
+## 1.28.0-dev.2
+
+ - **FEAT**: add `token_root_details` method ([#248](https://github.com/broxus/nekoton_bridge/issues/248)). ([b8d962b6](https://github.com/broxus/nekoton_bridge/commit/b8d962b68ecca51c50b906613ddad29132a4dcf5))
+
+## 1.28.0-dev.1
+
+ - **FIX**: StorageFeeInfo model. ([de7d50ae](https://github.com/broxus/nekoton_bridge/commit/de7d50ae26cf1b77b062ba742ec217e402980f0e))
+
+## 1.28.0-dev.0
+
+ - **FEAT**: add compute_storage_fee ([#245](https://github.com/broxus/nekoton_bridge/issues/245)). ([02e762a8](https://github.com/broxus/nekoton_bridge/commit/02e762a8ca2595e98056a4dae65c97cf07569df0))
+
 ## 1.27.3
 
  - **FIX**: added disposed flag to transport ([#243](https://github.com/broxus/nekoton_bridge/issues/243)). ([b49beb8c](https://github.com/broxus/nekoton_bridge/commit/b49beb8c2ef7aeae28d7456d8ff396647f8626b6))

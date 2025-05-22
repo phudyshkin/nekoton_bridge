@@ -3,24 +3,30 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_nekoton_bridge/flutter_nekoton_bridge.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:integration_test/integration_test.dart';
 import 'package:http/http.dart' as http;
+import 'package:integration_test/integration_test.dart';
 
 import '../timeout_utils.dart';
 import 'contract_abi.dart';
 
-Future<String> postTransportData({
-  required String endpoint,
-  required Map<String, String> headers,
-  required String data,
-}) async {
-  final response = await http.post(
-    Uri.parse(endpoint),
-    headers: headers,
-    body: data,
-  );
+class HttpClient implements JrpcConnectionHttpClient {
+  @override
+  Future<String> post({
+    required String endpoint,
+    required Map<String, String> headers,
+    required String data,
+  }) async {
+    final response = await http.post(
+      Uri.parse(endpoint),
+      headers: headers,
+      body: data,
+    );
 
-  return response.body;
+    return response.body;
+  }
+
+  @override
+  void dispose() {}
 }
 
 void main() {
@@ -39,10 +45,10 @@ void main() {
 
   const jrpcSettings = JrpcNetworkSettings(endpoint: endpoint);
 
-  setUp(() {
+  setUp(() async {
     // This setup thing SHOULD NOT be removed or altered because it used in integration tests
     setupLogger(
-      level: LogLevel.Trace,
+      level: LogLevel.trace,
       mobileLogger: false,
       logHandler: (logEntry) => debugPrint(
         'FromLib: ${logEntry.level} ${logEntry.tag} ${logEntry.msg} (lib_time=${logEntry.timeMillis})',
@@ -52,15 +58,19 @@ void main() {
     runApp(Container());
   });
 
+  setUpAll(() async {
+    await NekotonBridge.init();
+  });
+
   // TODO(nesquikm): it's not clear which test is causing flaky behavior
-  group('JrpcTransport tests', () {
+  group('JrpcTransport', () {
     testWidgets('Create JrpcTransport', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
       await initRustToDartCaller();
 
-      final connection = await JrpcConnection.create(
-        post: postTransportData,
+      final connection = JrpcConnection.create(
+        client: HttpClient(),
         settings: jrpcSettings,
         name: name,
         group: networkGroup,
@@ -70,13 +80,13 @@ void main() {
       expect(transport.transport, isNotNull);
     });
 
-    testWidgets('JrpcTransport getSignatureId ', (WidgetTester tester) async {
+    testWidgets('getSignatureId ', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
       await initRustToDartCaller();
 
-      final connection = await JrpcConnection.create(
-        post: postTransportData,
+      final connection = JrpcConnection.create(
+        client: HttpClient(),
         settings: jrpcSettings,
         name: name,
         group: networkGroup,
@@ -88,15 +98,14 @@ void main() {
       expect(signature, isNull);
     });
 
-    testWidgets('JrpcTransport getSignatureId venom ',
-        (WidgetTester tester) async {
+    testWidgets('getSignatureId venom ', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
       await initRustToDartCaller();
-      const venomEndpoint = 'https://jrpc-testnet.venom.foundation/rpc';
+      const venomEndpoint = 'https://jrpc.venom.foundation';
 
-      final connection = await JrpcConnection.create(
-        post: postTransportData,
+      final connection = JrpcConnection.create(
+        client: HttpClient(),
         settings: const JrpcNetworkSettings(endpoint: venomEndpoint),
         name: 'Testnet Venom',
         group: 'testnet',
@@ -105,16 +114,16 @@ void main() {
 
       final signature = await transport.getSignatureId();
 
-      expect(signature, 1000);
+      expect(signature, 1);
     });
 
-    testWidgets('JrpcTransport getTransactions ', (WidgetTester tester) async {
+    testWidgets('getTransactions ', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
       await initRustToDartCaller();
 
-      final connection = await JrpcConnection.create(
-        post: postTransportData,
+      final connection = JrpcConnection.create(
+        client: HttpClient(),
         settings: jrpcSettings,
         name: name,
         group: networkGroup,
@@ -129,13 +138,13 @@ void main() {
       expect(transactions.transactions.length, 1);
     });
 
-    testWidgets('JrpcTransport getTransaction ', (WidgetTester tester) async {
+    testWidgets('getTransaction ', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
       await initRustToDartCaller();
 
-      final connection = await JrpcConnection.create(
-        post: postTransportData,
+      final connection = JrpcConnection.create(
+        client: HttpClient(),
         settings: jrpcSettings,
         name: name,
         group: networkGroup,
@@ -151,13 +160,13 @@ void main() {
       expect(transaction.outMessages.length, 0);
     });
 
-    testWidgets('JrpcTransport getDstTransaction', (WidgetTester tester) async {
+    testWidgets('getDstTransaction', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
       await initRustToDartCaller();
 
-      final connection = await JrpcConnection.create(
-        post: postTransportData,
+      final connection = JrpcConnection.create(
+        client: HttpClient(),
         settings: jrpcSettings,
         name: name,
         group: networkGroup,
@@ -179,13 +188,13 @@ void main() {
       expect(transaction.outMessages.length, 1);
     });
 
-    testWidgets('JrpcTransport multiple calls ', (WidgetTester tester) async {
+    testWidgets('multiple calls ', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
       await initRustToDartCaller();
 
-      final connection = await JrpcConnection.create(
-        post: postTransportData,
+      final connection = JrpcConnection.create(
+        client: HttpClient(),
         settings: jrpcSettings,
         name: name,
         group: networkGroup,
@@ -213,13 +222,13 @@ void main() {
       );
     });
 
-    testWidgets('JrpcTransport getContractState ', (WidgetTester tester) async {
+    testWidgets('getContractState ', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
       await initRustToDartCaller();
 
-      final connection = await JrpcConnection.create(
-        post: postTransportData,
+      final connection = JrpcConnection.create(
+        client: HttpClient(),
         settings: jrpcSettings,
         name: name,
         group: networkGroup,
@@ -235,15 +244,15 @@ void main() {
       );
     });
 
-    testWidgets('JrpcTransport getFullContractState ', (
+    testWidgets('getFullContractState ', (
       WidgetTester tester,
     ) async {
       await tester.pumpAndSettleWithTimeout();
 
       await initRustToDartCaller();
 
-      final connection = await JrpcConnection.create(
-        post: postTransportData,
+      final connection = JrpcConnection.create(
+        client: HttpClient(),
         settings: jrpcSettings,
         name: name,
         group: networkGroup,
@@ -257,15 +266,15 @@ void main() {
       expect(state.isDeployed, true);
     });
 
-    testWidgets('JrpcTransport getContractFields', (
+    testWidgets('getContractFields', (
       WidgetTester tester,
     ) async {
       await tester.pumpAndSettleWithTimeout();
 
       await initRustToDartCaller();
 
-      final connection = await JrpcConnection.create(
-        post: postTransportData,
+      final connection = JrpcConnection.create(
+        client: HttpClient(),
         settings: jrpcSettings,
         name: name,
         group: networkGroup,
@@ -285,12 +294,12 @@ void main() {
       expect(state, isNotNull);
     });
 
-    testWidgets('JrpcTransport getNetworkId ', (WidgetTester tester) async {
+    testWidgets('getNetworkId ', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
       await initRustToDartCaller();
 
-      final connection = await JrpcConnection.create(
-        post: postTransportData,
+      final connection = JrpcConnection.create(
+        client: HttpClient(),
         settings: jrpcSettings,
         name: name,
         group: networkGroup,
@@ -300,30 +309,28 @@ void main() {
       expect(id, 42);
     });
 
-    testWidgets('JrpcTransport getNetworkId venom ',
-        (WidgetTester tester) async {
+    testWidgets('getNetworkId venom ', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
       await initRustToDartCaller();
-      const venomEndpoint = 'https://jrpc-testnet.venom.foundation/rpc';
+      const venomEndpoint = 'https://jrpc.venom.foundation';
 
-      final connection = await JrpcConnection.create(
-        post: postTransportData,
+      final connection = JrpcConnection.create(
+        client: HttpClient(),
         settings: const JrpcNetworkSettings(endpoint: venomEndpoint),
         name: 'Testnet Venom',
         group: 'testnet',
       );
       final transport = await JrpcTransport.create(jrpcConnection: connection);
       final id = await transport.getNetworkId();
-      expect(id, 1000);
+      expect(id, 1);
     });
 
-    testWidgets('JrpcTransport getBlockchainConfig ',
-        (WidgetTester tester) async {
+    testWidgets('getBlockchainConfig ', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
       await initRustToDartCaller();
 
-      final connection = await JrpcConnection.create(
-        post: postTransportData,
+      final connection = JrpcConnection.create(
+        client: HttpClient(),
         settings: jrpcSettings,
         name: name,
         group: networkGroup,
@@ -336,13 +343,12 @@ void main() {
       expect(config.globalVersion, 32);
     });
 
-    testWidgets('JrpcTransport simulateTransactionTree ',
-        (WidgetTester tester) async {
+    testWidgets('simulateTransactionTree ', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
       await initRustToDartCaller();
 
-      final connection = await JrpcConnection.create(
-        post: postTransportData,
+      final connection = JrpcConnection.create(
+        client: HttpClient(),
         settings: jrpcSettings,
         name: name,
         group: networkGroup,
@@ -361,12 +367,16 @@ void main() {
         publicKey: const PublicKey(
             publicKey:
                 '6c2f9514c1c0f2ec54cffe1ac2ba0e85268e76442c14205581ebc808fe7ee52c'),
-        destination: const Address(
-            address:
-                '-1:06eec9c3a6f122c29697d27ae987e4b911d4dadc937e23c7aa58bbf1e484b20f'),
-        amount: BigInt.parse('1000000000'),
-        bounce: false,
         expiration: const Expiration.timeout(60),
+        params: [
+          TonWalletTransferParams(
+            destination: const Address(
+                address:
+                    '-1:06eec9c3a6f122c29697d27ae987e4b911d4dadc937e23c7aa58bbf1e484b20f'),
+            amount: BigInt.parse('1000000000'),
+            bounce: false,
+          ),
+        ],
       );
       final signedMessage = await message.signFake();
       final errors = await transport.simulateTransactionTree(
@@ -377,6 +387,204 @@ void main() {
 
       expect(errors, isNotNull);
       expect(errors, isNotEmpty);
+    });
+
+    testWidgets('getFeeFactors', (WidgetTester tester) async {
+      await tester.pumpAndSettleWithTimeout();
+
+      await initRustToDartCaller();
+
+      final connection = JrpcConnection.create(
+        client: HttpClient(),
+        settings: jrpcSettings,
+        name: name,
+        group: networkGroup,
+      );
+      final transport = await JrpcTransport.create(jrpcConnection: connection);
+      final feeFactors = await transport.getFeeFactors(isMasterchain: true);
+
+      expect(feeFactors, isNotNull);
+      expect(feeFactors.storageFeeFactor, isNotNull);
+      expect(feeFactors.gasFeeFactor, isNotNull);
+
+      expect(feeFactors.storageFeeFactor, greaterThan(0));
+      expect(feeFactors.gasFeeFactor, greaterThan(0));
+    });
+  });
+
+  group('JrpcTransport(TON)', () {
+    late JrpcTransport transport;
+
+    setUp(() async {
+      final connection = JrpcConnection.create(
+        client: HttpClient(),
+        settings: const JrpcNetworkSettings(
+          endpoint: 'https://jrpc-ton.broxus.com',
+        ),
+        name: 'TON',
+        group: 'ton',
+      );
+      transport = await JrpcTransport.create(jrpcConnection: connection);
+    });
+
+    tearDown(() async {
+      await transport.dispose();
+    });
+
+    testWidgets('simulateTransactionTree (WalletV4R2)',
+        (WidgetTester tester) async {
+      await tester.pumpAndSettleWithTimeout();
+      await initRustToDartCaller();
+
+      const from = Address(
+          address:
+              '0:453163ef9b6f68e7c815a77a8d013bd791bb696e6fa4a0de0eb6df19cc0e373b');
+      const pk = PublicKey(
+          publicKey:
+              '1b2267c29f37b05470bfa593ed1f03c1b5f682bc6282f4896494b5f4c8fe66c8');
+      const to = Address(
+        address:
+            '0:f9f575258120bff21afd8c798a5c9e9a2ef0b251e11d9c85fbf43bec968a57c6',
+      );
+      final wallet = await TonWallet.subscribeByAddress(
+        transport: transport,
+        address: from,
+      );
+      final message = await wallet.prepareTransfer(
+        contractState: await transport.getContractState(from),
+        publicKey: pk,
+        expiration: const Expiration.timeout(60),
+        params: [
+          TonWalletTransferParams(
+            destination: to,
+            amount: BigInt.parse('1000'),
+            bounce: false,
+          ),
+        ],
+      );
+      final signedMessage = await message.signFake();
+      final errors = await transport.simulateTransactionTree(
+        signedMessage: signedMessage,
+        ignoredComputePhaseCodes: Int32List.fromList([0, 1, 60, 100]),
+        ignoredActionPhaseCodes: Int32List.fromList([0, 1]),
+      );
+
+      expect(errors, isNotNull);
+      expect(errors, isEmpty);
+    });
+
+    testWidgets('simulateTransactionTree (jetton: usdt)',
+        (WidgetTester tester) async {
+      await tester.pumpAndSettleWithTimeout();
+      await initRustToDartCaller();
+
+      const owner = Address(
+          address:
+              '0:6ca35273892588b4c5f4ae898dc1983eec9662dffebeacdbe82103a1d1dcac60');
+      const usdtTokenRoot = Address(
+          address:
+              '0:b113a994b5024a16719f69139328eb759596c38a25f59028b146fecdc3621dfe');
+
+      final wallet = await TonWallet.subscribeByAddress(
+        transport: transport,
+        address: owner,
+      );
+      final jettonWallet = await JettonWallet.subscribe(
+        transport: transport,
+        owner: owner,
+        rootTokenContract: usdtTokenRoot,
+      );
+
+      final internalMessage = await jettonWallet.prepareTransfer(
+        destination: usdtTokenRoot,
+        amount: BigInt.parse('10000'),
+        callbackValue: BigInt.one,
+        remainingGasTo: owner,
+      );
+      final message = await wallet.prepareTransfer(
+        contractState: await transport.getContractState(owner),
+        publicKey: const PublicKey(
+            publicKey:
+                '9107a65271437e1a982bb98404bd9a82c434f31ee30c621b6596702bb59bf0a0'),
+        expiration: const Expiration.timeout(60),
+        params: [
+          TonWalletTransferParams(
+            destination: internalMessage.destination,
+            amount: internalMessage.amount,
+            bounce: internalMessage.bounce,
+            body: internalMessage.body,
+          ),
+        ],
+      );
+
+      final signedMessage = await message.signFake();
+      final errors = await transport.simulateTransactionTree(
+        signedMessage: signedMessage,
+        ignoredComputePhaseCodes: Int32List.fromList([0, 1, 60, 100]),
+        ignoredActionPhaseCodes: Int32List.fromList([0, 1]),
+      );
+
+      expect(errors, isNotNull);
+      expect(errors, isEmpty);
+
+      jettonWallet.dispose();
+    });
+
+    testWidgets('simulateTransactionTree (jetton: mintless points)',
+        (WidgetTester tester) async {
+      await tester.pumpAndSettleWithTimeout();
+      await initRustToDartCaller();
+
+      const owner = Address(
+          address:
+              '0:6ca35273892588b4c5f4ae898dc1983eec9662dffebeacdbe82103a1d1dcac60');
+      const pointsTokenRoot = Address(
+          address:
+              '0:fa67d0c7739331fbc3c8f08e018c65f47763616a969100ad760a0b2dc1e36832');
+
+      final wallet = await TonWallet.subscribeByAddress(
+        transport: transport,
+        address: owner,
+      );
+      final jettonWallet = await JettonWallet.subscribe(
+        transport: transport,
+        owner: owner,
+        rootTokenContract: pointsTokenRoot,
+      );
+
+      final internalMessage = await jettonWallet.prepareTransfer(
+        destination: pointsTokenRoot,
+        amount: BigInt.parse('10000'),
+        callbackValue: BigInt.one,
+        remainingGasTo: owner,
+      );
+      final message = await wallet.prepareTransfer(
+        contractState: await transport.getContractState(owner),
+        publicKey: const PublicKey(
+            publicKey:
+                '9107a65271437e1a982bb98404bd9a82c434f31ee30c621b6596702bb59bf0a0'),
+        expiration: const Expiration.timeout(60),
+        params: [
+          TonWalletTransferParams(
+            destination: internalMessage.destination,
+            amount: internalMessage.amount,
+            bounce: internalMessage.bounce,
+            body: internalMessage.body,
+          ),
+        ],
+      );
+
+      final signedMessage = await message.signFake();
+      final errors = await transport.simulateTransactionTree(
+        signedMessage: signedMessage,
+        ignoredComputePhaseCodes: Int32List.fromList([0, 1, 60, 100]),
+        ignoredActionPhaseCodes: Int32List.fromList([0, 1]),
+      );
+
+      expect(errors, isNotNull);
+      expect(errors, isEmpty);
+
+      jettonWallet.dispose();
     });
   });
 }

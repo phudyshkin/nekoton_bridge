@@ -49,6 +49,13 @@ void main() {
       'country glue knife buzz bus armor cement offer guide corn buddy update bird alcohol either neglect demand uncover table lock ketchup dinner ramp cream';
   const password = 'password';
 
+  const labsKey = PublicKey(
+      publicKey:
+          '43c77e697042c96481336afd84a858079d97b3223dcb1228ec70112d89ecbf93');
+  const legacyKey = PublicKey(
+      publicKey:
+          '69fb667f274805ca5341afa06c4ba1227c37cd52f3a253f39426d211428fd78b');
+
   const inputLabsData = DerivedKeyCreateInputImport(
     keyName: 'KeyNameLabs',
     phrase: phraseLabs,
@@ -73,11 +80,29 @@ void main() {
     ),
   );
 
+  final addKeyInputBip39 = EncryptedKeyCreateInput(
+    name: 'KeyNameBip39',
+    mnemonicType: const MnemonicType.bip39(
+      Bip39MnemonicData(
+        accountId: 0,
+        path: Bip39Path.ever,
+        entropy: Bip39Entropy.bits128,
+      ),
+    ),
+    phrase: phraseLabs,
+    password: const Password.explicit(
+      PasswordExplicit(
+        password: password,
+        cacheBehavior: PasswordCacheBehavior.nop(),
+      ),
+    ),
+  );
+
   setUp(() async {
     storageMethods = MockedStorageMethods();
     // This setup thing SHOULD NOT be removed or altered because it used in integration tests
     setupLogger(
-      level: LogLevel.Trace,
+      level: LogLevel.trace,
       mobileLogger: false,
       logHandler: (logEntry) => debugPrint(
         'FromLib: ${logEntry.level} ${logEntry.tag} ${logEntry.msg} (lib_time=${logEntry.timeMillis})',
@@ -89,11 +114,15 @@ void main() {
     await initRustToDartCaller();
   });
 
-  group('KeyStore test', () {
+  setUpAll(() async {
+    await NekotonBridge.init();
+  });
+
+  group('KeyStore', () {
     testWidgets('Create KeyStore', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
-      final storage = await Storage.create(
+      final storage = Storage.create(
         get: storageMethods.get,
         set: storageMethods.set,
         setUnchecked: storageMethods.setUnchecked,
@@ -108,10 +137,10 @@ void main() {
       expect(keystore, isNotNull);
     });
 
-    testWidgets('KeyStore addKey derived', (WidgetTester tester) async {
+    testWidgets('addKey derived', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
-      final storage = await Storage.create(
+      final storage = Storage.create(
         get: storageMethods.get,
         set: storageMethods.set,
         setUnchecked: storageMethods.setUnchecked,
@@ -126,12 +155,7 @@ void main() {
 
       final key = await keystore.addKey(addKeyInputLabs);
       expect(key, isNotNull);
-      expect(
-        key,
-        const PublicKey(
-            publicKey:
-                '43c77e697042c96481336afd84a858079d97b3223dcb1228ec70112d89ecbf93'),
-      );
+      expect(key, labsKey);
       final keysEntry = keystore.keys.first;
       expect(keysEntry.name, inputLabsData.keyName);
       expect(keysEntry.isLegacy, false);
@@ -141,10 +165,10 @@ void main() {
       expect(storageMethods.data.isNotEmpty, isTrue);
     });
 
-    testWidgets('KeyStore addKey encrypted', (WidgetTester tester) async {
+    testWidgets('addKey encrypted', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
-      final storage = await Storage.create(
+      final storage = Storage.create(
         get: storageMethods.get,
         set: storageMethods.set,
         setUnchecked: storageMethods.setUnchecked,
@@ -157,28 +181,28 @@ void main() {
         signers: signers,
       );
 
-      final key = await keystore.addKey(addKeyInputLegacy);
-      expect(key, isNotNull);
-      expect(
-        key,
-        const PublicKey(
-            publicKey:
-                '69fb667f274805ca5341afa06c4ba1227c37cd52f3a253f39426d211428fd78b'),
-      );
+      final keyLegacy = await keystore.addKey(addKeyInputLegacy);
+      expect(keyLegacy, isNotNull);
+      expect(keyLegacy, legacyKey);
+
       final keysEntry = keystore.keys.first;
       expect(keysEntry.name, addKeyInputLegacy.name);
       expect(keysEntry.isLegacy, true);
       expect(keysEntry.isMaster, true);
       expect(keysEntry.signerName, const KeySigner.encrypted().name);
-      expect(key, keysEntry.publicKey);
+      expect(keyLegacy, keysEntry.publicKey);
+
+      final keyBip39 = await keystore.addKey(addKeyInputBip39);
+      expect(keyBip39, isNotNull);
+      expect(keyBip39, labsKey);
 
       expect(storageMethods.data.isNotEmpty, isTrue);
     });
 
-    testWidgets('KeyStore addKeys', (WidgetTester tester) async {
+    testWidgets('addKeys', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
-      final storage = await Storage.create(
+      final storage = Storage.create(
         get: storageMethods.get,
         set: storageMethods.set,
         setUnchecked: storageMethods.setUnchecked,
@@ -194,12 +218,7 @@ void main() {
       final keys = await keystore.addKeys([addKeyInputLabs]);
       final key = keys.first;
       expect(key, isNotNull);
-      expect(
-        key,
-        const PublicKey(
-            publicKey:
-                '43c77e697042c96481336afd84a858079d97b3223dcb1228ec70112d89ecbf93'),
-      );
+      expect(key, labsKey);
       final keysEntry = keystore.keys.first;
       expect(keysEntry.name, inputLabsData.keyName);
       expect(keysEntry.isLegacy, false);
@@ -210,10 +229,10 @@ void main() {
       expect(storageMethods.data.isNotEmpty, isTrue);
     });
 
-    testWidgets('KeyStore getEntries', (WidgetTester tester) async {
+    testWidgets('getEntries', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
-      final storage = await Storage.create(
+      final storage = Storage.create(
         get: storageMethods.get,
         set: storageMethods.set,
         setUnchecked: storageMethods.setUnchecked,
@@ -244,10 +263,10 @@ void main() {
       expect(storageMethods.data.isNotEmpty, isTrue);
     });
 
-    testWidgets('KeyStore removeKey', (WidgetTester tester) async {
+    testWidgets('removeKey', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
-      final storage = await Storage.create(
+      final storage = Storage.create(
         get: storageMethods.get,
         set: storageMethods.set,
         setUnchecked: storageMethods.setUnchecked,
@@ -268,10 +287,10 @@ void main() {
       expect(removed, isTrue);
     });
 
-    testWidgets('KeyStore removeKeys', (WidgetTester tester) async {
+    testWidgets('removeKeys', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
-      final storage = await Storage.create(
+      final storage = Storage.create(
         get: storageMethods.get,
         set: storageMethods.set,
         setUnchecked: storageMethods.setUnchecked,
@@ -296,10 +315,10 @@ void main() {
       expect(jsonEncode(removed), jsonEncode([addedKey1, addedKey2]));
     });
 
-    testWidgets('KeyStore clearStore', (WidgetTester tester) async {
+    testWidgets('clearStore', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
-      final storage = await Storage.create(
+      final storage = Storage.create(
         get: storageMethods.get,
         set: storageMethods.set,
         setUnchecked: storageMethods.setUnchecked,
@@ -321,10 +340,10 @@ void main() {
       expect(entries.length, 0);
     });
 
-    testWidgets('KeyStore exportKey', (WidgetTester tester) async {
+    testWidgets('exportKey', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
-      final storage = await Storage.create(
+      final storage = Storage.create(
         get: storageMethods.get,
         set: storageMethods.set,
         setUnchecked: storageMethods.setUnchecked,
@@ -346,10 +365,10 @@ void main() {
       expect(exported.phrase, inputLabsData.phrase);
     });
 
-    testWidgets('KeyStore getPublicKeys', (WidgetTester tester) async {
+    testWidgets('getPublicKeys', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
-      final storage = await Storage.create(
+      final storage = Storage.create(
         get: storageMethods.get,
         set: storageMethods.set,
         setUnchecked: storageMethods.setUnchecked,
@@ -374,10 +393,10 @@ void main() {
       expect(keys[0], key);
     });
 
-    testWidgets('KeyStore updateKey', (WidgetTester tester) async {
+    testWidgets('updateKey', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
-      final storage = await Storage.create(
+      final storage = Storage.create(
         get: storageMethods.get,
         set: storageMethods.set,
         setUnchecked: storageMethods.setUnchecked,

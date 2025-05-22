@@ -1,8 +1,10 @@
 #!/bin/bash
+set -e
+set -o pipefail
 
 # Setup
 BUILD_DIR=platform-build
-mkdir $BUILD_DIR
+mkdir -p $BUILD_DIR
 cd $BUILD_DIR
 
 # Build static libs
@@ -16,7 +18,7 @@ done
 
 # Create XCFramework zip
 FRAMEWORK="NekotonBridge.xcframework"
-LIBNAME=libnekoton_bridge.a
+LIBNAME=libflutter_nekoton_bridge.a
 mkdir mac-lipo ios-sim-lipo
 IOS_SIM_LIPO=ios-sim-lipo/$LIBNAME
 MAC_LIPO=mac-lipo/$LIBNAME

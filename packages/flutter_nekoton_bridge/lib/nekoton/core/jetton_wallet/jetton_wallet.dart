@@ -64,30 +64,26 @@ class JettonWallet extends RustToDartMirrorInterface
   /// [rootTokenContract] - address of contract in blockchain
   static Future<JettonWallet> subscribe({
     required Transport transport,
-    required GqlConnection gqlConnection,
     required Address owner,
     required Address rootTokenContract,
     bool preloadTransactions = false,
-  }) async {
-    final instance = JettonWallet._(transport, rootTokenContract);
+  }) =>
+      transport.use(() async {
+        final instance = JettonWallet._(transport, rootTokenContract);
 
-    return transport.use(() async {
-      final lib = createLib();
-      instance.wallet = await lib.subscribeStaticMethodJettonWalletDartWrapper(
-        instanceHash: instance.instanceHash,
-        transport: transport.transportBox,
-        gqlConnection: gqlConnection.connection,
-        rootTokenContract: rootTokenContract.address,
-        owner: owner.address,
-        preloadTransactions: preloadTransactions,
-      );
+        instance.wallet = await JettonWalletDartWrapper.subscribe(
+          instanceHash: instance.instanceHash,
+          transport: transport.transportBox,
+          rootTokenContract: rootTokenContract.address,
+          owner: owner.address,
+          preloadTransactions: preloadTransactions,
+        );
 
-      await instance._initInstance();
-      instance._isTransactionsPreloaded = preloadTransactions;
+        await instance._initInstance();
+        instance._isTransactionsPreloaded = preloadTransactions;
 
-      return instance;
-    });
-  }
+        return instance;
+      });
 
   /// If any error occurs during first initialization of wallet, it will dispose
   /// wallet and rethrow error;
@@ -264,15 +260,12 @@ class JettonWallet extends RustToDartMirrorInterface
   /// or throw error
   static Future<(JettonWalletData, JettonRootData)> getJettonWalletDetails({
     required Transport transport,
-    required GqlConnection gqlConnection,
     required Address address,
   }) async {
     final encoded = await transport.use(() async {
-      final lib = createLib();
-      return lib.getJettonWalletDetailsStaticMethodJettonWalletDartWrapper(
+      return JettonWalletDartWrapper.getJettonWalletDetails(
         address: address.address,
         transport: transport.transportBox,
-        gqlConnection: gqlConnection.connection,
       );
     });
     final decoded = jsonDecode(encoded) as List<dynamic>;
@@ -289,16 +282,12 @@ class JettonWallet extends RustToDartMirrorInterface
   static Future<(Address, JettonRootData)>
       getJettonRootDetailsFromJettonWallet({
     required Transport transport,
-    required GqlConnection gqlConnection,
     required Address address,
   }) async {
     final encoded = await transport.use(() async {
-      final lib = createLib();
-      return lib
-          .getJettonRootDetailsFromJettonWalletStaticMethodJettonWalletDartWrapper(
+      return JettonWalletDartWrapper.getJettonRootDetailsFromJettonWallet(
         tokenWalletAddress: address.address,
         transport: transport.transportBox,
-        gqlConnection: gqlConnection.connection,
       );
     });
     final decoded = jsonDecode(encoded) as List<dynamic>;
@@ -314,15 +303,12 @@ class JettonWallet extends RustToDartMirrorInterface
   /// or throw error.
   static Future<JettonRootData> getJettonRootDetails({
     required Transport transport,
-    required GqlConnection gqlConnection,
     required Address tokenRoot,
   }) async {
     final encoded = await transport.use(() async {
-      final lib = createLib();
-      return lib.getJettonRootDetailsStaticMethodJettonWalletDartWrapper(
+      return JettonWalletDartWrapper.getJettonRootDetails(
         tokenRootAddress: tokenRoot.address,
         transport: transport.transportBox,
-        gqlConnection: gqlConnection.connection,
       );
     });
     return JettonRootData.fromJson(jsonDecode(encoded));
@@ -330,6 +316,8 @@ class JettonWallet extends RustToDartMirrorInterface
 
   /// Calls from rust side when balance of wallet has been changed
   void onBalanceChanged(String balance) {
+    if (avoidCall) return;
+
     _onBalanceChangedController.add(BigInt.parse(balance));
 
     /// For some strange reason, rust calls this method before creation completes
@@ -340,6 +328,8 @@ class JettonWallet extends RustToDartMirrorInterface
 
   /// Calls from rust side when transactions of wallet has been found
   void onTransactionsFound(String payload) {
+    if (avoidCall) return;
+
     final json = jsonDecode(payload) as List<dynamic>;
 
     final transactionsJson = json.first as List<dynamic>;
@@ -373,7 +363,7 @@ class JettonWallet extends RustToDartMirrorInterface
     _contractState = await getContractState();
     if (avoidCall) return;
     balance = BigInt.parse(await _getBalance());
-
+    if (avoidCall) return;
     _fieldsUpdateController.add(null);
   }
 
@@ -382,6 +372,7 @@ class JettonWallet extends RustToDartMirrorInterface
     wallet.innerWallet.dispose();
     _onBalanceChangedController.close();
     _onTransactionsFoundController.close();
+    _fieldsUpdateController.close();
     super.dispose();
   }
 

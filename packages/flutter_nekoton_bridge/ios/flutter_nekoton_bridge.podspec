@@ -1,4 +1,4 @@
-release_tag_name = 'nekoton_bridge-v2.2.0' # generated; do not edit
+release_tag_name = 'nekoton_bridge-v2.8.2' # generated; do not edit
 # # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
 # # Run `pod lib lint flutter_nekoton_bridge.podspec` to validate before publishing.
 # #
@@ -54,8 +54,8 @@ Pod::Spec.new do |spec|
   spec.version       = '0.0.1'
   spec.license       = { :file => '../LICENSE' }
   spec.homepage      = 'https://github.com/broxus/nekoton_bridge'
-  spec.authors       = { 'nesquikm' => 'drapolyuk@gmail.com' }
-  spec.summary       = 'iOS/macOS Flutter bindings for nekoton_bridge'
+  spec.authors       = { 'Broxus' => 'hello@broxus.com' }
+  spec.summary       = 'iOS/macOS Flutter bindings for nekoton'
 
   spec.source              = { :path => '.' }
   spec.source_files        = 'Classes/**/*'

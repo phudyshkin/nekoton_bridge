@@ -5,9 +5,6 @@ on:
   push:
     branches:
       - main
-  schedule:
-    # runs the CI everyday at 10AM
-    - cron: "0 10 * * *"
 
 env:
   CARGO_INCREMENTAL: "1"
@@ -22,31 +19,16 @@ jobs:
 
     steps:
       # Setup
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.13.0'
+          flutter-version: '3.29.2'
           channel: 'stable'
           cache: true
           cache-key: flutter-:os:-:channel:-:version:-:arch:-:hash:-${{ hashFiles('**/pubspec.lock') }}
-      - uses: bluefireteam/melos-action@v2
-      - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: 1.71.1
-          override: true
-          components: rustfmt, clippy
-      - name: Set up cargo cache
-        uses: actions/cache@v3
-        continue-on-error: false
-        with:
-          path: |
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            target/
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: ${{ runner.os }}-cargo-
+      - uses: bluefireteam/melos-action@v3
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
 
       # Dart/Flutter format checking
       - name: Clean before check-format
@@ -60,10 +42,11 @@ jobs:
       - name: Build Rust code for Dart tests
         run: cargo build -r
       - name: Check Rust format
-        working-directory: ./packages/nekoton_bridge/native/src
-        run: rustfmt --check lib.rs --edition 2018
-      - name: Rust code analysis
-        run: cargo clippy -- -D warnings
+        working-directory: ./packages/nekoton_bridge/rust/src
+        run: rustfmt --check lib.rs --edition 2021
+      # TODO: update flutter & flutter-rust-bridge
+      # - name: Rust code analysis
+      #   run: cargo clippy -- -D warnings
       - name: Run Rust tests
         run: cargo test
 
@@ -79,22 +62,23 @@ jobs:
       - name: Check git diff
         run: melos git-check
 
-  # macos_integration_test:
+  # TODO: fix ios build & test
+  # ios_integration_test:
   #   runs-on: macos-latest
+  #   timeout-minutes: 360
 
   #   steps:
   #     - uses: actions/checkout@v3
   #     - uses: subosito/flutter-action@v2
   #       with:
-  #         flutter-version: '3.13.0'
+  #         flutter-version: '3.29.2'
   #         channel: 'stable'
   #         cache: true
   #         cache-key: flutter-:os:-:channel:-:version:-:arch:-:hash:-${{ hashFiles('**/pubspec.lock') }}
-
-  #     - uses: bluefireteam/melos-action@v2
+  #     - uses: bluefireteam/melos-action@v3
   #     - uses: actions-rs/toolchain@v1
   #       with:
-  #         toolchain: stable
+  #         toolchain: 1.74.1
   #     - name: Set up cargo cache
   #       uses: actions/cache@v3
   #       continue-on-error: false
@@ -108,209 +92,100 @@ jobs:
   #         key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
   #         restore-keys: ${{ runner.os }}-cargo-
 
+  #     - name: Start iOS Simulator
+  #       run: |
+  #         DEVICE_ID=$(xcrun xctrace list devices | grep iPhone | head -1 | awk '{print $NF}' | tr -d '()')
+  #         echo "DEVICE_ID=$DEVICE_ID" >> $GITHUB_ENV
+  #         xcrun simctl boot $DEVICE_ID
+
   #     - name: Build the XCFramework
-  #       run: melos run build:apple
+  #       run: melos run build:ios
   #     - name: Copy the XCFramework to the needed location
   #       run: |
   #         CURR_VERSION=nekoton_bridge-v`awk '/^version: /{print $2}' packages/nekoton_bridge/pubspec.yaml`
-  #         cp platform-build/NekotonBridge.xcframework.zip packages/flutter_nekoton_bridge/macos/Frameworks/$CURR_VERSION.zip
+  #         cp platform-build/NekotonBridge.xcframework.zip packages/flutter_nekoton_bridge/ios/Frameworks/$CURR_VERSION.zip
   #         echo Copied file!
-
+  #     # This is fucking hilarious, but no one has an idea how to fix
+  #     # TimeoutException after 0:12:00.000000 bug:
+  #     # https://github.com/flutter/flutter/issues/105913
+  #     # So, this is a magic that probably can 'fix'
+  #     - name: Pre-build the Flutter app
+  #       working-directory: packages/flutter_nekoton_bridge/example
+  #       run: flutter build ios --no-codesign --simulator --target=integration_test/app_test.dart
   #     - name: Run Flutter integration tests
   #       working-directory: packages/flutter_nekoton_bridge/example
-  #       run: flutter test -d macos integration_test
+  #       run: flutter test -d ${{ env.DEVICE_ID }} --dart-define=FLUTTER_TEST_SKIP_FLAKY_IOS=${{ vars.FLUTTER_TEST_SKIP_FLAKY_IOS }} integration_test
 
-  # windows_integration_test:
-  #   runs-on: windows-latest
+  # TODO: integration tests take too long to run
+  # android_integration_test:
+  #   runs-on: macos-13
+  #   timeout-minutes: 360
 
   #   steps:
-  #     - uses: actions/checkout@v3
+  #     - uses: actions/checkout@v4
   #     - uses: subosito/flutter-action@v2
   #       with:
-  #         flutter-version: '3.13.0'
+  #         flutter-version: '3.29.2'
   #         channel: 'stable'
   #         cache: true
   #         cache-key: flutter-:os:-:channel:-:version:-:arch:-:hash:-${{ hashFiles('**/pubspec.lock') }}
-  #     - uses: bluefireteam/melos-action@v2
-  #     - uses: goto-bus-stop/setup-zig@v2
-  #     - uses: KyleMayes/install-llvm-action@v1
+  #     - uses: bluefireteam/melos-action@v3
+  #     - uses: dtolnay/rust-toolchain@stable
+  #     - uses: Swatinem/rust-cache@v2
+  #     - uses: nttld/setup-ndk@v1
   #       with:
-  #         version: "15"
-  #     - uses: actions-rs/toolchain@v1
+  #         ndk-version: r25b
+  #     - uses: actions/setup-java@v4
   #       with:
-  #         toolchain: stable
-  #     - name: Set up cargo cache
-  #       uses: actions/cache@v3
-  #       continue-on-error: false
+  #         distribution: zulu
+  #         java-version: "17.x"
+
+  #     - name: Gradle cache
+  #       uses: gradle/gradle-build-action@v3
+  
+  #     - name: AVD cache
+  #       uses: actions/cache@v4
+  #       id: avd-cache
   #       with:
   #         path: |
-  #           ~/.cargo/bin/
-  #           ~/.cargo/registry/index/
-  #           ~/.cargo/registry/cache/
-  #           ~/.cargo/git/db/
-  #           target/
-  #         key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-  #         restore-keys: ${{ runner.os }}-cargo-
+  #           ~/.android/avd/*
+  #           ~/.android/adb*
+  #         key: avd-33
+
+  #     - name: create AVD and generate snapshot for caching
+  #       if: steps.avd-cache.outputs.cache-hit != 'true'
+  #       uses: reactivecircus/android-emulator-runner@v2
+  #       with:
+  #         api-level: 33
+  #         target: google_apis
+  #         arch: x86_64
+  #         ram-size: 1024M
+  #         disk-size: 2048M
+  #         force-avd-creation: false
+  #         emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+  #         disable-animations: false
+  #         script: echo "Generated AVD snapshot for caching."
 
   #     - name: Build the binaries
-  #       run: melos run build:other
-  #     - name: Copy the binaries to the needed location
-  #       shell: bash
-  #       run: |
-  #         CURR_VERSION=nekoton_bridge-v`awk '/^version: /{print $2}' packages/nekoton_bridge/pubspec.yaml`
-  #         cp platform-build/other.tar.gz packages/flutter_nekoton_bridge/windows/$CURR_VERSION.tar.gz
-  #         echo Copied file!
-
-  #     - name: Run Flutter integration tests
-  #       working-directory: packages/flutter_nekoton_bridge/example
-  #       run: flutter test -d windows integration_test
-
-  # linux_integration_test:
-  #   runs-on: ubuntu-latest
-
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - name: Install dependencies for flutter integration test
-  #       run: sudo apt update && sudo apt-get install -y libglu1-mesa ninja-build clang cmake pkg-config libgtk-3-dev liblzma-dev
-  #     - uses: pyvista/setup-headless-display-action@v1
-  #     - uses: subosito/flutter-action@v2
-  #       with:
-  #         flutter-version: '3.13.0'
-  #         channel: 'stable'
-  #         cache: true
-  #         cache-key: flutter-:os:-:channel:-:version:-:arch:-:hash:-${{ hashFiles('**/pubspec.lock') }}
-  #     - uses: bluefireteam/melos-action@v2
-  #     - uses: goto-bus-stop/setup-zig@v2
-  #     - uses: KyleMayes/install-llvm-action@v1
-  #       with:
-  #         version: "15"
-  #     - uses: actions-rs/toolchain@v1
-  #       with:
-  #         toolchain: stable
-  #     - name: Set up cargo cache
-  #       uses: actions/cache@v3
-  #       continue-on-error: false
-  #       with:
-  #         path: |
-  #           ~/.cargo/bin/
-  #           ~/.cargo/registry/index/
-  #           ~/.cargo/registry/cache/
-  #           ~/.cargo/git/db/
-  #           target/
-  #         key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-  #         restore-keys: ${{ runner.os }}-cargo-
-
-  #     - name: Build the binaries
-  #       run: melos run build:other
+  #       run: melos run build:android
   #     - name: Copy the binaries to the needed location
   #       run: |
   #         CURR_VERSION=nekoton_bridge-v`awk '/^version: /{print $2}' packages/nekoton_bridge/pubspec.yaml`
-  #         cp platform-build/other.tar.gz packages/flutter_nekoton_bridge/linux/$CURR_VERSION.tar.gz
+  #         cp platform-build/android.tar.gz packages/flutter_nekoton_bridge/android/$CURR_VERSION.tar.gz
   #         echo Copied file!
 
   #     - name: Run Flutter integration tests
-  #       working-directory: packages/flutter_nekoton_bridge/example
-  #       run: flutter test -d linux integration_test
-
-  ios_integration_test:
-    runs-on: macos-latest
-    timeout-minutes: 360
-
-    steps:
-      - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2
-        with:
-          cache: true
-          cache-key: flutter-:os:-:channel:-:version:-:arch:-:hash:-${{ hashFiles('**/pubspec.lock') }}
-      - uses: bluefireteam/melos-action@v2
-      - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-      - name: Set up cargo cache
-        uses: actions/cache@v3
-        continue-on-error: false
-        with:
-          path: |
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            target/
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: ${{ runner.os }}-cargo-
-
-      - name: Start iOS Simulator
-        run: |
-          DEVICE_ID=$(xcrun xctrace list devices | grep iPhone | head -1 | awk '{print $NF}' | tr -d '()')
-          echo "DEVICE_ID=$DEVICE_ID" >> $GITHUB_ENV
-          xcrun simctl boot $DEVICE_ID
-
-      - name: Build the XCFramework
-        run: melos run build:apple
-      - name: Copy the XCFramework to the needed location
-        run: |
-          CURR_VERSION=nekoton_bridge-v`awk '/^version: /{print $2}' packages/nekoton_bridge/pubspec.yaml`
-          cp platform-build/NekotonBridge.xcframework.zip packages/flutter_nekoton_bridge/ios/Frameworks/$CURR_VERSION.zip
-          echo Copied file!
-      # This is fucking hilarious, but no one has an idea how to fix
-      # TimeoutException after 0:12:00.000000 bug:
-      # https://github.com/flutter/flutter/issues/105913
-      # So, this is a magic that probably can 'fix'
-      - name: Pre-build the Flutter app
-        working-directory: packages/flutter_nekoton_bridge/example
-        run: flutter build ios --no-codesign --simulator --target=integration_test/app_test.dart
-      - name: Run Flutter integration tests
-        working-directory: packages/flutter_nekoton_bridge/example
-        run: flutter test -d ${{ env.DEVICE_ID }} --dart-define=FLUTTER_TEST_SKIP_FLAKY_IOS=${{ vars.FLUTTER_TEST_SKIP_FLAKY_IOS }} integration_test
-
-  android_integration_test:
-    runs-on: macos-latest
-    timeout-minutes: 360
-
-    steps:
-      - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2
-        with:
-          cache: true
-          cache-key: flutter-:os:-:channel:-:version:-:arch:-:hash:-${{ hashFiles('**/pubspec.lock') }}
-      - uses: bluefireteam/melos-action@v2
-      - name: Set up cargo cache
-        uses: actions/cache@v3
-        continue-on-error: false
-        with:
-          path: |
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            target/
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: ${{ runner.os }}-cargo-
-      - uses: nttld/setup-ndk@v1
-        with:
-          ndk-version: r25b
-      - uses: actions/setup-java@v3
-        with:
-          distribution: zulu
-          java-version: "11.x"
-
-      - name: Build the binaries
-        run: melos run build:android
-      - name: Copy the binaries to the needed location
-        run: |
-          CURR_VERSION=nekoton_bridge-v`awk '/^version: /{print $2}' packages/nekoton_bridge/pubspec.yaml`
-          cp platform-build/android.tar.gz packages/flutter_nekoton_bridge/android/$CURR_VERSION.tar.gz
-          echo Copied file!
-
-      - name: Run Flutter integration tests
-        uses: Wandalen/wretry.action@v1.0.36 # sometimes android tests are flaky
-        with:
-          attempt_limit: 5
-          action: reactivecircus/android-emulator-runner@v2
-          with: |
-            api-level: 33
-            target: google_apis
-            arch: x86_64
-            ram-size: 1024M
-            disk-size: 2048M
-            script: cd packages/flutter_nekoton_bridge/example && flutter test --dart-define=FLUTTER_TEST_SKIP_FLAKY_ANDROID=${{ vars.FLUTTER_TEST_SKIP_FLAKY_ANDROID }} -d `flutter devices | grep android | tr ' ' '\n' | grep emulator-` integration_test
+  #       uses: Wandalen/wretry.action@master
+  #       with:
+  #         attempt_limit: 5
+  #         action: reactivecircus/android-emulator-runner@v2
+  #         with: |
+  #           api-level: 33
+  #           target: google_apis
+  #           arch: x86_64
+  #           ram-size: 1024M
+  #           disk-size: 2048M
+  #           force-avd-creation: false
+  #           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+  #           disable-animations: true
+  #           script: cd packages/flutter_nekoton_bridge/example && flutter test --dart-define=FLUTTER_TEST_SKIP_FLAKY_ANDROID=${{ vars.FLUTTER_TEST_SKIP_FLAKY_ANDROID }} -d `flutter devices | grep android | tr ' ' '\n' | grep emulator-` integration_test

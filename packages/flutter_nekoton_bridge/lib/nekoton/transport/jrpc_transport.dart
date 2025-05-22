@@ -2,11 +2,12 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter_nekoton_bridge/flutter_nekoton_bridge.dart';
+import 'package:nekoton_bridge/nekoton_bridge.dart' as lib;
 
 /// Implementation of jrpc transport
 class JrpcTransport extends Transport {
   final JrpcConnection jrpcConnection;
-  late JrpcTransportImpl transport;
+  late lib.JrpcTransportImpl transport;
 
   JrpcTransport._(this.jrpcConnection);
 
@@ -20,8 +21,7 @@ class JrpcTransport extends Transport {
   }) async {
     final instance = JrpcTransport._(jrpcConnection);
 
-    final lib = createLib();
-    instance.transport = await lib.newStaticMethodJrpcTransportImpl(
+    instance.transport = lib.JrpcTransportImpl(
       jrpcConnection: jrpcConnection.connection,
     );
 
@@ -189,6 +189,16 @@ class JrpcTransport extends Transport {
   }
 
   @override
+  Future<FeeFactors> getFeeFactors({required bool isMasterchain}) async {
+    if (_disposed) throw TransportCallAfterDisposeError();
+
+    return mutex.protectRead(() async {
+      final res = await transport.getFeeFactors(isMasterchain: isMasterchain);
+      return FeeFactors.fromJson(jsonDecode(res));
+    });
+  }
+
+  @override
   String get group => jrpcConnection.group;
 
   @override
@@ -198,5 +208,5 @@ class JrpcTransport extends Transport {
   TransportType get type => jrpcConnection.type;
 
   @override
-  ArcTransportBoxTrait get transportBox => transport.innerTransport;
+  lib.ArcTransportBoxTrait get transportBox => transport.innerTransport;
 }

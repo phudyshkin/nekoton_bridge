@@ -15,10 +15,10 @@ scripts:
     description: Check the format of a specific package in this project.
 
   check-rust:
-    exec: rustfmt --check --edition 2018 native/src/lib.rs && cargo clippy -- -D warnings
+    exec: rustfmt --check --edition 2021 rust/src/lib.rs && cargo clippy -- -D warnings
     description: Check the format of a rust code.
     packageFilters:
-      dirExists: native
+      dirExists: rust
 
   format:
     exec: dart format .
@@ -85,9 +85,6 @@ command:
   clean:
     hooks:
       post: bash scripts/clean.sh
-  bootstrap:
-    hooks:
-      pre: bash scripts/pre-bs.sh
   version:
     updateGitTagRefs: true
     hooks:

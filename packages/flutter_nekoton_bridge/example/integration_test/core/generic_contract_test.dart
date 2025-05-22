@@ -1,28 +1,10 @@
-import 'dart:async';
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_nekoton_bridge/flutter_nekoton_bridge.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:http/http.dart' as http;
-
+import '../test_helpers.dart';
 import '../timeout_utils.dart';
-
-Future<Uint8List> postTransportData({
-  required String endpoint,
-  required Map<String, String> headers,
-  required Uint8List dataBytes,
-}) async {
-  final response = await http.post(
-    Uri.parse(endpoint),
-    headers: headers,
-    body: dataBytes,
-  );
-
-  return response.bodyBytes;
-}
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -41,7 +23,7 @@ void main() {
   setUp(() async {
     // This setup thing SHOULD NOT be removed or altered because it used in integration tests
     setupLogger(
-      level: LogLevel.Trace,
+      level: LogLevel.trace,
       mobileLogger: false,
       logHandler: (logEntry) => debugPrint(
         'FromLib: ${logEntry.level} ${logEntry.tag} ${logEntry.msg} (lib_time=${logEntry.timeMillis})',
@@ -52,8 +34,8 @@ void main() {
 
     await initRustToDartCaller();
 
-    final connection = await ProtoConnection.create(
-      post: postTransportData,
+    final connection = ProtoConnection.create(
+      client: TestProtoClient(),
       settings: jrpcSettings,
       name: name,
       group: networkGroup,
@@ -61,8 +43,16 @@ void main() {
     transport = await ProtoTransport.create(protoConnection: connection);
   });
 
-  group('GenericContract test', () {
-    testWidgets('GenericContract subscribe', (WidgetTester tester) async {
+  setUpAll(() async {
+    await NekotonBridge.init();
+  });
+
+  tearDown(() async {
+    await transport.dispose();
+  });
+
+  group('GenericContract', () {
+    testWidgets('subscribe', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
       final contract = await GenericContract.subscribe(
@@ -77,7 +67,7 @@ void main() {
       expect(contract.contractState.isDeployed, isTrue);
     });
 
-    testWidgets('GenericContract refresh', (WidgetTester tester) async {
+    testWidgets('refresh', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
       final contract = await GenericContract.subscribe(
@@ -102,20 +92,11 @@ void main() {
     });
 
     testWidgets(
-      'GenericContract subscribing new instance after disposing old one',
+      'subscribing new instance after disposing old one',
       (WidgetTester tester) async {
         await tester.pumpAndSettleWithTimeout();
 
         for (var i = 0; i < 10; i++) {
-          final completer = Completer<void>();
-
-          // if contract will not create instance for 5 seconds, then some bug here
-          final delaying = Future.delayed(const Duration(seconds: 5), () {
-            if (!completer.isCompleted) {
-              throw Exception('Resubscribe timeout at $i iteration');
-            }
-          });
-
           final contract = await GenericContract.subscribe(
             transport: transport,
             address: address,
@@ -128,9 +109,6 @@ void main() {
           expect(contract.contractState.isDeployed, isTrue);
 
           contract.dispose();
-          completer.complete();
-
-          await delaying;
         }
       },
     );

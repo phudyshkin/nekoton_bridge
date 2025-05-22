@@ -74,25 +74,23 @@ class TokenWallet extends RustToDartMirrorInterface
     required Address owner,
     required Address rootTokenContract,
     bool preloadTransactions = false,
-  }) async {
-    final instance = TokenWallet._(transport, rootTokenContract);
+  }) =>
+      transport.use(() async {
+        final instance = TokenWallet._(transport, rootTokenContract);
 
-    return transport.use(() async {
-      final lib = createLib();
-      instance.wallet = await lib.subscribeStaticMethodTokenWalletDartWrapper(
-        instanceHash: instance.instanceHash,
-        transport: transport.transportBox,
-        rootTokenContract: rootTokenContract.address,
-        owner: owner.address,
-        preloadTransactions: preloadTransactions,
-      );
+        instance.wallet = await TokenWalletDartWrapper.subscribe(
+          instanceHash: instance.instanceHash,
+          transport: transport.transportBox,
+          rootTokenContract: rootTokenContract.address,
+          owner: owner.address,
+          preloadTransactions: preloadTransactions,
+        );
 
-      await instance._initInstance();
-      instance._isTransactionsPreloaded = preloadTransactions;
+        await instance._initInstance();
+        instance._isTransactionsPreloaded = preloadTransactions;
 
-      return instance;
-    });
-  }
+        return instance;
+      });
 
   /// If any error occurs during first initialization of wallet, it will dispose
   /// wallet and rethrow error;
@@ -278,8 +276,7 @@ class TokenWallet extends RustToDartMirrorInterface
     required Address address,
   }) async {
     final encoded = await transport.use(() async {
-      final lib = createLib();
-      return lib.getTokenWalletDetailsStaticMethodTokenWalletDartWrapper(
+      return TokenWalletDartWrapper.getTokenWalletDetails(
         address: address.address,
         transport: transport.transportBox,
       );
@@ -301,9 +298,7 @@ class TokenWallet extends RustToDartMirrorInterface
     required Address address,
   }) async {
     final encoded = await transport.use(() async {
-      final lib = createLib();
-      return lib
-          .getTokenRootDetailsFromTokenWalletStaticMethodTokenWalletDartWrapper(
+      return TokenWalletDartWrapper.getTokenRootDetailsFromTokenWallet(
         tokenWalletAddress: address.address,
         transport: transport.transportBox,
       );
@@ -324,8 +319,7 @@ class TokenWallet extends RustToDartMirrorInterface
     required Address tokenRoot,
   }) async {
     final encoded = await transport.use(() async {
-      final lib = createLib();
-      return lib.getTokenRootDetailsStaticMethodTokenWalletDartWrapper(
+      return TokenWalletDartWrapper.getTokenRootDetails(
         tokenRootAddress: tokenRoot.address,
         transport: transport.transportBox,
       );
@@ -335,6 +329,8 @@ class TokenWallet extends RustToDartMirrorInterface
 
   /// Calls from rust side when balance of wallet has been changed
   void onBalanceChanged(String balance) {
+    if (avoidCall) return;
+
     _onBalanceChangedController.add(BigInt.parse(balance));
 
     /// For some strange reason, rust calls this method before creation completes
@@ -345,6 +341,8 @@ class TokenWallet extends RustToDartMirrorInterface
 
   /// Calls from rust side when transactions of wallet has been found
   void onTransactionsFound(String payload) {
+    if (avoidCall) return;
+
     final json = jsonDecode(payload) as List<dynamic>;
 
     final transactionsJson = json.first as List<dynamic>;
@@ -379,9 +377,9 @@ class TokenWallet extends RustToDartMirrorInterface
     if (avoidCall) return;
     balance = BigInt.parse(await _getBalance());
 
+    if (avoidCall) return;
     // Initialization is completed, so we have Currency already created
     _onMoneyBalanceChangedController.add(moneyBalance);
-
     _fieldsUpdateController.add(null);
   }
 
@@ -405,6 +403,7 @@ class TokenWallet extends RustToDartMirrorInterface
     _onBalanceChangedController.close();
     _onMoneyBalanceChangedController.close();
     _onTransactionsFoundController.close();
+    _fieldsUpdateController.close();
     super.dispose();
   }
 

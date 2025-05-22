@@ -57,9 +57,7 @@ class GenericContract extends RustToDartMirrorInterface
   }) async {
     final instance = GenericContract._(transport);
 
-    final lib = createLib();
-    instance.contract =
-        await lib.subscribeStaticMethodGenericContractDartWrapper(
+    instance.contract = await GenericContractDartWrapper.subscribe(
       instanceHash: instance.instanceHash,
       transport: transport.transportBox,
       address: address.address,
@@ -150,7 +148,7 @@ class GenericContract extends RustToDartMirrorInterface
   }) async {
     final encoded = await contract.executeTransactionLocally(
       signedMessage: jsonEncode(signedMessage),
-      options: options,
+      options: jsonEncode(options),
     );
     final decoded = jsonDecode(encoded) as Map<String, dynamic>;
     return Transaction.fromJson(decoded);

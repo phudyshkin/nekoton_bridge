@@ -1,6 +1,7 @@
 import 'package:flutter_nekoton_bridge/flutter_nekoton_bridge.dart';
 import 'package:flutter_nekoton_bridge/rust_to_dart/reflector.dart';
 import 'package:reflectable/mirrors.dart';
+
 import 'storage.reflectable.dart';
 
 typedef StorageGet = Future<String?> Function(String key);
@@ -37,17 +38,16 @@ class Storage extends RustToDartMirrorInterface {
     this._removeUnchecked,
   );
 
-  static Future<Storage> create({
+  static Storage create({
     required StorageGet get,
     required StorageSet set,
     required StorageSetUnchecked setUnchecked,
     required StorageRemove remove,
     required StorageRemoveUnchecked removeUnchecked,
-  }) async {
+  }) {
     final instance = Storage._(get, set, setUnchecked, remove, removeUnchecked);
 
-    final lib = createLib();
-    instance.storage = await lib.newStaticMethodStorageDartWrapper(
+    instance.storage = StorageDartWrapper(
       instanceHash: instance.instanceHash,
     );
 
@@ -59,7 +59,7 @@ class Storage extends RustToDartMirrorInterface {
     try {
       return _get(key);
     } catch (_) {
-      throw ErrorCode.Generic;
+      throw ErrorCode.generic;
     }
   }
 
@@ -68,7 +68,7 @@ class Storage extends RustToDartMirrorInterface {
     try {
       return _set(key: key, value: value);
     } catch (_) {
-      throw ErrorCode.Generic;
+      throw ErrorCode.generic;
     }
   }
 
@@ -84,7 +84,7 @@ class Storage extends RustToDartMirrorInterface {
     try {
       return _remove(key);
     } catch (_) {
-      throw ErrorCode.Generic;
+      throw ErrorCode.generic;
     }
   }
 

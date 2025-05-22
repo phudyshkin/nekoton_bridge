@@ -29,21 +29,22 @@ RawContractState _$RawContractStateFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$RawContractState {
+  Object get data => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(GenTimings timings) notExists,
+    required TResult Function(NotExistingContract data) notExists,
     required TResult Function(ExistingContract data) exists,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(GenTimings timings)? notExists,
+    TResult? Function(NotExistingContract data)? notExists,
     TResult? Function(ExistingContract data)? exists,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(GenTimings timings)? notExists,
+    TResult Function(NotExistingContract data)? notExists,
     TResult Function(ExistingContract data)? exists,
     required TResult orElse(),
   }) =>
@@ -99,9 +100,9 @@ abstract class _$$NotExistsImplCopyWith<$Res> {
           _$NotExistsImpl value, $Res Function(_$NotExistsImpl) then) =
       __$$NotExistsImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({GenTimings timings});
+  $Res call({NotExistingContract data});
 
-  $GenTimingsCopyWith<$Res> get timings;
+  $NotExistingContractCopyWith<$Res> get data;
 }
 
 /// @nodoc
@@ -117,13 +118,13 @@ class __$$NotExistsImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? timings = null,
+    Object? data = null,
   }) {
     return _then(_$NotExistsImpl(
-      null == timings
-          ? _value.timings
-          : timings // ignore: cast_nullable_to_non_nullable
-              as GenTimings,
+      null == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as NotExistingContract,
     ));
   }
 
@@ -131,31 +132,32 @@ class __$$NotExistsImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $GenTimingsCopyWith<$Res> get timings {
-    return $GenTimingsCopyWith<$Res>(_value.timings, (value) {
-      return _then(_value.copyWith(timings: value));
+  $NotExistingContractCopyWith<$Res> get data {
+    return $NotExistingContractCopyWith<$Res>(_value.data, (value) {
+      return _then(_value.copyWith(data: value));
     });
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$NotExistsImpl implements _NotExists {
-  const _$NotExistsImpl(this.timings, {final String? $type})
-      : $type = $type ?? 'notExists';
+class _$NotExistsImpl extends _NotExists {
+  const _$NotExistsImpl(this.data, {final String? $type})
+      : $type = $type ?? 'notExists',
+        super._();
 
   factory _$NotExistsImpl.fromJson(Map<String, dynamic> json) =>
       _$$NotExistsImplFromJson(json);
 
   @override
-  final GenTimings timings;
+  final NotExistingContract data;
 
   @JsonKey(name: 'type')
   final String $type;
 
   @override
   String toString() {
-    return 'RawContractState.notExists(timings: $timings)';
+    return 'RawContractState.notExists(data: $data)';
   }
 
   @override
@@ -163,12 +165,12 @@ class _$NotExistsImpl implements _NotExists {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$NotExistsImpl &&
-            (identical(other.timings, timings) || other.timings == timings));
+            (identical(other.data, data) || other.data == data));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, timings);
+  int get hashCode => Object.hash(runtimeType, data);
 
   /// Create a copy of RawContractState
   /// with the given fields replaced by the non-null parameter values.
@@ -181,30 +183,30 @@ class _$NotExistsImpl implements _NotExists {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(GenTimings timings) notExists,
+    required TResult Function(NotExistingContract data) notExists,
     required TResult Function(ExistingContract data) exists,
   }) {
-    return notExists(timings);
+    return notExists(data);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(GenTimings timings)? notExists,
+    TResult? Function(NotExistingContract data)? notExists,
     TResult? Function(ExistingContract data)? exists,
   }) {
-    return notExists?.call(timings);
+    return notExists?.call(data);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(GenTimings timings)? notExists,
+    TResult Function(NotExistingContract data)? notExists,
     TResult Function(ExistingContract data)? exists,
     required TResult orElse(),
   }) {
     if (notExists != null) {
-      return notExists(timings);
+      return notExists(data);
     }
     return orElse();
   }
@@ -248,13 +250,15 @@ class _$NotExistsImpl implements _NotExists {
   }
 }
 
-abstract class _NotExists implements RawContractState {
-  const factory _NotExists(final GenTimings timings) = _$NotExistsImpl;
+abstract class _NotExists extends RawContractState {
+  const factory _NotExists(final NotExistingContract data) = _$NotExistsImpl;
+  const _NotExists._() : super._();
 
   factory _NotExists.fromJson(Map<String, dynamic> json) =
       _$NotExistsImpl.fromJson;
 
-  GenTimings get timings;
+  @override
+  NotExistingContract get data;
 
   /// Create a copy of RawContractState
   /// with the given fields replaced by the non-null parameter values.
@@ -310,9 +314,10 @@ class __$$ExistsImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ExistsImpl implements _Exists {
+class _$ExistsImpl extends _Exists {
   const _$ExistsImpl(this.data, {final String? $type})
-      : $type = $type ?? 'exists';
+      : $type = $type ?? 'exists',
+        super._();
 
   factory _$ExistsImpl.fromJson(Map<String, dynamic> json) =>
       _$$ExistsImplFromJson(json);
@@ -351,7 +356,7 @@ class _$ExistsImpl implements _Exists {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(GenTimings timings) notExists,
+    required TResult Function(NotExistingContract data) notExists,
     required TResult Function(ExistingContract data) exists,
   }) {
     return exists(data);
@@ -360,7 +365,7 @@ class _$ExistsImpl implements _Exists {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(GenTimings timings)? notExists,
+    TResult? Function(NotExistingContract data)? notExists,
     TResult? Function(ExistingContract data)? exists,
   }) {
     return exists?.call(data);
@@ -369,7 +374,7 @@ class _$ExistsImpl implements _Exists {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(GenTimings timings)? notExists,
+    TResult Function(NotExistingContract data)? notExists,
     TResult Function(ExistingContract data)? exists,
     required TResult orElse(),
   }) {
@@ -418,11 +423,13 @@ class _$ExistsImpl implements _Exists {
   }
 }
 
-abstract class _Exists implements RawContractState {
+abstract class _Exists extends RawContractState {
   const factory _Exists(final ExistingContract data) = _$ExistsImpl;
+  const _Exists._() : super._();
 
   factory _Exists.fromJson(Map<String, dynamic> json) = _$ExistsImpl.fromJson;
 
+  @override
   ExistingContract get data;
 
   /// Create a copy of RawContractState

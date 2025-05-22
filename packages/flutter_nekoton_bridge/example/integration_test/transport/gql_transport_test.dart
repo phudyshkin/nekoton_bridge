@@ -3,30 +3,36 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_nekoton_bridge/flutter_nekoton_bridge.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:integration_test/integration_test.dart';
 import 'package:http/http.dart' as http;
+import 'package:integration_test/integration_test.dart';
 
 import '../timeout_utils.dart';
 import 'contract_abi.dart';
 
-Future<String> postTransportData({
-  required String endpoint,
-  required Map<String, String> headers,
-  required String data,
-}) async {
-  final response = await http.post(
-    Uri.parse(endpoint),
-    headers: headers,
-    body: data,
-  );
+class HttpClient implements GqlConnectionHttpClient {
+  @override
+  Future<String> post({
+    required String endpoint,
+    required Map<String, String> headers,
+    required String data,
+  }) async {
+    final response = await http.post(
+      Uri.parse(endpoint),
+      headers: headers,
+      body: data,
+    );
 
-  return response.body;
-}
+    return response.body;
+  }
 
-Future<String> getTransportData(String endpoint) async {
-  final response = await http.get(Uri.parse(endpoint));
+  @override
+  Future<String> get(String endpoint) async {
+    final response = await http.get(Uri.parse(endpoint));
+    return response.body;
+  }
 
-  return response.body;
+  @override
+  void dispose() {}
 }
 
 void main() {
@@ -58,10 +64,10 @@ void main() {
     local: false,
   );
 
-  setUp(() {
+  setUp(() async {
     // This setup thing SHOULD NOT be removed or altered because it used in integration tests
     setupLogger(
-      level: LogLevel.Trace,
+      level: LogLevel.trace,
       mobileLogger: false,
       logHandler: (logEntry) => debugPrint(
         'FromLib: ${logEntry.level} ${logEntry.tag} ${logEntry.msg} (lib_time=${logEntry.timeMillis})',
@@ -71,16 +77,19 @@ void main() {
     runApp(Container());
   });
 
+  setUpAll(() async {
+    await NekotonBridge.init();
+  });
+
   // TODO(nesquikm): it's not clear which test is causing flaky behavior
-  group('GqlTransport tests', () {
+  group('GqlTransport', () {
     testWidgets('Create GqlTransport', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
       await initRustToDartCaller();
 
-      final connection = await GqlConnection.create(
-        post: postTransportData,
-        get: getTransportData,
+      final connection = GqlConnection.create(
+        client: HttpClient(),
         settings: gqlSettings,
         name: name,
         group: networkGroup,
@@ -90,14 +99,13 @@ void main() {
       expect(transport.transport, isNotNull);
     });
 
-    testWidgets('GqlTransport getSignatureId ', (WidgetTester tester) async {
+    testWidgets('getSignatureId ', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
       await initRustToDartCaller();
 
-      final connection = await GqlConnection.create(
-        post: postTransportData,
-        get: getTransportData,
+      final connection = GqlConnection.create(
+        client: HttpClient(),
         settings: gqlSettings,
         name: name,
         group: networkGroup,
@@ -109,14 +117,13 @@ void main() {
       expect(signature, isNull);
     });
 
-    testWidgets('GqlTransport getTransactions ', (WidgetTester tester) async {
+    testWidgets('getTransactions ', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
       await initRustToDartCaller();
 
-      final connection = await GqlConnection.create(
-        post: postTransportData,
-        get: getTransportData,
+      final connection = GqlConnection.create(
+        client: HttpClient(),
         settings: gqlSettings,
         name: name,
         group: networkGroup,
@@ -131,14 +138,13 @@ void main() {
       expect(transactions.transactions.length, 1);
     });
 
-    testWidgets('GqlTransport getTransaction ', (WidgetTester tester) async {
+    testWidgets('getTransaction ', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
       await initRustToDartCaller();
 
-      final connection = await GqlConnection.create(
-        post: postTransportData,
-        get: getTransportData,
+      final connection = GqlConnection.create(
+        client: HttpClient(),
         settings: gqlSettings,
         name: name,
         group: networkGroup,
@@ -154,14 +160,13 @@ void main() {
       expect(transaction.outMessages.length, 0);
     });
 
-    testWidgets('GqlTransport getDstTransaction', (WidgetTester tester) async {
+    testWidgets('getDstTransaction', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
       await initRustToDartCaller();
 
-      final connection = await GqlConnection.create(
-        post: postTransportData,
-        get: getTransportData,
+      final connection = GqlConnection.create(
+        client: HttpClient(),
         settings: gqlSettings,
         name: name,
         group: networkGroup,
@@ -182,14 +187,13 @@ void main() {
       expect(transaction.outMessages.length, 1);
     });
 
-    testWidgets('GqlTransport multiple calls ', (WidgetTester tester) async {
+    testWidgets('multiple calls ', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
       await initRustToDartCaller();
 
-      final connection = await GqlConnection.create(
-        post: postTransportData,
-        get: getTransportData,
+      final connection = GqlConnection.create(
+        client: HttpClient(),
         settings: gqlSettings,
         name: name,
         group: networkGroup,
@@ -217,14 +221,13 @@ void main() {
       );
     });
 
-    testWidgets('GqlTransport getContractState ', (WidgetTester tester) async {
+    testWidgets('getContractState ', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
       await initRustToDartCaller();
 
-      final connection = await GqlConnection.create(
-        post: postTransportData,
-        get: getTransportData,
+      final connection = GqlConnection.create(
+        client: HttpClient(),
         settings: gqlSettings,
         name: name,
         group: networkGroup,
@@ -240,16 +243,15 @@ void main() {
       );
     });
 
-    testWidgets('GqlTransport getFullContractState ', (
+    testWidgets('getFullContractState ', (
       WidgetTester tester,
     ) async {
       await tester.pumpAndSettleWithTimeout();
 
       await initRustToDartCaller();
 
-      final connection = await GqlConnection.create(
-        post: postTransportData,
-        get: getTransportData,
+      final connection = GqlConnection.create(
+        client: HttpClient(),
         settings: gqlSettings,
         name: name,
         group: networkGroup,
@@ -263,16 +265,15 @@ void main() {
       expect(state.isDeployed, true);
     });
 
-    testWidgets('GqlTransport getContractFields', (
+    testWidgets('getContractFields', (
       WidgetTester tester,
     ) async {
       await tester.pumpAndSettleWithTimeout();
 
       await initRustToDartCaller();
 
-      final connection = await GqlConnection.create(
-        post: postTransportData,
-        get: getTransportData,
+      final connection = GqlConnection.create(
+        client: HttpClient(),
         settings: gqlSettings,
         name: name,
         group: networkGroup,
@@ -292,13 +293,12 @@ void main() {
       expect(state, isNotNull);
     });
 
-    testWidgets('GqlTransport getNetworkId ', (WidgetTester tester) async {
+    testWidgets('getNetworkId ', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
       await initRustToDartCaller();
 
-      final connection = await GqlConnection.create(
-        post: postTransportData,
-        get: getTransportData,
+      final connection = GqlConnection.create(
+        client: HttpClient(),
         settings: gqlSettings,
         name: name,
         group: networkGroup,
@@ -308,14 +308,12 @@ void main() {
       expect(id, 42);
     });
 
-    testWidgets('GqlTransport getBlockchainConfig ',
-        (WidgetTester tester) async {
+    testWidgets('getBlockchainConfig ', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
       await initRustToDartCaller();
 
-      final connection = await GqlConnection.create(
-        post: postTransportData,
-        get: getTransportData,
+      final connection = GqlConnection.create(
+        client: HttpClient(),
         settings: gqlSettings,
         name: name,
         group: networkGroup,
@@ -328,14 +326,12 @@ void main() {
       expect(config.globalVersion, 32);
     });
 
-    testWidgets('GqlTransport simulateTransactionTree ',
-        (WidgetTester tester) async {
+    testWidgets('simulateTransactionTree ', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
       await initRustToDartCaller();
 
-      final connection = await GqlConnection.create(
-        post: postTransportData,
-        get: getTransportData,
+      final connection = GqlConnection.create(
+        client: HttpClient(),
         settings: gqlSettings,
         name: name,
         group: networkGroup,
@@ -354,12 +350,16 @@ void main() {
         publicKey: const PublicKey(
             publicKey:
                 '6c2f9514c1c0f2ec54cffe1ac2ba0e85268e76442c14205581ebc808fe7ee52c'),
-        destination: const Address(
-            address:
-                '-1:06eec9c3a6f122c29697d27ae987e4b911d4dadc937e23c7aa58bbf1e484b20f'),
-        amount: BigInt.parse('1000000000'),
-        bounce: false,
         expiration: const Expiration.timeout(60),
+        params: [
+          TonWalletTransferParams(
+            destination: const Address(
+                address:
+                    '-1:06eec9c3a6f122c29697d27ae987e4b911d4dadc937e23c7aa58bbf1e484b20f'),
+            amount: BigInt.parse('1000000000'),
+            bounce: false,
+          ),
+        ],
       );
       final signedMessage = await message.signFake();
       final errors = await transport.simulateTransactionTree(
@@ -370,6 +370,28 @@ void main() {
 
       expect(errors, isNotNull);
       expect(errors, isNotEmpty);
+    });
+
+    testWidgets('getFeeFactors', (WidgetTester tester) async {
+      await tester.pumpAndSettleWithTimeout();
+
+      await initRustToDartCaller();
+
+      final connection = GqlConnection.create(
+        client: HttpClient(),
+        settings: gqlSettings,
+        name: name,
+        group: networkGroup,
+      );
+      final transport = await GqlTransport.create(gqlConnection: connection);
+      final feeFactors = await transport.getFeeFactors(isMasterchain: true);
+
+      expect(feeFactors, isNotNull);
+      expect(feeFactors.storageFeeFactor, isNotNull);
+      expect(feeFactors.gasFeeFactor, isNotNull);
+
+      expect(feeFactors.storageFeeFactor, greaterThan(0));
+      expect(feeFactors.gasFeeFactor, greaterThan(0));
     });
   });
 }

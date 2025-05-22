@@ -1,60 +1,21 @@
-name: Publish Release(s)
+name: Publish FNB Release
 
 on:
   push:
     tags:
       - 'flutter_nekoton_bridge-v*'
 
-env:
-  CARGO_INCREMENTAL: "1"
-
 permissions:
   contents: write
 
 jobs:
   publish_github_release:
-    # macOS because we can cross-compile to all other platforms from it
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.13.0'
-          channel: 'stable'
-          cache: true
-          cache-key: flutter-:os:-:channel:-:version:-:arch:-:hash:-${{ hashFiles('**/pubspec.lock') }}
-      - uses: bluefireteam/melos-action@v2
-      - uses: goto-bus-stop/setup-zig@v2
-      - uses: KyleMayes/install-llvm-action@v1
-        with:
-          version: "15"
-      - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-      - name: Set up cargo cache
-        uses: actions/cache@v3
-        continue-on-error: false
-        with:
-          path: |
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            target/
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: ${{ runner.os }}-cargo-
-      - uses: nttld/setup-ndk@v1
-        with:
-          ndk-version: r25b
-
-      - name: Build all library binaries
-        run: melos run build
-
+      - uses: actions/checkout@v4
       - name: Create GitHub release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: platform-build/*
+        uses: softprops/action-gh-release@v2
 
   publish_pub_release:
     needs: publish_github_release
@@ -63,15 +24,15 @@ jobs:
       id-token: write # This is required for authentication using OIDC
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: dart-lang/setup-dart@v1
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.13.0'
+          flutter-version: '3.29.2'
           channel: 'stable'
           cache: true
           cache-key: flutter-:os:-:channel:-:version:-:arch:-:hash:-${{ hashFiles('**/pubspec.lock') }}
-      - uses: bluefireteam/melos-action@v2
+      - uses: bluefireteam/melos-action@v3
       - name: Dry-run publish to pub.dev
         run: melos publish -y --dry-run --scope="flutter_nekoton_bridge"
       - name: Publish to pub.dev

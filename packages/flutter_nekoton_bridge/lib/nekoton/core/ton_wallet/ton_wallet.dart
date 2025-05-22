@@ -63,68 +63,60 @@ class TonWallet extends RustToDartMirrorInterface
     required int workchainId,
     required PublicKey publicKey,
     required WalletType walletType,
-  }) async {
-    final instance = TonWallet._(transport);
+  }) =>
+      transport.use(() async {
+        final instance = TonWallet._(transport);
 
-    return transport.use(() async {
-      final lib = createLib();
-      instance.wallet = await lib.subscribeStaticMethodTonWalletDartWrapper(
-        instanceHash: instance.instanceHash,
-        publicKey: publicKey.publicKey,
-        walletType: jsonEncode(walletType),
-        workchainId: workchainId,
-        transport: transport.transportBox,
-      );
+        instance.wallet = await TonWalletDartWrapper.subscribe(
+          instanceHash: instance.instanceHash,
+          publicKey: publicKey.publicKey,
+          walletType: jsonEncode(walletType),
+          workchainId: workchainId,
+          transport: transport.transportBox,
+        );
 
-      await instance._initInstance();
+        await instance._initInstance();
 
-      return instance;
-    });
-  }
+        return instance;
+      });
 
   /// Create TonWallet by subscribing to its instance by address of wallet.
   static Future<TonWallet> subscribeByAddress({
     required Transport transport,
     required Address address,
-  }) async {
-    final instance = TonWallet._(transport);
+  }) =>
+      transport.use(() async {
+        final instance = TonWallet._(transport);
 
-    return transport.use(() async {
-      final lib = createLib();
-      instance.wallet =
-          await lib.subscribeByAddressStaticMethodTonWalletDartWrapper(
-        instanceHash: instance.instanceHash,
-        address: address.address,
-        transport: transport.transportBox,
-      );
+        instance.wallet = await TonWalletDartWrapper.subscribeByAddress(
+          instanceHash: instance.instanceHash,
+          address: address.address,
+          transport: transport.transportBox,
+        );
 
-      await instance._initInstance();
+        await instance._initInstance();
 
-      return instance;
-    });
-  }
+        return instance;
+      });
 
   /// Create TonWallet by subscribing to its instance by existed instance.
   static Future<TonWallet> subscribeByExistingWallet({
     required Transport transport,
     required ExistingWalletInfo existingWallet,
-  }) async {
-    final instance = TonWallet._(transport);
+  }) =>
+      transport.use(() async {
+        final instance = TonWallet._(transport);
 
-    return transport.use(() async {
-      final lib = createLib();
-      instance.wallet =
-          await lib.subscribeByExistingStaticMethodTonWalletDartWrapper(
-        instanceHash: instance.instanceHash,
-        existingWallet: jsonEncode(existingWallet),
-        transport: transport.transportBox,
-      );
+        instance.wallet = await TonWalletDartWrapper.subscribeByExisting(
+          instanceHash: instance.instanceHash,
+          existingWallet: jsonEncode(existingWallet),
+          transport: transport.transportBox,
+        );
 
-      await instance._initInstance();
+        await instance._initInstance();
 
-      return instance;
-    });
-  }
+        return instance;
+      });
 
   /// If any error occurs during first initialization of wallet, it will dispose
   /// wallet and rethrow error;
@@ -277,29 +269,22 @@ class TonWallet extends RustToDartMirrorInterface
       );
 
   /// Prepare transferring tokens from this wallet to other.
+  /// [contractState] - wallet contract state
   /// [publicKey] - key of account that had initiated transfer
-  /// [destination] - address of account that should receive token
-  /// [amount] - amount of tokens that should be transferred
-  /// [bounce] - nekoton's bounce param
-  /// [body] - body of transfer aka comment
+  /// [expiration] - expiration of message
+  /// [params] - list of TonWalletTransferParams
   /// Returns UnsignedMessage or throw error.
   Future<UnsignedMessage> prepareTransfer({
     required RawContractState contractState,
     required PublicKey publicKey,
-    required Address destination,
-    required BigInt amount,
-    required bool bounce,
-    String? body,
     required Expiration expiration,
+    required List<TonWalletTransferParams> params,
   }) async {
     final message = await wallet.prepareTransfer(
       contractState: jsonEncode(contractState),
       publicKey: publicKey.publicKey,
-      destination: destination.address,
-      amount: amount.toString(),
-      bounce: bounce,
-      body: body,
       expiration: jsonEncode(expiration),
+      params: jsonEncode(params),
     );
     await _updateData();
     return UnsignedMessage.create(message: message);
@@ -328,9 +313,13 @@ class TonWallet extends RustToDartMirrorInterface
   /// Returns representation of u128 or throw error.
   Future<BigInt> estimateFees({
     required SignedMessage signedMessage,
+    TransactionExecutionOptions? executionOptions,
   }) async {
-    final fee =
-        await wallet.estimateFees(signedMessage: jsonEncode(signedMessage));
+    final fee = await wallet.estimateFees(
+      signedMessage: jsonEncode(signedMessage),
+      executionOptions:
+          executionOptions != null ? jsonEncode(executionOptions) : null,
+    );
     return BigInt.parse(fee);
   }
 
@@ -393,6 +382,8 @@ class TonWallet extends RustToDartMirrorInterface
     await _updateData();
   }
 
+  Future<String> makeStateInit() => wallet.makeStateInit();
+
   /// Find list of wallets of [publicKey] and return them.
   /// [walletTypes] - list of WalletType we accept for searching.
   /// [publicKey] - key of account where wallets must be found.
@@ -404,8 +395,7 @@ class TonWallet extends RustToDartMirrorInterface
     required List<WalletType> walletTypes,
   }) async {
     final encoded = await transport.use(() {
-      final lib = createLib();
-      return lib.findExistingWalletsStaticMethodTonWalletDartWrapper(
+      return TonWalletDartWrapper.findExistingWallets(
         publicKey: publicKey.publicKey,
         walletTypes: jsonEncode(walletTypes),
         workchainId: workchainId,
@@ -425,8 +415,7 @@ class TonWallet extends RustToDartMirrorInterface
     required Address address,
   }) async {
     final encoded = await transport.use(() {
-      final lib = createLib();
-      return lib.getExistingWalletInfoStaticMethodTonWalletDartWrapper(
+      return TonWalletDartWrapper.getExistingWalletInfo(
         address: address.address,
         transport: transport.transportBox,
       );
@@ -443,8 +432,7 @@ class TonWallet extends RustToDartMirrorInterface
     required Address address,
   }) async {
     final encoded = await transport.use(() {
-      final lib = createLib();
-      return lib.getCustodiansStaticMethodTonWalletDartWrapper(
+      return TonWalletDartWrapper.getCustodians(
         address: address.address,
         transport: transport.transportBox,
       );
@@ -455,6 +443,8 @@ class TonWallet extends RustToDartMirrorInterface
 
   /// Calls from rust side when message has been sent to blockchain
   void onMessageSent(String payload) {
+    if (avoidCall) return;
+
     final json = jsonDecode(payload) as List<dynamic>;
 
     final pendingTransactionJson = json.first as Map<String, dynamic>;
@@ -468,6 +458,8 @@ class TonWallet extends RustToDartMirrorInterface
 
   /// Calls from rust side when message has been expired
   void onMessageExpired(String payload) {
+    if (avoidCall) return;
+
     final json = jsonDecode(payload) as Map<String, dynamic>;
     final pendingTransaction = PendingTransaction.fromJson(json);
     _onMessageExpiredController.add(pendingTransaction);
@@ -475,6 +467,8 @@ class TonWallet extends RustToDartMirrorInterface
 
   /// Calls from rust side when state of wallet has been changed
   void onStateChanged(String payload) {
+    if (avoidCall) return;
+
     final json = jsonDecode(payload) as Map<String, dynamic>;
     final contractState = ContractState.fromJson(json);
     _onStateChangedController.add(contractState);
@@ -486,6 +480,8 @@ class TonWallet extends RustToDartMirrorInterface
 
   /// Calls from rust side when transactions of wallet has been found
   void onTransactionsFound(String payload) {
+    if (avoidCall) return;
+
     final json = jsonDecode(payload) as List<dynamic>;
 
     final transactionsJson = json.first as List<dynamic>;
@@ -509,6 +505,8 @@ class TonWallet extends RustToDartMirrorInterface
 
   /// Calls from rust side when details of wallet has been changed
   void onDetailsChanged(String payload) {
+    if (avoidCall) return;
+
     final json = jsonDecode(payload) as Map<String, dynamic>;
     final details = TonWalletDetails.fromJson(json);
 
@@ -518,6 +516,8 @@ class TonWallet extends RustToDartMirrorInterface
 
   /// Calls from rust side when custodians of wallet has been changed
   void onCustodiansChanged(String payload) {
+    if (avoidCall) return;
+
     final json = jsonDecode(payload) as List<dynamic>;
     final custodians = json
         .map(
@@ -531,6 +531,8 @@ class TonWallet extends RustToDartMirrorInterface
 
   /// Calls from rust side when unconfirmed transactions of wallet has been found
   void onUnconfirmedTransactionsChanged(String payload) {
+    if (avoidCall) return;
+
     final json = jsonDecode(payload) as List<dynamic>;
 
     final unconfirmedTransactions = json
@@ -566,7 +568,7 @@ class TonWallet extends RustToDartMirrorInterface
     _custodians = await getCustodians();
     if (avoidCall) return;
     _details = await _getDetails();
-
+    if (avoidCall) return;
     _fieldsUpdateController.add(null);
   }
 
@@ -577,6 +579,7 @@ class TonWallet extends RustToDartMirrorInterface
     _onMessageExpiredController.close();
     _onStateChangedController.close();
     _onTransactionsFoundController.close();
+    _fieldsUpdateController.close();
     super.dispose();
   }
 

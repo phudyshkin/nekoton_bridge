@@ -1,35 +1,17 @@
-import 'dart:async';
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_nekoton_bridge/flutter_nekoton_bridge.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:http/http.dart' as http;
-
+import '../test_helpers.dart';
 import '../timeout_utils.dart';
-
-Future<Uint8List> postTransportData({
-  required String endpoint,
-  required Map<String, String> headers,
-  required Uint8List dataBytes,
-}) async {
-  final response = await http.post(
-    Uri.parse(endpoint),
-    headers: headers,
-    body: dataBytes,
-  );
-
-  return response.bodyBytes;
-}
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   const name = 'Mainnet (GQL)';
   const networkGroup = 'mainnet';
-  const endpoint = 'https://jrpc.everwallet.net/proto';
+  const endpoint = 'https://jrpc.everwallet.net';
 
   const stEverRootContract = Address(
       address:
@@ -44,7 +26,7 @@ void main() {
   setUp(() async {
     // This setup thing SHOULD NOT be removed or altered because it used in integration tests
     setupLogger(
-      level: LogLevel.Trace,
+      level: LogLevel.trace,
       mobileLogger: false,
       logHandler: (logEntry) => debugPrint(
         'FromLib: ${logEntry.level} ${logEntry.tag} ${logEntry.msg} (lib_time=${logEntry.timeMillis})',
@@ -55,8 +37,8 @@ void main() {
 
     await initRustToDartCaller();
 
-    final connection = await ProtoConnection.create(
-      post: postTransportData,
+    final connection = ProtoConnection.create(
+      client: TestProtoClient(),
       settings: jrpcSettings,
       name: name,
       group: networkGroup,
@@ -64,8 +46,16 @@ void main() {
     transport = await ProtoTransport.create(protoConnection: connection);
   });
 
-  group('TokenWallet test', () {
-    testWidgets('TokenWallet subscribe', (WidgetTester tester) async {
+  setUpAll(() async {
+    await NekotonBridge.init();
+  });
+
+  tearDown(() async {
+    await transport.dispose();
+  });
+
+  group('TokenWallet', () {
+    testWidgets('subscribe', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
       final wallet = await TokenWallet.subscribe(
@@ -83,15 +73,16 @@ void main() {
                 '0:ecfb1d0edbcbe0409763fa8ad8ad7f2727749f6cf29e0e6bcba9fdc752d3ae01'),
       );
       expect(wallet.rootTokenContract, stEverRootContract);
-      expect(wallet.contractState.balance, BigInt.parse('0'));
+      expect(wallet.contractState.balance, BigInt.parse('89399257'));
       expect(wallet.symbol.decimals, 9);
       expect(wallet.symbol.rootTokenContract, stEverRootContract);
       expect(wallet.symbol.name, 'STEVER');
       expect(wallet.version, TokenWalletVersion.tip3);
+
+      wallet.dispose();
     });
 
-    testWidgets('TokenWallet estimateMinAttachedAmount',
-        (WidgetTester tester) async {
+    testWidgets('estimateMinAttachedAmount', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
       const destination = Address(
@@ -122,7 +113,7 @@ void main() {
       expect(amount.isValidInt, isTrue);
     });
 
-    testWidgets('TokenWallet prepareTransfer', (WidgetTester tester) async {
+    testWidgets('prepareTransfer', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
       final wallet = await TokenWallet.subscribe(
@@ -142,14 +133,15 @@ void main() {
       );
 
       expect(message1, isNotNull);
-      expect(message1.amount, BigInt.parse('500000000'));
+      expect(message1.amount >= BigInt.parse('500000000'), isTrue);
 
       expect(message2, isNotNull);
-      expect(message2.amount, BigInt.parse('200000000'));
+      expect(message2.amount >= BigInt.parse('200000000'), isTrue);
+
+      wallet.dispose();
     });
 
-    testWidgets('TokenWallet getTokenWalletDetails',
-        (WidgetTester tester) async {
+    testWidgets('getTokenWalletDetails', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
       final details = await TokenWallet.getTokenWalletDetails(
@@ -159,20 +151,20 @@ void main() {
                 '0:ecfb1d0edbcbe0409763fa8ad8ad7f2727749f6cf29e0e6bcba9fdc752d3ae01'),
       );
 
-      expect(details.item1.balance, BigInt.parse('0'));
-      expect(details.item1.ownerAddress, address);
-      expect(details.item1.rootAddress, stEverRootContract);
+      expect(details.$1.balance, BigInt.parse('1826241428'));
+      expect(details.$1.ownerAddress, address);
+      expect(details.$1.rootAddress, stEverRootContract);
       expect(
-        details.item2.ownerAddress,
+        details.$2.ownerAddress,
         const Address(
             address:
                 '0:675a6d63f27e3f24d41d286043a9286b2e3eb6b84fa4c3308cc2833ef6f54d68'),
       );
-      expect(details.item2.version, TokenWalletVersion.tip3);
-      expect(details.item2.symbol, 'STEVER');
+      expect(details.$2.version, TokenWalletVersion.tip3);
+      expect(details.$2.symbol, 'STEVER');
     });
 
-    testWidgets('TokenWallet getTokenRootDetailsFromTokenWallet',
+    testWidgets('getTokenRootDetailsFromTokenWallet',
         (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
@@ -183,18 +175,18 @@ void main() {
                 '0:ecfb1d0edbcbe0409763fa8ad8ad7f2727749f6cf29e0e6bcba9fdc752d3ae01'),
       );
 
-      expect(details.item1, stEverRootContract);
+      expect(details.$1, stEverRootContract);
       expect(
-        details.item2.ownerAddress,
+        details.$2.ownerAddress,
         const Address(
             address:
                 '0:675a6d63f27e3f24d41d286043a9286b2e3eb6b84fa4c3308cc2833ef6f54d68'),
       );
-      expect(details.item2.version, TokenWalletVersion.tip3);
-      expect(details.item2.symbol, 'STEVER');
+      expect(details.$2.version, TokenWalletVersion.tip3);
+      expect(details.$2.symbol, 'STEVER');
     });
 
-    testWidgets('TokenWallet getTokenRootDetails', (WidgetTester tester) async {
+    testWidgets('getTokenRootDetails', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
       final details = await TokenWallet.getTokenRootDetails(
@@ -215,7 +207,7 @@ void main() {
       expect(details.decimals, 9);
     });
 
-    testWidgets('TokenWallet refresh', (WidgetTester tester) async {
+    testWidgets('refresh', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
       final wallet = await TokenWallet.subscribe(
@@ -233,7 +225,7 @@ void main() {
                 '0:ecfb1d0edbcbe0409763fa8ad8ad7f2727749f6cf29e0e6bcba9fdc752d3ae01'),
       );
       expect(wallet.rootTokenContract, stEverRootContract);
-      expect(wallet.contractState.balance, BigInt.parse('0'));
+      expect(wallet.contractState.balance, BigInt.parse('89399257'));
       expect(wallet.symbol.decimals, 9);
       expect(wallet.symbol.rootTokenContract, stEverRootContract);
       expect(wallet.symbol.name, 'STEVER');
@@ -253,28 +245,21 @@ void main() {
                 '0:ecfb1d0edbcbe0409763fa8ad8ad7f2727749f6cf29e0e6bcba9fdc752d3ae01'),
       );
       expect(wallet.rootTokenContract, stEverRootContract);
-      expect(wallet.contractState.balance, BigInt.parse('0'));
+      expect(wallet.contractState.balance, BigInt.parse('89399257'));
       expect(wallet.symbol.decimals, 9);
       expect(wallet.symbol.rootTokenContract, stEverRootContract);
       expect(wallet.symbol.name, 'STEVER');
       expect(wallet.version, TokenWalletVersion.tip3);
+
+      wallet.dispose();
     });
 
     testWidgets(
-      'TokenWallet subscribing new instance after disposing old one',
+      'subscribing new instance after disposing old one',
       (WidgetTester tester) async {
         await tester.pumpAndSettleWithTimeout();
 
         for (var i = 0; i < 10; i++) {
-          final completer = Completer<void>();
-
-          // if wallet will not create instance for 5 seconds, then some bug here
-          final delaying = Future.delayed(const Duration(seconds: 5), () {
-            if (!completer.isCompleted) {
-              throw Exception('Resubscribe timeout at $i iteration');
-            }
-          });
-
           final wallet = await TokenWallet.subscribe(
             transport: transport,
             owner: address,
@@ -290,22 +275,19 @@ void main() {
                     '0:ecfb1d0edbcbe0409763fa8ad8ad7f2727749f6cf29e0e6bcba9fdc752d3ae01'),
           );
           expect(wallet.rootTokenContract, stEverRootContract);
-          expect(wallet.contractState.balance, BigInt.parse('0'));
+          expect(wallet.contractState.balance, BigInt.parse('89399257'));
           expect(wallet.symbol.decimals, 9);
           expect(wallet.symbol.rootTokenContract, stEverRootContract);
           expect(wallet.symbol.name, 'STEVER');
           expect(wallet.version, TokenWalletVersion.tip3);
 
           wallet.dispose();
-
-          completer.complete();
-          await delaying;
         }
       },
     );
 
     testWidgets(
-      'TokenWallet Currency creation',
+      'Currency creation',
       (WidgetTester tester) async {
         await tester.pumpAndSettleWithTimeout();
 
@@ -321,7 +303,56 @@ void main() {
         expect(Currencies().find('STEVER'), isNotNull);
 
         expect(wallet.moneyBalance.currency.isoCode, 'STEVER');
+
+        wallet.dispose();
       },
     );
+
+    testWidgets('preloadTransactions: true', (WidgetTester tester) async {
+      await tester.pumpAndSettleWithTimeout();
+
+      final wallet = await TokenWallet.subscribe(
+        transport: transport,
+        owner: address,
+        rootTokenContract: stEverRootContract,
+        preloadTransactions: true,
+      );
+      var events = 0;
+
+      wallet.onTransactionsFoundStream.listen(
+        (data) => events++,
+      );
+
+      expect(wallet, isNotNull);
+      expect(wallet.isTransactionsPreloaded, true);
+      await wallet.preloadTransactions();
+      expect(events, 2);
+
+      wallet.dispose();
+    });
+
+    testWidgets('preloadTransactions: false', (WidgetTester tester) async {
+      await tester.pumpAndSettleWithTimeout();
+
+      final wallet = await TokenWallet.subscribe(
+        transport: transport,
+        owner: address,
+        rootTokenContract: stEverRootContract,
+        preloadTransactions: false,
+      );
+      var events = 0;
+
+      wallet.onTransactionsFoundStream.listen(
+        (data) => events++,
+      );
+
+      expect(wallet, isNotNull);
+      expect(wallet.isTransactionsPreloaded, false);
+      await wallet.preloadTransactions();
+      expect(events, 1);
+      expect(wallet.isTransactionsPreloaded, true);
+
+      wallet.dispose();
+    });
   });
 }

@@ -3,6 +3,1857 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2025-05-19
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.9.4`](#flutter_nekoton_bridge---v294)
+ - [`flutter_nekoton_bridge_example` - `v1.24.6`](#flutter_nekoton_bridge_example---v1246)
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.9.4`
+
+ - **FIX**(EWM-427): update message hash after `refreshTimeout`. ([dbc1dafe](https://github.com/broxus/nekoton_bridge/commit/dbc1dafed1748f78a0f84482f99935633025e92d))
+
+#### `flutter_nekoton_bridge_example` - `v1.24.6`
+
+ - **FIX**(EWM-427): update message hash after `refreshTimeout`. ([dbc1dafe](https://github.com/broxus/nekoton_bridge/commit/dbc1dafed1748f78a0f84482f99935633025e92d))
+
+
+## 2025-05-19
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.9.3`](#flutter_nekoton_bridge---v293)
+ - [`flutter_nekoton_bridge_example` - `v1.24.5`](#flutter_nekoton_bridge_example---v1245)
+ - [`nekoton_bridge` - `v2.8.2`](#nekoton_bridge---v282)
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.9.3`
+
+ - **FIX**(EWM-427): update message hash after `refreshTimeout`. ([dbc1dafe](https://github.com/broxus/nekoton_bridge/commit/dbc1dafed1748f78a0f84482f99935633025e92d))
+ - **FIX**(EWM-427): implement immutable `refresh_timeout`. ([1c8b1103](https://github.com/broxus/nekoton_bridge/commit/1c8b1103ef76e5617bafcf2b4b190f25eab63e76))
+
+#### `flutter_nekoton_bridge_example` - `v1.24.5`
+
+ - **FIX**(EWM-427): update message hash after `refreshTimeout`. ([dbc1dafe](https://github.com/broxus/nekoton_bridge/commit/dbc1dafed1748f78a0f84482f99935633025e92d))
+ - **FIX**(EWM-427): implement immutable `refresh_timeout`. ([1c8b1103](https://github.com/broxus/nekoton_bridge/commit/1c8b1103ef76e5617bafcf2b4b190f25eab63e76))
+
+#### `nekoton_bridge` - `v2.8.2`
+
+ - **FIX**(EWM-427): implement immutable `refresh_timeout`. ([1c8b1103](https://github.com/broxus/nekoton_bridge/commit/1c8b1103ef76e5617bafcf2b4b190f25eab63e76))
+
+
+## 2025-05-08
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - [`flutter_nekoton_bridge` - `v2.9.2`](#flutter_nekoton_bridge---v292)
+ - [`flutter_nekoton_bridge_example` - `v1.24.4`](#flutter_nekoton_bridge_example---v1244)
+ - [`nekoton_bridge` - `v2.8.1`](#nekoton_bridge---v281)
+
+Packages with other changes:
+
+ - There are no other changes in this release.
+
+Packages graduated to a stable release (see pre-releases prior to the stable version for changelog entries):
+
+ - `flutter_nekoton_bridge` - `v2.9.2`
+ - `flutter_nekoton_bridge_example` - `v1.24.4`
+ - `nekoton_bridge` - `v2.8.1`
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.9.2`
+
+#### `flutter_nekoton_bridge_example` - `v1.24.4`
+
+#### `nekoton_bridge` - `v2.8.1`
+
+
+## 2025-05-01
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.9.2-dev.1`](#flutter_nekoton_bridge---v292-dev1)
+ - [`nekoton_bridge` - `v2.8.1-dev.1`](#nekoton_bridge---v281-dev1)
+ - [`flutter_nekoton_bridge_example` - `v1.24.4-dev.1`](#flutter_nekoton_bridge_example---v1244-dev1)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `flutter_nekoton_bridge_example` - `v1.24.4-dev.1`
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.9.2-dev.1`
+
+ - **FIX**: update StorageDartWrapper API to use synchronous constructor and adjust related function signatures. ([556ebdc1](https://github.com/broxus/nekoton_bridge/commit/556ebdc138b055f3b460b10c3e8bcfc102e6e444))
+
+#### `nekoton_bridge` - `v2.8.1-dev.1`
+
+ - **FIX**: update StorageDartWrapper API to use synchronous constructor and adjust related function signatures. ([556ebdc1](https://github.com/broxus/nekoton_bridge/commit/556ebdc138b055f3b460b10c3e8bcfc102e6e444))
+
+
+## 2025-05-01
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.9.2-dev.0`](#flutter_nekoton_bridge---v292-dev0)
+ - [`nekoton_bridge` - `v2.8.1-dev.0`](#nekoton_bridge---v281-dev0)
+ - [`flutter_nekoton_bridge_example` - `v1.24.4-dev.0`](#flutter_nekoton_bridge_example---v1244-dev0)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `flutter_nekoton_bridge_example` - `v1.24.4-dev.0`
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.9.2-dev.0`
+
+ - **FIX**(EWM-496): remove tokio runtime & refactor async rust. ([cc7caeaf](https://github.com/broxus/nekoton_bridge/commit/cc7caeafab1b587c47f805c63b36c7127a882936))
+
+#### `nekoton_bridge` - `v2.8.1-dev.0`
+
+ - **FIX**(EWM-496): remove tokio runtime & refactor async rust. ([cc7caeaf](https://github.com/broxus/nekoton_bridge/commit/cc7caeafab1b587c47f805c63b36c7127a882936))
+
+
+## 2025-04-23
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.9.1`](#flutter_nekoton_bridge---v291)
+ - [`flutter_nekoton_bridge_example` - `v1.24.3`](#flutter_nekoton_bridge_example---v1243)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `flutter_nekoton_bridge_example` - `v1.24.3`
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.9.1`
+
+ - **FIX**: `RawContractState` add private constructor. ([82581163](https://github.com/broxus/nekoton_bridge/commit/82581163818cbba1ffd78a8b4a7f92bb52788b8a))
+
+
+## 2025-04-23
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.9.0`](#flutter_nekoton_bridge---v290)
+ - [`flutter_nekoton_bridge_example` - `v1.24.2`](#flutter_nekoton_bridge_example---v1242)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `flutter_nekoton_bridge_example` - `v1.24.2`
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.9.0`
+
+ - **FIX**: `RawContractState` add private constructor. ([82581163](https://github.com/broxus/nekoton_bridge/commit/82581163818cbba1ffd78a8b4a7f92bb52788b8a))
+ - **FEAT**(EWM-508): add exists check method for raw_contract_state. ([70ad0d95](https://github.com/broxus/nekoton_bridge/commit/70ad0d953d9daf275914cbd93da7bceae55bd0c0))
+
+
+## 2025-04-22
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.8.1`](#flutter_nekoton_bridge---v281)
+ - [`flutter_nekoton_bridge_example` - `v1.24.1`](#flutter_nekoton_bridge_example---v1241)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `flutter_nekoton_bridge_example` - `v1.24.1`
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.8.1`
+
+ - **FIX**(EWM-508): add NotExistingContract model to fix broken contract state. ([7b197368](https://github.com/broxus/nekoton_bridge/commit/7b1973686d73f7c05f7d3a7a9b1ce5cf69a978d0))
+
+
+## 2025-04-02
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.8.0`](#flutter_nekoton_bridge---v280)
+ - [`flutter_nekoton_bridge_example` - `v1.24.0`](#flutter_nekoton_bridge_example---v1240)
+ - [`nekoton_bridge` - `v2.8.0`](#nekoton_bridge---v280)
+
+Packages graduated to a stable release (see pre-releases prior to the stable version for changelog entries):
+
+ - `flutter_nekoton_bridge` - `v2.8.0`
+ - `flutter_nekoton_bridge_example` - `v1.24.0`
+ - `nekoton_bridge` - `v2.8.0`
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.8.0`
+
+#### `flutter_nekoton_bridge_example` - `v1.24.0`
+
+#### `nekoton_bridge` - `v2.8.0`
+
+
+## 2025-03-31
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.8.0-dev.1`](#flutter_nekoton_bridge---v280-dev1)
+ - [`flutter_nekoton_bridge_example` - `v1.24.0-dev.1`](#flutter_nekoton_bridge_example---v1240-dev1)
+ - [`nekoton_bridge` - `v2.8.0-dev.1`](#nekoton_bridge---v280-dev1)
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.8.0-dev.1`
+
+ - **FEAT**: update payload parsing to support jetton transfers. ([1ca7f1f3](https://github.com/broxus/nekoton_bridge/commit/1ca7f1f315ed16b004db40cef3102f37cb9d05f4))
+
+#### `flutter_nekoton_bridge_example` - `v1.24.0-dev.1`
+
+ - **FEAT**: update payload parsing to support jetton transfers. ([1ca7f1f3](https://github.com/broxus/nekoton_bridge/commit/1ca7f1f315ed16b004db40cef3102f37cb9d05f4))
+
+#### `nekoton_bridge` - `v2.8.0-dev.1`
+
+ - **FEAT**: update payload parsing to support jetton transfers. ([1ca7f1f3](https://github.com/broxus/nekoton_bridge/commit/1ca7f1f315ed16b004db40cef3102f37cb9d05f4))
+
+
+## 2025-03-24
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.8.0-dev.0`](#flutter_nekoton_bridge---v280-dev0)
+ - [`flutter_nekoton_bridge_example` - `v1.24.0-dev.0`](#flutter_nekoton_bridge_example---v1240-dev0)
+ - [`nekoton_bridge` - `v2.8.0-dev.0`](#nekoton_bridge---v280-dev0)
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.8.0-dev.0`
+
+ - **FEAT**: add encodeComment function ([#346](https://github.com/broxus/nekoton_bridge/issues/346)). ([d4b0e1fd](https://github.com/broxus/nekoton_bridge/commit/d4b0e1fd3fb31f8c24c838f9e7dd1105183326e3))
+
+#### `flutter_nekoton_bridge_example` - `v1.24.0-dev.0`
+
+ - **FEAT**: add encodeComment function ([#346](https://github.com/broxus/nekoton_bridge/issues/346)). ([d4b0e1fd](https://github.com/broxus/nekoton_bridge/commit/d4b0e1fd3fb31f8c24c838f9e7dd1105183326e3))
+
+#### `nekoton_bridge` - `v2.8.0-dev.0`
+
+ - **FEAT**: add encodeComment function ([#346](https://github.com/broxus/nekoton_bridge/issues/346)). ([d4b0e1fd](https://github.com/broxus/nekoton_bridge/commit/d4b0e1fd3fb31f8c24c838f9e7dd1105183326e3))
+
+
+## 2025-03-19
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.7.0`](#flutter_nekoton_bridge---v270)
+ - [`nekoton_bridge` - `v2.7.0`](#nekoton_bridge---v270)
+ - [`flutter_nekoton_bridge_example` - `v1.23.1`](#flutter_nekoton_bridge_example---v1231)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `flutter_nekoton_bridge_example` - `v1.23.1`
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.7.0`
+
+ - **FEAT**(EWM-484): add WalletV3R1 and WalletV3R2 types to wallet models. ([38f0fac9](https://github.com/broxus/nekoton_bridge/commit/38f0fac93eb0834785af02d15f0ef8789c07c352))
+
+#### `nekoton_bridge` - `v2.7.0`
+
+ - **FEAT**(EWM-484): add WalletV3R1 and WalletV3R2 types to wallet models. ([38f0fac9](https://github.com/broxus/nekoton_bridge/commit/38f0fac93eb0834785af02d15f0ef8789c07c352))
+
+
+## 2025-03-12
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.6.0`](#flutter_nekoton_bridge---v260)
+ - [`flutter_nekoton_bridge_example` - `v1.23.0`](#flutter_nekoton_bridge_example---v1230)
+ - [`nekoton_bridge` - `v2.6.0`](#nekoton_bridge---v260)
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.6.0`
+
+ - **FIX**(SPARX-FQ): improve mutex usage. ([1e6a053f](https://github.com/broxus/nekoton_bridge/commit/1e6a053f57563ffb74c20bc0d781833c375e7f3f))
+ - **FEAT**: add makeStateInit method to TonWallet and update related tests. ([b099d504](https://github.com/broxus/nekoton_bridge/commit/b099d504040002178f9451afba64d050c95b2e06))
+
+#### `flutter_nekoton_bridge_example` - `v1.23.0`
+
+ - **FEAT**: add makeStateInit method to TonWallet and update related tests. ([b099d504](https://github.com/broxus/nekoton_bridge/commit/b099d504040002178f9451afba64d050c95b2e06))
+
+#### `nekoton_bridge` - `v2.6.0`
+
+ - **FIX**: rust format. ([63a2543c](https://github.com/broxus/nekoton_bridge/commit/63a2543c1504aa39ca197be72f0a34b4cb5cd332))
+ - **FEAT**: add makeStateInit method to TonWallet and update related tests. ([b099d504](https://github.com/broxus/nekoton_bridge/commit/b099d504040002178f9451afba64d050c95b2e06))
+
+
+## 2025-03-04
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - [`flutter_nekoton_bridge_example` - `v1.22.3`](#flutter_nekoton_bridge_example---v1223)
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.5.0`](#flutter_nekoton_bridge---v250)
+ - [`nekoton_bridge` - `v2.5.0`](#nekoton_bridge---v250)
+
+Packages graduated to a stable release (see pre-releases prior to the stable version for changelog entries):
+
+ - `flutter_nekoton_bridge` - `v2.5.0`
+ - `flutter_nekoton_bridge_example` - `v1.22.3`
+ - `nekoton_bridge` - `v2.5.0`
+
+---
+
+#### `flutter_nekoton_bridge_example` - `v1.22.3`
+
+#### `flutter_nekoton_bridge` - `v2.5.0`
+
+#### `nekoton_bridge` - `v2.5.0`
+
+
+## 2025-03-03
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`nekoton_bridge` - `v2.5.0-dev.5`](#nekoton_bridge---v250-dev5)
+ - [`flutter_nekoton_bridge` - `v2.5.0-dev.5`](#flutter_nekoton_bridge---v250-dev5)
+ - [`flutter_nekoton_bridge_example` - `v1.22.3-dev.5`](#flutter_nekoton_bridge_example---v1223-dev5)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `flutter_nekoton_bridge` - `v2.5.0-dev.5`
+ - `flutter_nekoton_bridge_example` - `v1.22.3-dev.5`
+
+---
+
+#### `nekoton_bridge` - `v2.5.0-dev.5`
+
+ - **FIX**: `MnemonicTypeJsonConverter`. ([aaa261cf](https://github.com/broxus/nekoton_bridge/commit/aaa261cf418e065404ce9c818a6e8c396e6d97d2))
+
+
+## 2025-03-03
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.5.0-dev.4`](#flutter_nekoton_bridge---v250-dev4)
+ - [`flutter_nekoton_bridge_example` - `v1.22.3-dev.4`](#flutter_nekoton_bridge_example---v1223-dev4)
+ - [`nekoton_bridge` - `v2.5.0-dev.4`](#nekoton_bridge---v250-dev4)
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.5.0-dev.4`
+
+ - **FIX**(SPARX-80): prevent unnecessary calls in wallet event handlers. ([a50d03e2](https://github.com/broxus/nekoton_bridge/commit/a50d03e218e07d3d0f8b6e26865fd850cb386926))
+ - **FEAT**: update nekoton and mnemonic format. ([1460bc24](https://github.com/broxus/nekoton_bridge/commit/1460bc2497464e416e4f22119c278e9bbeca9174))
+
+#### `flutter_nekoton_bridge_example` - `v1.22.3-dev.4`
+
+ - **FEAT**: update nekoton and mnemonic format. ([1460bc24](https://github.com/broxus/nekoton_bridge/commit/1460bc2497464e416e4f22119c278e9bbeca9174))
+
+#### `nekoton_bridge` - `v2.5.0-dev.4`
+
+ - **FEAT**: update nekoton and mnemonic format. ([1460bc24](https://github.com/broxus/nekoton_bridge/commit/1460bc2497464e416e4f22119c278e9bbeca9174))
+
+
+## 2025-02-25
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.5.0-dev.3`](#flutter_nekoton_bridge---v250-dev3)
+ - [`flutter_nekoton_bridge_example` - `v1.22.3-dev.3`](#flutter_nekoton_bridge_example---v1223-dev3)
+ - [`nekoton_bridge` - `v2.5.0-dev.3`](#nekoton_bridge---v250-dev3)
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.5.0-dev.3`
+
+ - **REFACTOR**: `FeeFactors` model & `getFeeFactors` methods. ([e9760638](https://github.com/broxus/nekoton_bridge/commit/e976063801f05510515dcd1ae600311fe7418c88))
+ - **FEAT**: add TonWalletTransferParams model; update `prepare_transfer` method;. ([a66f1a11](https://github.com/broxus/nekoton_bridge/commit/a66f1a1183370c441291d213cf954021a51c7e4c))
+
+#### `flutter_nekoton_bridge_example` - `v1.22.3-dev.3`
+
+ - **REFACTOR**: `FeeFactors` model & `getFeeFactors` methods. ([e9760638](https://github.com/broxus/nekoton_bridge/commit/e976063801f05510515dcd1ae600311fe7418c88))
+ - **FEAT**: add TonWalletTransferParams model; update `prepare_transfer` method;. ([a66f1a11](https://github.com/broxus/nekoton_bridge/commit/a66f1a1183370c441291d213cf954021a51c7e4c))
+
+#### `nekoton_bridge` - `v2.5.0-dev.3`
+
+ - **REFACTOR**: `FeeFactors` model & `getFeeFactors` methods. ([e9760638](https://github.com/broxus/nekoton_bridge/commit/e976063801f05510515dcd1ae600311fe7418c88))
+ - **FEAT**: add TonWalletTransferParams model; update `prepare_transfer` method;. ([a66f1a11](https://github.com/broxus/nekoton_bridge/commit/a66f1a1183370c441291d213cf954021a51c7e4c))
+
+
+## 2025-02-17
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.5.0-dev.2`](#flutter_nekoton_bridge---v250-dev2)
+ - [`flutter_nekoton_bridge_example` - `v1.22.3-dev.2`](#flutter_nekoton_bridge_example---v1223-dev2)
+ - [`nekoton_bridge` - `v2.5.0-dev.2`](#nekoton_bridge---v250-dev2)
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.5.0-dev.2`
+
+ - **FIX**: update nekoton & remove gqlConnection parameter from JettonWallet methods. ([71778866](https://github.com/broxus/nekoton_bridge/commit/717788663fce536f1e28603919bec5894a9d965c))
+ - **FEAT**: update fee method ([#327](https://github.com/broxus/nekoton_bridge/issues/327)). ([f621674d](https://github.com/broxus/nekoton_bridge/commit/f621674d143ff90442fb971414eef4bf7fe5ceef))
+
+#### `flutter_nekoton_bridge_example` - `v1.22.3-dev.2`
+
+ - **FIX**: update nekoton & remove gqlConnection parameter from JettonWallet methods. ([71778866](https://github.com/broxus/nekoton_bridge/commit/717788663fce536f1e28603919bec5894a9d965c))
+ - **FEAT**: update fee method ([#327](https://github.com/broxus/nekoton_bridge/issues/327)). ([f621674d](https://github.com/broxus/nekoton_bridge/commit/f621674d143ff90442fb971414eef4bf7fe5ceef))
+
+#### `nekoton_bridge` - `v2.5.0-dev.2`
+
+ - **FIX**: update nekoton & remove gqlConnection parameter from JettonWallet methods. ([71778866](https://github.com/broxus/nekoton_bridge/commit/717788663fce536f1e28603919bec5894a9d965c))
+ - **FEAT**: update fee method ([#327](https://github.com/broxus/nekoton_bridge/issues/327)). ([f621674d](https://github.com/broxus/nekoton_bridge/commit/f621674d143ff90442fb971414eef4bf7fe5ceef))
+
+
+## 2025-02-10
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.5.0-dev.1`](#flutter_nekoton_bridge---v250-dev1)
+ - [`nekoton_bridge` - `v2.5.0-dev.1`](#nekoton_bridge---v250-dev1)
+ - [`flutter_nekoton_bridge_example` - `v1.22.3-dev.1`](#flutter_nekoton_bridge_example---v1223-dev1)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `flutter_nekoton_bridge_example` - `v1.22.3-dev.1`
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.5.0-dev.1`
+
+ - **FEAT**: change async functions to synchronous in mnemonic API. ([e147f7b7](https://github.com/broxus/nekoton_bridge/commit/e147f7b70298f5b1c7aa921b9518d06899485d06))
+
+#### `nekoton_bridge` - `v2.5.0-dev.1`
+
+ - **FEAT**: change async functions to synchronous in mnemonic API. ([e147f7b7](https://github.com/broxus/nekoton_bridge/commit/e147f7b70298f5b1c7aa921b9518d06899485d06))
+
+
+## 2025-01-31
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.5.0-dev.0`](#flutter_nekoton_bridge---v250-dev0)
+ - [`nekoton_bridge` - `v2.5.0-dev.0`](#nekoton_bridge---v250-dev0)
+ - [`flutter_nekoton_bridge_example` - `v1.22.3-dev.0`](#flutter_nekoton_bridge_example---v1223-dev0)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `flutter_nekoton_bridge_example` - `v1.22.3-dev.0`
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.5.0-dev.0`
+
+ - **FEAT**: implemented moving from u64 to u128 ([#323](https://github.com/broxus/nekoton_bridge/issues/323)). ([c4c3234c](https://github.com/broxus/nekoton_bridge/commit/c4c3234c2a9d09ce5c43fa78af119fa041f15583))
+
+#### `nekoton_bridge` - `v2.5.0-dev.0`
+
+ - **FEAT**: implemented moving from u64 to u128 ([#323](https://github.com/broxus/nekoton_bridge/issues/323)). ([c4c3234c](https://github.com/broxus/nekoton_bridge/commit/c4c3234c2a9d09ce5c43fa78af119fa041f15583))
+
+
+## 2025-01-24
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.4.2`](#flutter_nekoton_bridge---v242)
+ - [`flutter_nekoton_bridge_example` - `v1.22.2`](#flutter_nekoton_bridge_example---v1222)
+ - [`nekoton_bridge` - `v2.4.1`](#nekoton_bridge---v241)
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.4.2`
+
+ - **FIX**: add address validation and update related methods. ([cbfa998f](https://github.com/broxus/nekoton_bridge/commit/cbfa998fdd4861d25cc995ecb65b03d8b663e7c9))
+
+#### `flutter_nekoton_bridge_example` - `v1.22.2`
+
+ - **FIX**: add address validation and update related methods. ([cbfa998f](https://github.com/broxus/nekoton_bridge/commit/cbfa998fdd4861d25cc995ecb65b03d8b663e7c9))
+
+#### `nekoton_bridge` - `v2.4.1`
+
+ - **FIX**: add address validation and update related methods. ([cbfa998f](https://github.com/broxus/nekoton_bridge/commit/cbfa998fdd4861d25cc995ecb65b03d8b663e7c9))
+
+
+## 2025-01-23
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.4.1`](#flutter_nekoton_bridge---v241)
+ - [`flutter_nekoton_bridge_example` - `v1.22.1`](#flutter_nekoton_bridge_example---v1221)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `flutter_nekoton_bridge_example` - `v1.22.1`
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.4.1`
+
+ - **FIX**: make overrideBalance nullable in TransactionExecutionOptions model. ([4e6ab696](https://github.com/broxus/nekoton_bridge/commit/4e6ab696c9e337101b7069b20cfe960a3117764c))
+
+
+## 2025-01-23
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.4.0`](#flutter_nekoton_bridge---v240)
+ - [`flutter_nekoton_bridge_example` - `v1.22.0`](#flutter_nekoton_bridge_example---v1220)
+ - [`nekoton_bridge` - `v2.4.0`](#nekoton_bridge---v240)
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.4.0`
+
+ - **FEAT**: add execution options to estimateFees and update related models ([#317](https://github.com/broxus/nekoton_bridge/issues/317)). ([48106400](https://github.com/broxus/nekoton_bridge/commit/48106400aa4929d1c48e7f60dd20e00659114db2))
+
+#### `flutter_nekoton_bridge_example` - `v1.22.0`
+
+ - **FEAT**: add execution options to estimateFees and update related models ([#317](https://github.com/broxus/nekoton_bridge/issues/317)). ([48106400](https://github.com/broxus/nekoton_bridge/commit/48106400aa4929d1c48e7f60dd20e00659114db2))
+
+#### `nekoton_bridge` - `v2.4.0`
+
+ - **FEAT**: add execution options to estimateFees and update related models ([#317](https://github.com/broxus/nekoton_bridge/issues/317)). ([48106400](https://github.com/broxus/nekoton_bridge/commit/48106400aa4929d1c48e7f60dd20e00659114db2))
+
+
+## 2025-01-23
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.3.1`](#flutter_nekoton_bridge---v231)
+ - [`flutter_nekoton_bridge_example` - `v1.21.1`](#flutter_nekoton_bridge_example---v1211)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `flutter_nekoton_bridge_example` - `v1.21.1`
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.3.1`
+
+ - **FIX**: downgrade rxdart version to 0.27.7 in flutter_nekoton_bridge. ([197b0b9f](https://github.com/broxus/nekoton_bridge/commit/197b0b9ffaf633c3d387d251d441d5ad71fe5c31))
+
+
+## 2025-01-23
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.3.0`](#flutter_nekoton_bridge---v230)
+ - [`flutter_nekoton_bridge_example` - `v1.21.0`](#flutter_nekoton_bridge_example---v1210)
+ - [`nekoton_bridge` - `v2.3.0`](#nekoton_bridge---v230)
+
+Packages graduated to a stable release (see pre-releases prior to the stable version for changelog entries):
+
+ - `flutter_nekoton_bridge` - `v2.3.0`
+ - `flutter_nekoton_bridge_example` - `v1.21.0`
+ - `nekoton_bridge` - `v2.3.0`
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.3.0`
+
+#### `flutter_nekoton_bridge_example` - `v1.21.0`
+
+#### `nekoton_bridge` - `v2.3.0`
+
+
+## 2025-01-21
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.3.0-dev.4`](#flutter_nekoton_bridge---v230-dev4)
+ - [`flutter_nekoton_bridge_example` - `v1.21.0-dev.4`](#flutter_nekoton_bridge_example---v1210-dev4)
+ - [`nekoton_bridge` - `v2.3.0-dev.4`](#nekoton_bridge---v230-dev4)
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.3.0-dev.4`
+
+ - **FIX**(ios): rename nekoton_bridge to flutter_nekoton_bridge. ([c30e409f](https://github.com/broxus/nekoton_bridge/commit/c30e409ff982cce2a0c2025061a6489ee78271af))
+
+#### `flutter_nekoton_bridge_example` - `v1.21.0-dev.4`
+
+ - **FIX**(ios): rename nekoton_bridge to flutter_nekoton_bridge. ([c30e409f](https://github.com/broxus/nekoton_bridge/commit/c30e409ff982cce2a0c2025061a6489ee78271af))
+
+#### `nekoton_bridge` - `v2.3.0-dev.4`
+
+ - **FIX**(ios): rename nekoton_bridge to flutter_nekoton_bridge. ([c30e409f](https://github.com/broxus/nekoton_bridge/commit/c30e409ff982cce2a0c2025061a6489ee78271af))
+
+
+## 2025-01-20
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`nekoton_bridge` - `v2.3.0-dev.3`](#nekoton_bridge---v230-dev3)
+ - [`flutter_nekoton_bridge` - `v2.3.0-dev.3`](#flutter_nekoton_bridge---v230-dev3)
+ - [`flutter_nekoton_bridge_example` - `v1.21.0-dev.3`](#flutter_nekoton_bridge_example---v1210-dev3)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `flutter_nekoton_bridge` - `v2.3.0-dev.3`
+ - `flutter_nekoton_bridge_example` - `v1.21.0-dev.3`
+
+---
+
+#### `nekoton_bridge` - `v2.3.0-dev.3`
+
+ - **FIX**: update dependencies. ([f592261b](https://github.com/broxus/nekoton_bridge/commit/f592261b392387b9166036649bf02a39bcb214db))
+
+
+## 2025-01-17
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.3.0-dev.2`](#flutter_nekoton_bridge---v230-dev2)
+ - [`flutter_nekoton_bridge_example` - `v1.21.0-dev.2`](#flutter_nekoton_bridge_example---v1210-dev2)
+ - [`nekoton_bridge` - `v2.3.0-dev.2`](#nekoton_bridge---v230-dev2)
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.3.0-dev.2`
+
+ - **FIX**: restrict `money2` version to avoid json serialization issues. ([3ac64f36](https://github.com/broxus/nekoton_bridge/commit/3ac64f3636078f53b42c6f54c2d5443e3b951aa5))
+ - **FEAT**: update `flutter_rust_bridge` ([#297](https://github.com/broxus/nekoton_bridge/issues/297)). ([f5803e51](https://github.com/broxus/nekoton_bridge/commit/f5803e51d85cb423a8563ce02ebd35c6a92ca4b1))
+ - **FEAT**: enhance Address model with new methods and integration tests. ([9e2bf7e7](https://github.com/broxus/nekoton_bridge/commit/9e2bf7e7ca55b141c6563e11c9e9a6a5f6e66d7c))
+ - **FEAT**: update `flutter_rust_bridge`. ([017a2403](https://github.com/broxus/nekoton_bridge/commit/017a2403d247c1eab81a7af3f34ccf04dcf3a22b))
+
+#### `flutter_nekoton_bridge_example` - `v1.21.0-dev.2`
+
+ - **FEAT**: update `flutter_rust_bridge` ([#297](https://github.com/broxus/nekoton_bridge/issues/297)). ([f5803e51](https://github.com/broxus/nekoton_bridge/commit/f5803e51d85cb423a8563ce02ebd35c6a92ca4b1))
+ - **FEAT**: enhance Address model with new methods and integration tests. ([9e2bf7e7](https://github.com/broxus/nekoton_bridge/commit/9e2bf7e7ca55b141c6563e11c9e9a6a5f6e66d7c))
+ - **FEAT**: update `flutter_rust_bridge`. ([017a2403](https://github.com/broxus/nekoton_bridge/commit/017a2403d247c1eab81a7af3f34ccf04dcf3a22b))
+
+#### `nekoton_bridge` - `v2.3.0-dev.2`
+
+ - **FIX**: restrict `money2` version to avoid json serialization issues. ([3ac64f36](https://github.com/broxus/nekoton_bridge/commit/3ac64f3636078f53b42c6f54c2d5443e3b951aa5))
+ - **FEAT**: update `flutter_rust_bridge` ([#297](https://github.com/broxus/nekoton_bridge/issues/297)). ([f5803e51](https://github.com/broxus/nekoton_bridge/commit/f5803e51d85cb423a8563ce02ebd35c6a92ca4b1))
+ - **FEAT**: enhance Address model with new methods and integration tests. ([9e2bf7e7](https://github.com/broxus/nekoton_bridge/commit/9e2bf7e7ca55b141c6563e11c9e9a6a5f6e66d7c))
+ - **FEAT**: update `flutter_rust_bridge`. ([017a2403](https://github.com/broxus/nekoton_bridge/commit/017a2403d247c1eab81a7af3f34ccf04dcf3a22b))
+
+
+## 2025-01-16
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.3.0-dev.1`](#flutter_nekoton_bridge---v230-dev1)
+ - [`flutter_nekoton_bridge_example` - `v1.21.0-dev.1`](#flutter_nekoton_bridge_example---v1210-dev1)
+ - [`nekoton_bridge` - `v2.3.0-dev.1`](#nekoton_bridge---v230-dev1)
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.3.0-dev.1`
+
+ - **FEAT**: enhance Address model with new methods and integration tests. ([9e2bf7e7](https://github.com/broxus/nekoton_bridge/commit/9e2bf7e7ca55b141c6563e11c9e9a6a5f6e66d7c))
+
+#### `flutter_nekoton_bridge_example` - `v1.21.0-dev.1`
+
+ - **FEAT**: enhance Address model with new methods and integration tests. ([9e2bf7e7](https://github.com/broxus/nekoton_bridge/commit/9e2bf7e7ca55b141c6563e11c9e9a6a5f6e66d7c))
+
+#### `nekoton_bridge` - `v2.3.0-dev.1`
+
+ - **FEAT**: enhance Address model with new methods and integration tests. ([9e2bf7e7](https://github.com/broxus/nekoton_bridge/commit/9e2bf7e7ca55b141c6563e11c9e9a6a5f6e66d7c))
+
+
+## 2025-01-15
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.3.0-dev.0`](#flutter_nekoton_bridge---v230-dev0)
+ - [`flutter_nekoton_bridge_example` - `v1.21.0-dev.0`](#flutter_nekoton_bridge_example---v1210-dev0)
+ - [`nekoton_bridge` - `v2.3.0-dev.0`](#nekoton_bridge---v230-dev0)
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.3.0-dev.0`
+
+ - **FEAT**: update `flutter_rust_bridge`. ([017a2403](https://github.com/broxus/nekoton_bridge/commit/017a2403d247c1eab81a7af3f34ccf04dcf3a22b))
+
+#### `flutter_nekoton_bridge_example` - `v1.21.0-dev.0`
+
+ - **FEAT**: update `flutter_rust_bridge`. ([017a2403](https://github.com/broxus/nekoton_bridge/commit/017a2403d247c1eab81a7af3f34ccf04dcf3a22b))
+
+#### `nekoton_bridge` - `v2.3.0-dev.0`
+
+ - **FEAT**: update `flutter_rust_bridge`. ([017a2403](https://github.com/broxus/nekoton_bridge/commit/017a2403d247c1eab81a7af3f34ccf04dcf3a22b))
+
+
+## 2024-12-29
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.2.3`](#flutter_nekoton_bridge---v223)
+ - [`flutter_nekoton_bridge_example` - `v1.20.2`](#flutter_nekoton_bridge_example---v1202)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `flutter_nekoton_bridge_example` - `v1.20.2`
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.2.3`
+
+ - **FIX**: force version bump. ([945da3ee](https://github.com/broxus/nekoton_bridge/commit/945da3eedf79480f890fdf645f296b54dc36c72a))
+
+
+## 2024-12-27
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.2.1`](#flutter_nekoton_bridge---v221)
+ - [`flutter_nekoton_bridge_example` - `v1.20.1`](#flutter_nekoton_bridge_example---v1201)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `flutter_nekoton_bridge_example` - `v1.20.1`
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.2.1`
+
+ - **FIX**: check if contract was disposed. ([18828705](https://github.com/broxus/nekoton_bridge/commit/18828705bae9d83d34fd8e6dccf01b1bd84c663c))
+
+
+## 2024-12-26
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.2.0`](#flutter_nekoton_bridge---v220)
+ - [`flutter_nekoton_bridge_example` - `v1.20.0`](#flutter_nekoton_bridge_example---v1200)
+ - [`nekoton_bridge` - `v2.2.0`](#nekoton_bridge---v220)
+
+Packages graduated to a stable release (see pre-releases prior to the stable version for changelog entries):
+
+ - `flutter_nekoton_bridge` - `v2.2.0`
+ - `flutter_nekoton_bridge_example` - `v1.20.0`
+ - `nekoton_bridge` - `v2.2.0`
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.2.0`
+
+#### `flutter_nekoton_bridge_example` - `v1.20.0`
+
+#### `nekoton_bridge` - `v2.2.0`
+
+
+## 2024-12-26
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.2.0-dev.0`](#flutter_nekoton_bridge---v220-dev0)
+ - [`flutter_nekoton_bridge_example` - `v1.20.0-dev.0`](#flutter_nekoton_bridge_example---v1200-dev0)
+ - [`nekoton_bridge` - `v2.2.0-dev.0`](#nekoton_bridge---v220-dev0)
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.2.0-dev.0`
+
+ - **FEAT**: update `nekoton`. ([56addc96](https://github.com/broxus/nekoton_bridge/commit/56addc96b5690f8d81fd4e5ff97bd2dc83df05f9))
+
+#### `flutter_nekoton_bridge_example` - `v1.20.0-dev.0`
+
+ - **FEAT**: update `nekoton`. ([56addc96](https://github.com/broxus/nekoton_bridge/commit/56addc96b5690f8d81fd4e5ff97bd2dc83df05f9))
+
+#### `nekoton_bridge` - `v2.2.0-dev.0`
+
+ - **FEAT**: update `nekoton`. ([56addc96](https://github.com/broxus/nekoton_bridge/commit/56addc96b5690f8d81fd4e5ff97bd2dc83df05f9))
+
+
+## 2024-12-23
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.1.0`](#flutter_nekoton_bridge---v210)
+ - [`flutter_nekoton_bridge_example` - `v1.19.0`](#flutter_nekoton_bridge_example---v1190)
+ - [`nekoton_bridge` - `v2.1.0`](#nekoton_bridge---v210)
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.1.0`
+
+ - **FEAT**: update `nekoton`, add jetton `update_library_cell` support;. ([69576615](https://github.com/broxus/nekoton_bridge/commit/695766159ca82faf1c255755e48bfdbd949f6798))
+
+#### `flutter_nekoton_bridge_example` - `v1.19.0`
+
+ - **FEAT**: update `nekoton`, add jetton `update_library_cell` support;. ([69576615](https://github.com/broxus/nekoton_bridge/commit/695766159ca82faf1c255755e48bfdbd949f6798))
+
+#### `nekoton_bridge` - `v2.1.0`
+
+ - **FEAT**: update `nekoton`, add jetton `update_library_cell` support;. ([69576615](https://github.com/broxus/nekoton_bridge/commit/695766159ca82faf1c255755e48bfdbd949f6798))
+
+
+## 2024-12-20
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`nekoton_bridge` - `v2.0.2`](#nekoton_bridge---v202)
+ - [`flutter_nekoton_bridge` - `v2.0.2`](#flutter_nekoton_bridge---v202)
+ - [`flutter_nekoton_bridge_example` - `v1.18.2`](#flutter_nekoton_bridge_example---v1182)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `flutter_nekoton_bridge` - `v2.0.2`
+ - `flutter_nekoton_bridge_example` - `v1.18.2`
+
+---
+
+#### `nekoton_bridge` - `v2.0.2`
+
+ - **FIX**: specify nekoton rev. ([9a60c737](https://github.com/broxus/nekoton_bridge/commit/9a60c737f5d9fd67c0787419eced008f9695d86d))
+
+
+## 2024-12-20
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - [`flutter_nekoton_bridge_example` - `v1.18.1`](#flutter_nekoton_bridge_example---v1181)
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.0.1`](#flutter_nekoton_bridge---v201)
+ - [`nekoton_bridge` - `v2.0.1`](#nekoton_bridge---v201)
+
+Packages graduated to a stable release (see pre-releases prior to the stable version for changelog entries):
+
+ - `flutter_nekoton_bridge` - `v2.0.1`
+ - `flutter_nekoton_bridge_example` - `v1.18.1`
+ - `nekoton_bridge` - `v2.0.1`
+
+---
+
+#### `flutter_nekoton_bridge_example` - `v1.18.1`
+
+#### `flutter_nekoton_bridge` - `v2.0.1`
+
+#### `nekoton_bridge` - `v2.0.1`
+
+
+## 2024-12-19
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.0.1-dev.14`](#flutter_nekoton_bridge---v201-dev14)
+ - [`flutter_nekoton_bridge_example` - `v1.18.1-dev.13`](#flutter_nekoton_bridge_example---v1181-dev13)
+ - [`nekoton_bridge` - `v2.0.1-dev.10`](#nekoton_bridge---v201-dev10)
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.0.1-dev.14`
+
+ - **FEAT**: token wallet preload transactions ([#286](https://github.com/broxus/nekoton_bridge/issues/286)). ([ff55c7a8](https://github.com/broxus/nekoton_bridge/commit/ff55c7a84d9b5e19ec2f137d26b81ba94ed721d6))
+
+#### `flutter_nekoton_bridge_example` - `v1.18.1-dev.13`
+
+ - **FEAT**: token wallet preload transactions ([#286](https://github.com/broxus/nekoton_bridge/issues/286)). ([ff55c7a8](https://github.com/broxus/nekoton_bridge/commit/ff55c7a84d9b5e19ec2f137d26b81ba94ed721d6))
+
+#### `nekoton_bridge` - `v2.0.1-dev.10`
+
+ - **FEAT**: token wallet preload transactions ([#286](https://github.com/broxus/nekoton_bridge/issues/286)). ([ff55c7a8](https://github.com/broxus/nekoton_bridge/commit/ff55c7a84d9b5e19ec2f137d26b81ba94ed721d6))
+
+
+## 2024-12-16
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.0.1-dev.13`](#flutter_nekoton_bridge---v201-dev13)
+ - [`nekoton_bridge` - `v2.0.1-dev.9`](#nekoton_bridge---v201-dev9)
+ - [`flutter_nekoton_bridge_example` - `v1.18.1-dev.12`](#flutter_nekoton_bridge_example---v1181-dev12)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `flutter_nekoton_bridge_example` - `v1.18.1-dev.12`
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.0.1-dev.13`
+
+ - **FEAT**: add ton wallet callbacks (`on_details_changed`, `on_custodians_changed`, `on_unconfirmed_transactions_changed`). ([3b146cd4](https://github.com/broxus/nekoton_bridge/commit/3b146cd4fef3f524e0c1c5f518a32444eff1e3f3))
+
+#### `nekoton_bridge` - `v2.0.1-dev.9`
+
+ - **FEAT**: add ton wallet callbacks (`on_details_changed`, `on_custodians_changed`, `on_unconfirmed_transactions_changed`). ([3b146cd4](https://github.com/broxus/nekoton_bridge/commit/3b146cd4fef3f524e0c1c5f518a32444eff1e3f3))
+
+
+## 2024-12-13
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.0.1-dev.12`](#flutter_nekoton_bridge---v201-dev12)
+ - [`flutter_nekoton_bridge_example` - `v1.18.1-dev.11`](#flutter_nekoton_bridge_example---v1181-dev11)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `flutter_nekoton_bridge_example` - `v1.18.1-dev.11`
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.0.1-dev.12`
+
+ - **FIX**: add `ton_wallet_transfer` wallet interaction method. ([7eeb6e02](https://github.com/broxus/nekoton_bridge/commit/7eeb6e024b55a206adacaa1bc156614477b615da))
+
+
+## 2024-12-13
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.0.1-dev.11`](#flutter_nekoton_bridge---v201-dev11)
+ - [`nekoton_bridge` - `v2.0.1-dev.8`](#nekoton_bridge---v201-dev8)
+ - [`flutter_nekoton_bridge_example` - `v1.18.1-dev.10`](#flutter_nekoton_bridge_example---v1181-dev10)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `flutter_nekoton_bridge_example` - `v1.18.1-dev.10`
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.0.1-dev.11`
+
+ - **FIX**: ton `KnownPayload` support. ([e8628199](https://github.com/broxus/nekoton_bridge/commit/e8628199a642edc9477a93b3844a935846550b49))
+
+#### `nekoton_bridge` - `v2.0.1-dev.8`
+
+ - **FIX**: rust-format. ([383d26d7](https://github.com/broxus/nekoton_bridge/commit/383d26d7ce88aee825fda8bbb6b8e434cab7b054))
+
+
+## 2024-12-13
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.0.1-dev.10`](#flutter_nekoton_bridge---v201-dev10)
+ - [`nekoton_bridge` - `v2.0.1-dev.7`](#nekoton_bridge---v201-dev7)
+ - [`flutter_nekoton_bridge_example` - `v1.18.1-dev.9`](#flutter_nekoton_bridge_example---v1181-dev9)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `flutter_nekoton_bridge_example` - `v1.18.1-dev.9`
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.0.1-dev.10`
+
+ - **FIX**: `JettonIncomingTransfer` field fix; add TON wallet types;. ([49a64af7](https://github.com/broxus/nekoton_bridge/commit/49a64af76be1550bf6b717adfab2bc2dc87fab92))
+ - **FEAT**: add `pack_address`. ([47cf1763](https://github.com/broxus/nekoton_bridge/commit/47cf176373028c08dd24a51632d829d6987a0b5b))
+
+#### `nekoton_bridge` - `v2.0.1-dev.7`
+
+ - **FEAT**: add `pack_address`. ([47cf1763](https://github.com/broxus/nekoton_bridge/commit/47cf176373028c08dd24a51632d829d6987a0b5b))
+
+
+## 2024-12-09
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - [`flutter_nekoton_bridge` - `v2.0.1-dev.9`](#flutter_nekoton_bridge---v201-dev9)
+ - [`flutter_nekoton_bridge_example` - `v1.18.1-dev.8`](#flutter_nekoton_bridge_example---v1181-dev8)
+
+Packages with other changes:
+
+ - There are no other changes in this release.
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.0.1-dev.9`
+
+ - **FEAT**: combine token & jetton transaction models. ([d22f1c48](https://github.com/broxus/nekoton_bridge/commit/d22f1c4886932666d8128fb6d9bb501f907434fd))
+ - **BREAKING** **REFACTOR**: remove `tuple`. ([11d9efed](https://github.com/broxus/nekoton_bridge/commit/11d9efed69398b72beba14fedaa00213d82da7bc))
+
+#### `flutter_nekoton_bridge_example` - `v1.18.1-dev.8`
+
+ - **BREAKING** **REFACTOR**: remove `tuple`. ([11d9efed](https://github.com/broxus/nekoton_bridge/commit/11d9efed69398b72beba14fedaa00213d82da7bc))
+
+
+## 2024-12-06
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.0.1-dev.8`](#flutter_nekoton_bridge---v201-dev8)
+ - [`flutter_nekoton_bridge_example` - `v1.18.1-dev.7`](#flutter_nekoton_bridge_example---v1181-dev7)
+ - [`nekoton_bridge` - `v2.0.1-dev.6`](#nekoton_bridge---v201-dev6)
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.0.1-dev.8`
+
+ - **FEAT**: add jetton wallet support ([#276](https://github.com/broxus/nekoton_bridge/issues/276)). ([6120e3c6](https://github.com/broxus/nekoton_bridge/commit/6120e3c638214a5271aa9a901beccd48fe910ff4))
+
+#### `flutter_nekoton_bridge_example` - `v1.18.1-dev.7`
+
+ - **FEAT**: add jetton wallet support ([#276](https://github.com/broxus/nekoton_bridge/issues/276)). ([6120e3c6](https://github.com/broxus/nekoton_bridge/commit/6120e3c638214a5271aa9a901beccd48fe910ff4))
+
+#### `nekoton_bridge` - `v2.0.1-dev.6`
+
+ - **FEAT**: add jetton wallet support ([#276](https://github.com/broxus/nekoton_bridge/issues/276)). ([6120e3c6](https://github.com/broxus/nekoton_bridge/commit/6120e3c638214a5271aa9a901beccd48fe910ff4))
+
+
+## 2024-12-04
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.0.1-dev.7`](#flutter_nekoton_bridge---v201-dev7)
+ - [`flutter_nekoton_bridge_example` - `v1.18.1-dev.6`](#flutter_nekoton_bridge_example---v1181-dev6)
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.0.1-dev.7`
+
+ - **FEAT**: transport http client. ([67411462](https://github.com/broxus/nekoton_bridge/commit/67411462831486246d6e597f1d2af6d810632117))
+
+#### `flutter_nekoton_bridge_example` - `v1.18.1-dev.6`
+
+ - **FEAT**: transport http client. ([67411462](https://github.com/broxus/nekoton_bridge/commit/67411462831486246d6e597f1d2af6d810632117))
+
+
+## 2024-11-27
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.0.1-dev.6`](#flutter_nekoton_bridge---v201-dev6)
+ - [`nekoton_bridge` - `v2.0.1-dev.5`](#nekoton_bridge---v201-dev5)
+ - [`flutter_nekoton_bridge_example` - `v1.18.1-dev.5`](#flutter_nekoton_bridge_example---v1181-dev5)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `flutter_nekoton_bridge_example` - `v1.18.1-dev.5`
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.0.1-dev.6`
+
+ - **FIX**: downgrade `money2` package. ([c5a70412](https://github.com/broxus/nekoton_bridge/commit/c5a7041219809b71b266620fbb3fd9279b309e2e))
+ - **FIX**: tests. ([04e17cc7](https://github.com/broxus/nekoton_bridge/commit/04e17cc763e29d6929292c202c7e2a6d016b7d5f))
+
+#### `nekoton_bridge` - `v2.0.1-dev.5`
+
+ - **FIX**: downgrade `money2` package. ([c5a70412](https://github.com/broxus/nekoton_bridge/commit/c5a7041219809b71b266620fbb3fd9279b309e2e))
+
+
+## 2024-11-26
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.0.1-dev.5`](#flutter_nekoton_bridge---v201-dev5)
+ - [`flutter_nekoton_bridge_example` - `v1.18.1-dev.4`](#flutter_nekoton_bridge_example---v1181-dev4)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `flutter_nekoton_bridge_example` - `v1.18.1-dev.4`
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.0.1-dev.5`
+
+ - **FEAT**: use transport mutex in ton/token wallets. ([5eaa8283](https://github.com/broxus/nekoton_bridge/commit/5eaa8283d8d657c12101cf507b8713519e5d75f0))
+ - **FEAT**: add transport mutex. ([0eaf93a2](https://github.com/broxus/nekoton_bridge/commit/0eaf93a28a5665018324a177151bc0da1da17c6a))
+
+
+## 2024-11-22
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.0.1-dev.4`](#flutter_nekoton_bridge---v201-dev4)
+ - [`nekoton_bridge` - `v2.0.1-dev.4`](#nekoton_bridge---v201-dev4)
+ - [`flutter_nekoton_bridge_example` - `v1.18.1-dev.3`](#flutter_nekoton_bridge_example---v1181-dev3)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `flutter_nekoton_bridge_example` - `v1.18.1-dev.3`
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.0.1-dev.4`
+
+ - **FEAT**: add expiration time to multisig ([#267](https://github.com/broxus/nekoton_bridge/issues/267)). ([3cbf41ce](https://github.com/broxus/nekoton_bridge/commit/3cbf41ce902197784a9f20115965f46e76372317))
+
+#### `nekoton_bridge` - `v2.0.1-dev.4`
+
+ - **FEAT**: add expiration time to multisig ([#267](https://github.com/broxus/nekoton_bridge/issues/267)). ([3cbf41ce](https://github.com/broxus/nekoton_bridge/commit/3cbf41ce902197784a9f20115965f46e76372317))
+
+
+## 2024-11-14
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.0.1-dev.2`](#flutter_nekoton_bridge---v201-dev2)
+ - [`nekoton_bridge` - `v2.0.1-dev.2`](#nekoton_bridge---v201-dev2)
+ - [`flutter_nekoton_bridge_example` - `v1.18.1-dev.2`](#flutter_nekoton_bridge_example---v1181-dev2)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `flutter_nekoton_bridge_example` - `v1.18.1-dev.2`
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.0.1-dev.2`
+
+ - **FIX**: force `nekoton_bridge` version bump. ([8bb103d4](https://github.com/broxus/nekoton_bridge/commit/8bb103d42fc76c7d40138ba0cfede899a6165255))
+
+#### `nekoton_bridge` - `v2.0.1-dev.2`
+
+ - **FIX**: force `nekoton_bridge` version bump. ([8bb103d4](https://github.com/broxus/nekoton_bridge/commit/8bb103d42fc76c7d40138ba0cfede899a6165255))
+
+
+## 2024-09-19
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.0.1-dev.1`](#flutter_nekoton_bridge---v201-dev1)
+ - [`flutter_nekoton_bridge_example` - `v1.18.1-dev.1`](#flutter_nekoton_bridge_example---v1181-dev1)
+ - [`nekoton_bridge` - `v2.0.1-dev.0`](#nekoton_bridge---v201-dev0)
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.0.1-dev.1`
+
+ - **FIX**: Transaction json parse. ([b1977e8e](https://github.com/broxus/nekoton_bridge/commit/b1977e8ef950206f4da5db57cc3ad49f43b1bd50))
+ - **FIX**: android build. ([a68fe9b9](https://github.com/broxus/nekoton_bridge/commit/a68fe9b90e91a65109df7919cb3fb1f0523cbbaa))
+
+#### `flutter_nekoton_bridge_example` - `v1.18.1-dev.1`
+
+ - **FIX**: Transaction json parse. ([b1977e8e](https://github.com/broxus/nekoton_bridge/commit/b1977e8ef950206f4da5db57cc3ad49f43b1bd50))
+ - **FIX**: android build. ([a68fe9b9](https://github.com/broxus/nekoton_bridge/commit/a68fe9b90e91a65109df7919cb3fb1f0523cbbaa))
+
+#### `nekoton_bridge` - `v2.0.1-dev.0`
+
+ - **REFACTOR**: use struct to parse json string. ([35999f74](https://github.com/broxus/nekoton_bridge/commit/35999f74c5613f9888b523f6e94a2658a8a32fb6))
+ - **FIX**: Transaction json parse. ([b1977e8e](https://github.com/broxus/nekoton_bridge/commit/b1977e8ef950206f4da5db57cc3ad49f43b1bd50))
+
+
+## 2024-08-31
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v2.0.1-dev.0`](#flutter_nekoton_bridge---v201-dev0)
+ - [`flutter_nekoton_bridge_example` - `v1.18.1-dev.0`](#flutter_nekoton_bridge_example---v1181-dev0)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `flutter_nekoton_bridge_example` - `v1.18.1-dev.0`
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.0.1-dev.0`
+
+ - **FIX**: pubspec.yaml. ([69d3f686](https://github.com/broxus/nekoton_bridge/commit/69d3f686b07bc9b27dd77d2b5e3a4f0646ea7de2))
+
+
+## 2024-08-31
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - [`flutter_nekoton_bridge` - `v2.0.0`](#flutter_nekoton_bridge---v200)
+ - [`nekoton_bridge` - `v2.0.0`](#nekoton_bridge---v200)
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge_example` - `v1.18.0`](#flutter_nekoton_bridge_example---v1180)
+
+Packages graduated to a stable release (see pre-releases prior to the stable version for changelog entries):
+
+ - `flutter_nekoton_bridge` - `v2.0.0`
+ - `flutter_nekoton_bridge_example` - `v1.18.0`
+ - `nekoton_bridge` - `v2.0.0`
+
+---
+
+#### `flutter_nekoton_bridge` - `v2.0.0`
+
+#### `nekoton_bridge` - `v2.0.0`
+
+#### `flutter_nekoton_bridge_example` - `v1.18.0`
+
+
+## 2024-08-21
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`nekoton_bridge` - `v1.20.0-dev.5`](#nekoton_bridge---v1200-dev5)
+ - [`flutter_nekoton_bridge` - `v1.28.0-dev.7`](#flutter_nekoton_bridge---v1280-dev7)
+ - [`flutter_nekoton_bridge_example` - `v1.18.0-dev.7`](#flutter_nekoton_bridge_example---v1180-dev7)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `flutter_nekoton_bridge` - `v1.28.0-dev.7`
+ - `flutter_nekoton_bridge_example` - `v1.18.0-dev.7`
+
+---
+
+#### `nekoton_bridge` - `v1.20.0-dev.5`
+
+ - **FIX**: `estimate_min_attached_amount` payload fix. ([3c53957e](https://github.com/broxus/nekoton_bridge/commit/3c53957ef0c86ffa487d995142d5a4499bb33acc))
+
+
+## 2024-07-31
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v1.28.0-dev.6`](#flutter_nekoton_bridge---v1280-dev6)
+ - [`flutter_nekoton_bridge_example` - `v1.18.0-dev.6`](#flutter_nekoton_bridge_example---v1180-dev6)
+ - [`nekoton_bridge` - `v1.20.0-dev.4`](#nekoton_bridge---v1200-dev4)
+
+---
+
+#### `flutter_nekoton_bridge` - `v1.28.0-dev.6`
+
+ - **FIX**: rollback codegen files. ([99c57171](https://github.com/broxus/nekoton_bridge/commit/99c57171a4c6dd24f66ebf326e5b041e7406fe22))
+ - **FEAT**: add `simulateTransactionTree` method. ([2df468c3](https://github.com/broxus/nekoton_bridge/commit/2df468c350e1bf336ed87cce69121c38655c85f6))
+
+#### `flutter_nekoton_bridge_example` - `v1.18.0-dev.6`
+
+ - **FEAT**: add `simulateTransactionTree` method. ([2df468c3](https://github.com/broxus/nekoton_bridge/commit/2df468c350e1bf336ed87cce69121c38655c85f6))
+
+#### `nekoton_bridge` - `v1.20.0-dev.4`
+
+ - **FIX**: rust format. ([2bb48093](https://github.com/broxus/nekoton_bridge/commit/2bb48093775e1a54e50e87a504a7442d2c1bba38))
+ - **FEAT**: add `simulateTransactionTree` method. ([2df468c3](https://github.com/broxus/nekoton_bridge/commit/2df468c350e1bf336ed87cce69121c38655c85f6))
+
+
+## 2024-07-29
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v1.28.0-dev.5`](#flutter_nekoton_bridge---v1280-dev5)
+ - [`flutter_nekoton_bridge_example` - `v1.18.0-dev.5`](#flutter_nekoton_bridge_example---v1180-dev5)
+ - [`nekoton_bridge` - `v1.20.0-dev.3`](#nekoton_bridge---v1200-dev3)
+
+---
+
+#### `flutter_nekoton_bridge` - `v1.28.0-dev.5`
+
+ - **FIX**: update nekoton. ([bfc8837d](https://github.com/broxus/nekoton_bridge/commit/bfc8837d4fc94e8a8247341c4a8fbc8cfe1c1727))
+
+#### `flutter_nekoton_bridge_example` - `v1.18.0-dev.5`
+
+ - **FIX**: update nekoton. ([bfc8837d](https://github.com/broxus/nekoton_bridge/commit/bfc8837d4fc94e8a8247341c4a8fbc8cfe1c1727))
+
+#### `nekoton_bridge` - `v1.20.0-dev.3`
+
+ - **FIX**: update nekoton. ([bfc8837d](https://github.com/broxus/nekoton_bridge/commit/bfc8837d4fc94e8a8247341c4a8fbc8cfe1c1727))
+
+
+## 2024-07-26
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v1.28.0-dev.4`](#flutter_nekoton_bridge---v1280-dev4)
+ - [`flutter_nekoton_bridge_example` - `v1.18.0-dev.4`](#flutter_nekoton_bridge_example---v1180-dev4)
+
+---
+
+#### `flutter_nekoton_bridge` - `v1.28.0-dev.4`
+
+ - **FIX**: `estimate_min_attached_amount` return type. ([7fbcb2a1](https://github.com/broxus/nekoton_bridge/commit/7fbcb2a11bb5e3b52cb8b58f9ee56e7651bbcd99))
+
+#### `flutter_nekoton_bridge_example` - `v1.18.0-dev.4`
+
+ - **FIX**: `estimate_min_attached_amount` return type. ([7fbcb2a1](https://github.com/broxus/nekoton_bridge/commit/7fbcb2a11bb5e3b52cb8b58f9ee56e7651bbcd99))
+
+
+## 2024-07-26
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v1.28.0-dev.3`](#flutter_nekoton_bridge---v1280-dev3)
+ - [`flutter_nekoton_bridge_example` - `v1.18.0-dev.3`](#flutter_nekoton_bridge_example---v1180-dev3)
+ - [`nekoton_bridge` - `v1.20.0-dev.2`](#nekoton_bridge---v1200-dev2)
+
+---
+
+#### `flutter_nekoton_bridge` - `v1.28.0-dev.3`
+
+ - **FEAT**: `estimate_min_attached_amount` method ([#250](https://github.com/broxus/nekoton_bridge/issues/250)). ([f2b75c60](https://github.com/broxus/nekoton_bridge/commit/f2b75c6030a4d6e42b8f328ea2e2fbb112647dda))
+
+#### `flutter_nekoton_bridge_example` - `v1.18.0-dev.3`
+
+ - **FEAT**: `estimate_min_attached_amount` method ([#250](https://github.com/broxus/nekoton_bridge/issues/250)). ([f2b75c60](https://github.com/broxus/nekoton_bridge/commit/f2b75c6030a4d6e42b8f328ea2e2fbb112647dda))
+
+#### `nekoton_bridge` - `v1.20.0-dev.2`
+
+ - **FEAT**: `estimate_min_attached_amount` method ([#250](https://github.com/broxus/nekoton_bridge/issues/250)). ([f2b75c60](https://github.com/broxus/nekoton_bridge/commit/f2b75c6030a4d6e42b8f328ea2e2fbb112647dda))
+
+
+## 2024-07-22
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v1.28.0-dev.2`](#flutter_nekoton_bridge---v1280-dev2)
+ - [`flutter_nekoton_bridge_example` - `v1.18.0-dev.2`](#flutter_nekoton_bridge_example---v1180-dev2)
+ - [`nekoton_bridge` - `v1.20.0-dev.1`](#nekoton_bridge---v1200-dev1)
+
+---
+
+#### `flutter_nekoton_bridge` - `v1.28.0-dev.2`
+
+ - **FEAT**: add `token_root_details` method ([#248](https://github.com/broxus/nekoton_bridge/issues/248)). ([b8d962b6](https://github.com/broxus/nekoton_bridge/commit/b8d962b68ecca51c50b906613ddad29132a4dcf5))
+
+#### `flutter_nekoton_bridge_example` - `v1.18.0-dev.2`
+
+ - **FEAT**: add `token_root_details` method ([#248](https://github.com/broxus/nekoton_bridge/issues/248)). ([b8d962b6](https://github.com/broxus/nekoton_bridge/commit/b8d962b68ecca51c50b906613ddad29132a4dcf5))
+
+#### `nekoton_bridge` - `v1.20.0-dev.1`
+
+ - **FEAT**: add `token_root_details` method ([#248](https://github.com/broxus/nekoton_bridge/issues/248)). ([b8d962b6](https://github.com/broxus/nekoton_bridge/commit/b8d962b68ecca51c50b906613ddad29132a4dcf5))
+
+
+## 2024-07-02
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v1.28.0-dev.1`](#flutter_nekoton_bridge---v1280-dev1)
+ - [`flutter_nekoton_bridge_example` - `v1.18.0-dev.1`](#flutter_nekoton_bridge_example---v1180-dev1)
+
+Packages with dependency updates only:
+
+> Packages listed below depend on other packages in this workspace that have had changes. Their versions have been incremented to bump the minimum dependency versions of the packages they depend upon in this project.
+
+ - `flutter_nekoton_bridge_example` - `v1.18.0-dev.1`
+
+---
+
+#### `flutter_nekoton_bridge` - `v1.28.0-dev.1`
+
+ - **FIX**: StorageFeeInfo model. ([de7d50ae](https://github.com/broxus/nekoton_bridge/commit/de7d50ae26cf1b77b062ba742ec217e402980f0e))
+
+
+## 2024-07-01
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
+ - [`flutter_nekoton_bridge` - `v1.28.0-dev.0`](#flutter_nekoton_bridge---v1280-dev0)
+ - [`flutter_nekoton_bridge_example` - `v1.18.0-dev.0`](#flutter_nekoton_bridge_example---v1180-dev0)
+ - [`nekoton_bridge` - `v1.20.0-dev.0`](#nekoton_bridge---v1200-dev0)
+
+---
+
+#### `flutter_nekoton_bridge` - `v1.28.0-dev.0`
+
+ - **FEAT**: add compute_storage_fee ([#245](https://github.com/broxus/nekoton_bridge/issues/245)). ([02e762a8](https://github.com/broxus/nekoton_bridge/commit/02e762a8ca2595e98056a4dae65c97cf07569df0))
+
+#### `flutter_nekoton_bridge_example` - `v1.18.0-dev.0`
+
+ - **FEAT**: add compute_storage_fee ([#245](https://github.com/broxus/nekoton_bridge/issues/245)). ([02e762a8](https://github.com/broxus/nekoton_bridge/commit/02e762a8ca2595e98056a4dae65c97cf07569df0))
+
+#### `nekoton_bridge` - `v1.20.0-dev.0`
+
+ - **FEAT**: add compute_storage_fee ([#245](https://github.com/broxus/nekoton_bridge/issues/245)). ([02e762a8](https://github.com/broxus/nekoton_bridge/commit/02e762a8ca2595e98056a4dae65c97cf07569df0))
+
+
 ## 2023-12-05
 
 ### Changes

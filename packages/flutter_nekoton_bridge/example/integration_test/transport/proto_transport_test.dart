@@ -3,24 +3,30 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_nekoton_bridge/flutter_nekoton_bridge.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:integration_test/integration_test.dart';
 import 'package:http/http.dart' as http;
+import 'package:integration_test/integration_test.dart';
 
 import '../timeout_utils.dart';
 import 'contract_abi.dart';
 
-Future<Uint8List> postTransportData({
-  required String endpoint,
-  required Map<String, String> headers,
-  required Uint8List dataBytes,
-}) async {
-  final response = await http.post(
-    Uri.parse(endpoint),
-    headers: headers,
-    body: dataBytes,
-  );
+class HttpClient implements ProtoConnectionHttpClient {
+  @override
+  Future<Uint8List> post({
+    required String endpoint,
+    required Map<String, String> headers,
+    required Uint8List dataBytes,
+  }) async {
+    final response = await http.post(
+      Uri.parse(endpoint),
+      headers: headers,
+      body: dataBytes,
+    );
 
-  return response.bodyBytes;
+    return response.bodyBytes;
+  }
+
+  @override
+  void dispose() {}
 }
 
 void main() {
@@ -39,10 +45,10 @@ void main() {
 
   const protoSettings = ProtoNetworkSettings(endpoint: endpoint);
 
-  setUp(() {
+  setUp(() async {
     // This setup thing SHOULD NOT be removed or altered because it used in integration tests
     setupLogger(
-      level: LogLevel.Trace,
+      level: LogLevel.trace,
       mobileLogger: false,
       logHandler: (logEntry) => debugPrint(
         'FromLib: ${logEntry.level} ${logEntry.tag} ${logEntry.msg} (lib_time=${logEntry.timeMillis})',
@@ -52,15 +58,19 @@ void main() {
     runApp(Container());
   });
 
+  setUpAll(() async {
+    await NekotonBridge.init();
+  });
+
   // TODO(nesquikm): it's not clear which test is causing flaky behavior
-  group('ProtoTransport tests', () {
+  group('ProtoTransport', () {
     testWidgets('Create ProtoTransport', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
       await initRustToDartCaller();
 
-      final connection = await ProtoConnection.create(
-        post: postTransportData,
+      final connection = ProtoConnection.create(
+        client: HttpClient(),
         settings: protoSettings,
         name: name,
         group: networkGroup,
@@ -71,13 +81,13 @@ void main() {
       expect(transport.transport, isNotNull);
     });
 
-    testWidgets('ProtoTransport getSignatureId ', (WidgetTester tester) async {
+    testWidgets('getSignatureId ', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
       await initRustToDartCaller();
 
-      final connection = await ProtoConnection.create(
-        post: postTransportData,
+      final connection = ProtoConnection.create(
+        client: HttpClient(),
         settings: protoSettings,
         name: name,
         group: networkGroup,
@@ -90,34 +100,33 @@ void main() {
       expect(signature, isNull);
     });
 
-    testWidgets('ProtoTransport getSignatureId venom ',
-        (WidgetTester tester) async {
+    testWidgets('getSignatureId venom ', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
       await initRustToDartCaller();
-      const venomEndpoint = 'https://jrpc-testnet.venom.foundation/proto';
+      const venomEndpoint = 'https://jrpc.venom.foundation';
 
-      final connection = await ProtoConnection.create(
-        post: postTransportData,
+      final connection = ProtoConnection.create(
+        client: HttpClient(),
         settings: const ProtoNetworkSettings(endpoint: venomEndpoint),
-        name: 'Testnet Venom',
-        group: 'testnet',
+        name: 'Venom',
+        group: 'venom',
       );
       final transport =
           await ProtoTransport.create(protoConnection: connection);
 
       final signature = await transport.getSignatureId();
 
-      expect(signature, 1000);
+      expect(signature, 1);
     });
 
-    testWidgets('ProtoTransport getTransactions ', (WidgetTester tester) async {
+    testWidgets('getTransactions ', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
       await initRustToDartCaller();
 
-      final connection = await ProtoConnection.create(
-        post: postTransportData,
+      final connection = ProtoConnection.create(
+        client: HttpClient(),
         settings: protoSettings,
         name: name,
         group: networkGroup,
@@ -133,13 +142,13 @@ void main() {
       expect(transactions.transactions.length, 1);
     });
 
-    testWidgets('ProtoTransport getTransaction ', (WidgetTester tester) async {
+    testWidgets('getTransaction ', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
       await initRustToDartCaller();
 
-      final connection = await ProtoConnection.create(
-        post: postTransportData,
+      final connection = ProtoConnection.create(
+        client: HttpClient(),
         settings: protoSettings,
         name: name,
         group: networkGroup,
@@ -156,14 +165,13 @@ void main() {
       expect(transaction.outMessages.length, 0);
     });
 
-    testWidgets('ProtoTransport getDstTransaction',
-        (WidgetTester tester) async {
+    testWidgets('getDstTransaction', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
       await initRustToDartCaller();
 
-      final connection = await ProtoConnection.create(
-        post: postTransportData,
+      final connection = ProtoConnection.create(
+        client: HttpClient(),
         settings: protoSettings,
         name: name,
         group: networkGroup,
@@ -186,13 +194,13 @@ void main() {
       expect(transaction.outMessages.length, 1);
     });
 
-    testWidgets('ProtoTransport multiple calls ', (WidgetTester tester) async {
+    testWidgets('multiple calls ', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
       await initRustToDartCaller();
 
-      final connection = await ProtoConnection.create(
-        post: postTransportData,
+      final connection = ProtoConnection.create(
+        client: HttpClient(),
         settings: protoSettings,
         name: name,
         group: networkGroup,
@@ -221,14 +229,13 @@ void main() {
       );
     });
 
-    testWidgets('ProtoTransport getContractState ',
-        (WidgetTester tester) async {
+    testWidgets('getContractState ', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
 
       await initRustToDartCaller();
 
-      final connection = await ProtoConnection.create(
-        post: postTransportData,
+      final connection = ProtoConnection.create(
+        client: HttpClient(),
         settings: protoSettings,
         name: name,
         group: networkGroup,
@@ -245,15 +252,15 @@ void main() {
       );
     });
 
-    testWidgets('ProtoTransport getFullContractState ', (
+    testWidgets('getFullContractState ', (
       WidgetTester tester,
     ) async {
       await tester.pumpAndSettleWithTimeout();
 
       await initRustToDartCaller();
 
-      final connection = await ProtoConnection.create(
-        post: postTransportData,
+      final connection = ProtoConnection.create(
+        client: HttpClient(),
         settings: protoSettings,
         name: name,
         group: networkGroup,
@@ -268,15 +275,15 @@ void main() {
       expect(state.isDeployed, true);
     });
 
-    testWidgets('ProtoTransport getContractFields', (
+    testWidgets('getContractFields', (
       WidgetTester tester,
     ) async {
       await tester.pumpAndSettleWithTimeout();
 
       await initRustToDartCaller();
 
-      final connection = await ProtoConnection.create(
-        post: postTransportData,
+      final connection = ProtoConnection.create(
+        client: HttpClient(),
         settings: protoSettings,
         name: name,
         group: networkGroup,
@@ -297,12 +304,12 @@ void main() {
       expect(state, isNotNull);
     });
 
-    testWidgets('ProtoTransport getNetworkId ', (WidgetTester tester) async {
+    testWidgets('getNetworkId ', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
       await initRustToDartCaller();
 
-      final connection = await ProtoConnection.create(
-        post: postTransportData,
+      final connection = ProtoConnection.create(
+        client: HttpClient(),
         settings: protoSettings,
         name: name,
         group: networkGroup,
@@ -313,31 +320,29 @@ void main() {
       expect(id, 42);
     });
 
-    testWidgets('ProtoTransport getNetworkId venom ',
-        (WidgetTester tester) async {
+    testWidgets('getNetworkId venom ', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
       await initRustToDartCaller();
-      const venomEndpoint = 'https://jrpc-testnet.venom.foundation/proto';
+      const venomEndpoint = 'https://jrpc.venom.foundation';
 
-      final connection = await ProtoConnection.create(
-        post: postTransportData,
+      final connection = ProtoConnection.create(
+        client: HttpClient(),
         settings: const ProtoNetworkSettings(endpoint: venomEndpoint),
-        name: 'Testnet Venom',
-        group: 'testnet',
+        name: 'Venom',
+        group: 'venom',
       );
       final transport =
           await ProtoTransport.create(protoConnection: connection);
       final id = await transport.getNetworkId();
-      expect(id, 1000);
+      expect(id, 1);
     });
 
-    testWidgets('ProtoTransport getBlockchainConfig ',
-        (WidgetTester tester) async {
+    testWidgets('getBlockchainConfig ', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
       await initRustToDartCaller();
 
-      final connection = await ProtoConnection.create(
-        post: postTransportData,
+      final connection = ProtoConnection.create(
+        client: HttpClient(),
         settings: protoSettings,
         name: name,
         group: networkGroup,
@@ -351,13 +356,12 @@ void main() {
       expect(config.globalVersion, 32);
     });
 
-    testWidgets('ProtoTransport simulateTransactionTree ',
-        (WidgetTester tester) async {
+    testWidgets('simulateTransactionTree ', (WidgetTester tester) async {
       await tester.pumpAndSettleWithTimeout();
       await initRustToDartCaller();
 
-      final connection = await ProtoConnection.create(
-        post: postTransportData,
+      final connection = ProtoConnection.create(
+        client: HttpClient(),
         settings: protoSettings,
         name: name,
         group: networkGroup,
@@ -377,12 +381,16 @@ void main() {
         publicKey: const PublicKey(
             publicKey:
                 '6c2f9514c1c0f2ec54cffe1ac2ba0e85268e76442c14205581ebc808fe7ee52c'),
-        destination: const Address(
-            address:
-                '-1:06eec9c3a6f122c29697d27ae987e4b911d4dadc937e23c7aa58bbf1e484b20f'),
-        amount: BigInt.parse('1000000000'),
-        bounce: false,
         expiration: const Expiration.timeout(60),
+        params: [
+          TonWalletTransferParams(
+            destination: const Address(
+                address:
+                    '-1:06eec9c3a6f122c29697d27ae987e4b911d4dadc937e23c7aa58bbf1e484b20f'),
+            amount: BigInt.parse('1000000000'),
+            bounce: false,
+          ),
+        ],
       );
       final signedMessage = await message.signFake();
       final errors = await transport.simulateTransactionTree(
@@ -393,6 +401,29 @@ void main() {
 
       expect(errors, isNotNull);
       expect(errors, isNotEmpty);
+    });
+
+    testWidgets('getFeeFactors', (WidgetTester tester) async {
+      await tester.pumpAndSettleWithTimeout();
+
+      await initRustToDartCaller();
+
+      final connection = ProtoConnection.create(
+        client: HttpClient(),
+        settings: protoSettings,
+        name: name,
+        group: networkGroup,
+      );
+      final transport =
+          await ProtoTransport.create(protoConnection: connection);
+      final feeFactors = await transport.getFeeFactors(isMasterchain: true);
+
+      expect(feeFactors, isNotNull);
+      expect(feeFactors.storageFeeFactor, isNotNull);
+      expect(feeFactors.gasFeeFactor, isNotNull);
+
+      expect(feeFactors.storageFeeFactor, greaterThan(0));
+      expect(feeFactors.gasFeeFactor, greaterThan(0));
     });
   });
 }
