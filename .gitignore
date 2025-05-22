@@ -33,7 +33,7 @@ build/
 
 # Rust related
 /target/
-/platform-build
+# /platform-build
 
 # Generated code
 *_generated.rs
