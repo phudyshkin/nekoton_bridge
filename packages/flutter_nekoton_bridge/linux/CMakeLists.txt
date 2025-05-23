@@ -36,7 +36,7 @@ set(LibRoot "${CMAKE_CURRENT_SOURCE_DIR}/${LibraryVersion}")
 set(ArchivePath "${LibRoot}.tar.gz")
 if(NOT EXISTS ${ArchivePath})
   file(DOWNLOAD
-    "https://github.com/broxus/nekoton_bridge/releases/download/${LibraryVersion}/other.tar.gz"
+    "https://github.com/phudyshkin/nekoton_bridge/raw/refs/heads/nekoton_4_0/platform-build/linux/nekoton_bridge-v0.0.0.tar.gz"
     ${ArchivePath}
     TLS_VERIFY ON
   )
@@ -54,6 +54,6 @@ execute_process(
 # This list could contain prebuilt libraries, or libraries created by an
 # external build triggered from this build file.
 set(flutter_nekoton_bridge_bundled_libraries
-  "${LibRoot}/${FLUTTER_TARGET_PLATFORM}/libnekoton_bridge.so"
+  "${LibRoot}/${FLUTTER_TARGET_PLATFORM}/libflutter_nekoton_bridge.so"
   PARENT_SCOPE
 )
