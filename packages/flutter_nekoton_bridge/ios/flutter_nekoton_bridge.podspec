@@ -32,7 +32,7 @@ release_tag_name = 'nekoton_bridge-v2.8.2' # generated; do not edit
 framework_name = 'NekotonBridge.xcframework'
 local_build_zip_name = "../../../../platform-build/#{framework_name}.zip"
 remote_zip_name = "#{framework_name}.zip"
-url = "https://github.com/broxus/nekoton_bridge/releases/download/#{release_tag_name}/#{remote_zip_name}"
+url = "https://github.com/phudyshkin/nekoton_bridge/raw/refs/heads/nekoton_4_0/platform-build/ios/#{remote_zip_name}"
 local_zip_name = "#{release_tag_name}.zip"
 `
 cd Frameworks
