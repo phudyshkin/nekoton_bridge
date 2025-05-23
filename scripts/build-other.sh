@@ -30,7 +30,7 @@ win_build () {
 }
 
 # Build all the dynamic libraries
-LINUX_LIBNAME=libnekoton_bridge.so
+LINUX_LIBNAME=libflutter_nekoton_bridge.so
 zig_build aarch64-unknown-linux-gnu linux-arm64 $LINUX_LIBNAME
 zig_build x86_64-unknown-linux-gnu linux-x64 $LINUX_LIBNAME
 #WINDOWS_LIBNAME=nekoton_bridge.dll
