@@ -6,8 +6,7 @@ part of 'transaction.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$TransactionImpl _$$TransactionImplFromJson(Map<String, dynamic> json) =>
-    _$TransactionImpl(
+_Transaction _$TransactionFromJson(Map<String, dynamic> json) => _Transaction(
       id: TransactionId.fromJson(json['id'] as Map<String, dynamic>),
       prevTransactionId: json['prevTransactionId'] == null
           ? null
@@ -20,7 +19,7 @@ _$TransactionImpl _$$TransactionImplFromJson(Map<String, dynamic> json) =>
       resultCode: (json['resultCode'] as num?)?.toInt(),
       origStatus: $enumDecode(_$AccountStatusEnumMap, json['origStatus']),
       endStatus: $enumDecode(_$AccountStatusEnumMap, json['endStatus']),
-      totalFees: amountJsonConverter.fromJson(json['totalFees'] as String),
+      totalFees: BigInt.parse(json['totalFees'] as String),
       inMessage: Message.fromJson(json['inMessage'] as Map<String, dynamic>),
       outMessages: (json['outMessages'] as List<dynamic>)
           .map((e) => Message.fromJson(e as Map<String, dynamic>))
@@ -28,7 +27,7 @@ _$TransactionImpl _$$TransactionImplFromJson(Map<String, dynamic> json) =>
       boc: json['boc'] as String?,
     );
 
-Map<String, dynamic> _$$TransactionImplToJson(_$TransactionImpl instance) =>
+Map<String, dynamic> _$TransactionToJson(_Transaction instance) =>
     <String, dynamic>{
       'id': instance.id.toJson(),
       'prevTransactionId': instance.prevTransactionId?.toJson(),
@@ -39,7 +38,7 @@ Map<String, dynamic> _$$TransactionImplToJson(_$TransactionImpl instance) =>
       if (instance.resultCode case final value?) 'resultCode': value,
       'origStatus': _$AccountStatusEnumMap[instance.origStatus]!,
       'endStatus': _$AccountStatusEnumMap[instance.endStatus]!,
-      'totalFees': amountJsonConverter.toJson(instance.totalFees),
+      'totalFees': instance.totalFees.toString(),
       'inMessage': instance.inMessage.toJson(),
       'outMessages': instance.outMessages.map((e) => e.toJson()).toList(),
       'boc': instance.boc,

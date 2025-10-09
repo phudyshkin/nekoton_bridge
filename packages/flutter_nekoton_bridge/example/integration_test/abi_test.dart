@@ -1,10 +1,32 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:flutter_nekoton_bridge/flutter_nekoton_bridge.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http/http.dart' as http;
 import 'package:integration_test/integration_test.dart';
 
 import 'timeout_utils.dart';
+
+class HttpClient implements ProtoConnectionHttpClient {
+  @override
+  Future<Uint8List> post({
+    required String endpoint,
+    required Map<String, String> headers,
+    required Uint8List dataBytes,
+  }) async {
+    final response = await http.post(
+      Uri.parse(endpoint),
+      headers: headers,
+      body: dataBytes,
+    );
+
+    return response.bodyBytes;
+  }
+
+  @override
+  void dispose() {}
+}
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -90,31 +112,103 @@ void main() {
 
     expect(knownTokenTransactionPayload, isNotNull);
     expect(
-      knownTokenTransactionPayload!.whenOrNull(
-        tokenOutgoingTransfer: (data) => data,
-      ),
+      switch (knownTokenTransactionPayload!) {
+        KnownPayloadTokenOutgoingTransfer(data: final data) => data,
+        _ => null,
+      },
       isNotNull,
     );
     expect(
-      knownTokenTransactionPayload.whenOrNull(
-        tokenOutgoingTransfer: (data) => data.tokens,
-      ),
+      switch (knownTokenTransactionPayload) {
+        KnownPayloadTokenOutgoingTransfer(data: final data) => data.tokens,
+        _ => null,
+      },
       BigInt.parse('1000000000'),
     );
 
     expect(knownJettonTransactionPayload, isNotNull);
     expect(
-      knownJettonTransactionPayload!.whenOrNull(
-        jettonOutgoingTransfer: (data) => data,
-      ),
+      switch (knownJettonTransactionPayload!) {
+        KnownPayloadJettonOutgoingTransfer(data: final data) => data,
+        _ => null,
+      },
       isNotNull,
     );
     expect(
-      knownJettonTransactionPayload.whenOrNull(
-        jettonOutgoingTransfer: (data) => data.tokens,
-      ),
+      switch (knownJettonTransactionPayload) {
+        KnownPayloadJettonOutgoingTransfer(data: final data) => data.tokens,
+        _ => null,
+      },
       BigInt.parse('10000'),
     );
+  });
+
+  testWidgets('computeTonWalletAddress', (WidgetTester tester) async {
+    await tester.pumpAndSettleWithTimeout();
+    await initRustToDartCaller();
+
+    final tonWalletAddress = computeTonWalletAddress(
+      walletType: const WalletType.everWallet(),
+      publicKey: const PublicKey(
+          publicKey:
+              '6c2f9514c1c0f2ec54cffe1ac2ba0e85268e76442c14205581ebc808fe7ee52c'),
+      workchain: 0,
+    );
+
+    expect(
+      tonWalletAddress.address,
+      '0:fbf531128cba1f1b24778917b1e7e4916647ffc27828f97666201b032707822b',
+    );
+  });
+
+  testWidgets('getContractTypeNumber', (WidgetTester tester) async {
+    await tester.pumpAndSettleWithTimeout();
+    await initRustToDartCaller();
+
+    final ew = getContractTypeNumber(const WalletType.everWallet());
+    final v3 = getContractTypeNumber(const WalletType.walletV3());
+    final ms = getContractTypeNumber(
+      const WalletType.multisig(MultisigType.multisig2_1),
+    );
+
+    expect(ew, 1);
+    expect(v3, 0);
+    expect(ms, 8);
+  });
+
+  testWidgets('runLocalWithLibs', (WidgetTester tester) async {
+    await tester.pumpAndSettleWithTimeout();
+    await initRustToDartCaller();
+
+    const testLibraryAbi =
+        '{"ABI version":2,"version":"2.7","header":["time","expire"],"functions":[{"name":"testAddGetter","inputs":[{"name":"a","type":"uint256"},{"name":"b","type":"uint256"}],"outputs":[{"name":"value0","type":"uint256"}]}],"getters":[],"events":[],"fields":[]}';
+    const address = Address(
+      address:
+          '0:84105d39805e023053cbf2b6a30e3c495b41678eec854b0fa56c9228abd5c975',
+    );
+
+    final connection = ProtoConnection.create(
+      client: HttpClient(),
+      settings: const ProtoNetworkSettings(
+        endpoint: 'https://rpc-testnet.tychoprotocol.com',
+      ),
+      name: 'Tycho Testnet',
+      group: 'tycho_testnet',
+    );
+    final transport = await ProtoTransport.create(protoConnection: connection);
+    final state = await transport.getFullContractState(address);
+
+    final result = await runLocalWithLibs(
+      transport: transport,
+      contractAbi: testLibraryAbi,
+      methodId: 'testAddGetter',
+      input: {'a': 1, 'b': 2},
+      responsible: false,
+      accountStuffBoc: state!.boc,
+    );
+
+    expect(result.code, 0);
+    expect(result.output!['value0'], '3');
   });
 
   // Moved to integration tests due to the need to call native methods (packAddress, repackAddress)

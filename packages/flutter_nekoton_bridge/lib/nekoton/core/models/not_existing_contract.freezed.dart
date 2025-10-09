@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,135 +10,29 @@ part of 'not_existing_contract.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-NotExistingContract _$NotExistingContractFromJson(Map<String, dynamic> json) {
-  return _NotExistingContract.fromJson(json);
-}
 
 /// @nodoc
 mixin _$NotExistingContract {
-  GenTimings get timings => throw _privateConstructorUsedError;
-
-  /// Serializes this NotExistingContract to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  GenTimings get timings;
 
   /// Create a copy of NotExistingContract
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $NotExistingContractCopyWith<NotExistingContract> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+      _$NotExistingContractCopyWithImpl<NotExistingContract>(
+          this as NotExistingContract, _$identity);
 
-/// @nodoc
-abstract class $NotExistingContractCopyWith<$Res> {
-  factory $NotExistingContractCopyWith(
-          NotExistingContract value, $Res Function(NotExistingContract) then) =
-      _$NotExistingContractCopyWithImpl<$Res, NotExistingContract>;
-  @useResult
-  $Res call({GenTimings timings});
-
-  $GenTimingsCopyWith<$Res> get timings;
-}
-
-/// @nodoc
-class _$NotExistingContractCopyWithImpl<$Res, $Val extends NotExistingContract>
-    implements $NotExistingContractCopyWith<$Res> {
-  _$NotExistingContractCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of NotExistingContract
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? timings = null,
-  }) {
-    return _then(_value.copyWith(
-      timings: null == timings
-          ? _value.timings
-          : timings // ignore: cast_nullable_to_non_nullable
-              as GenTimings,
-    ) as $Val);
-  }
-
-  /// Create a copy of NotExistingContract
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $GenTimingsCopyWith<$Res> get timings {
-    return $GenTimingsCopyWith<$Res>(_value.timings, (value) {
-      return _then(_value.copyWith(timings: value) as $Val);
-    });
-  }
-}
-
-/// @nodoc
-abstract class _$$NotExistingContractImplCopyWith<$Res>
-    implements $NotExistingContractCopyWith<$Res> {
-  factory _$$NotExistingContractImplCopyWith(_$NotExistingContractImpl value,
-          $Res Function(_$NotExistingContractImpl) then) =
-      __$$NotExistingContractImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({GenTimings timings});
-
-  @override
-  $GenTimingsCopyWith<$Res> get timings;
-}
-
-/// @nodoc
-class __$$NotExistingContractImplCopyWithImpl<$Res>
-    extends _$NotExistingContractCopyWithImpl<$Res, _$NotExistingContractImpl>
-    implements _$$NotExistingContractImplCopyWith<$Res> {
-  __$$NotExistingContractImplCopyWithImpl(_$NotExistingContractImpl _value,
-      $Res Function(_$NotExistingContractImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of NotExistingContract
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? timings = null,
-  }) {
-    return _then(_$NotExistingContractImpl(
-      timings: null == timings
-          ? _value.timings
-          : timings // ignore: cast_nullable_to_non_nullable
-              as GenTimings,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$NotExistingContractImpl implements _NotExistingContract {
-  const _$NotExistingContractImpl({required this.timings});
-
-  factory _$NotExistingContractImpl.fromJson(Map<String, dynamic> json) =>
-      _$$NotExistingContractImplFromJson(json);
-
-  @override
-  final GenTimings timings;
-
-  @override
-  String toString() {
-    return 'NotExistingContract(timings: $timings)';
-  }
+  /// Serializes this NotExistingContract to a JSON map.
+  Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$NotExistingContractImpl &&
+            other is NotExistingContract &&
             (identical(other.timings, timings) || other.timings == timings));
   }
 
@@ -145,37 +40,147 @@ class _$NotExistingContractImpl implements _NotExistingContract {
   @override
   int get hashCode => Object.hash(runtimeType, timings);
 
+  @override
+  String toString() {
+    return 'NotExistingContract(timings: $timings)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $NotExistingContractCopyWith<$Res> {
+  factory $NotExistingContractCopyWith(
+          NotExistingContract value, $Res Function(NotExistingContract) _then) =
+      _$NotExistingContractCopyWithImpl;
+  @useResult
+  $Res call({GenTimings timings});
+
+  $GenTimingsCopyWith<$Res> get timings;
+}
+
+/// @nodoc
+class _$NotExistingContractCopyWithImpl<$Res>
+    implements $NotExistingContractCopyWith<$Res> {
+  _$NotExistingContractCopyWithImpl(this._self, this._then);
+
+  final NotExistingContract _self;
+  final $Res Function(NotExistingContract) _then;
+
   /// Create a copy of NotExistingContract
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? timings = null,
+  }) {
+    return _then(_self.copyWith(
+      timings: null == timings
+          ? _self.timings
+          : timings // ignore: cast_nullable_to_non_nullable
+              as GenTimings,
+    ));
+  }
+
+  /// Create a copy of NotExistingContract
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  _$$NotExistingContractImplCopyWith<_$NotExistingContractImpl> get copyWith =>
-      __$$NotExistingContractImplCopyWithImpl<_$NotExistingContractImpl>(
+  $GenTimingsCopyWith<$Res> get timings {
+    return $GenTimingsCopyWith<$Res>(_self.timings, (value) {
+      return _then(_self.copyWith(timings: value));
+    });
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _NotExistingContract implements NotExistingContract {
+  const _NotExistingContract({required this.timings});
+  factory _NotExistingContract.fromJson(Map<String, dynamic> json) =>
+      _$NotExistingContractFromJson(json);
+
+  @override
+  final GenTimings timings;
+
+  /// Create a copy of NotExistingContract
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$NotExistingContractCopyWith<_NotExistingContract> get copyWith =>
+      __$NotExistingContractCopyWithImpl<_NotExistingContract>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$NotExistingContractImplToJson(
+    return _$NotExistingContractToJson(
       this,
     );
   }
-}
-
-abstract class _NotExistingContract implements NotExistingContract {
-  const factory _NotExistingContract({required final GenTimings timings}) =
-      _$NotExistingContractImpl;
-
-  factory _NotExistingContract.fromJson(Map<String, dynamic> json) =
-      _$NotExistingContractImpl.fromJson;
 
   @override
-  GenTimings get timings;
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _NotExistingContract &&
+            (identical(other.timings, timings) || other.timings == timings));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, timings);
+
+  @override
+  String toString() {
+    return 'NotExistingContract(timings: $timings)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$NotExistingContractCopyWith<$Res>
+    implements $NotExistingContractCopyWith<$Res> {
+  factory _$NotExistingContractCopyWith(_NotExistingContract value,
+          $Res Function(_NotExistingContract) _then) =
+      __$NotExistingContractCopyWithImpl;
+  @override
+  @useResult
+  $Res call({GenTimings timings});
+
+  @override
+  $GenTimingsCopyWith<$Res> get timings;
+}
+
+/// @nodoc
+class __$NotExistingContractCopyWithImpl<$Res>
+    implements _$NotExistingContractCopyWith<$Res> {
+  __$NotExistingContractCopyWithImpl(this._self, this._then);
+
+  final _NotExistingContract _self;
+  final $Res Function(_NotExistingContract) _then;
 
   /// Create a copy of NotExistingContract
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$NotExistingContractImplCopyWith<_$NotExistingContractImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? timings = null,
+  }) {
+    return _then(_NotExistingContract(
+      timings: null == timings
+          ? _self.timings
+          : timings // ignore: cast_nullable_to_non_nullable
+              as GenTimings,
+    ));
+  }
+
+  /// Create a copy of NotExistingContract
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $GenTimingsCopyWith<$Res> get timings {
+    return $GenTimingsCopyWith<$Res>(_self.timings, (value) {
+      return _then(_self.copyWith(timings: value));
+    });
+  }
 }
+
+// dart format on

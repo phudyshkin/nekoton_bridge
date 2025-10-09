@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,236 +10,36 @@ part of 'de_pool_on_round_complete_notification.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-DePoolOnRoundCompleteNotification _$DePoolOnRoundCompleteNotificationFromJson(
-    Map<String, dynamic> json) {
-  return _DePoolOnRoundCompleteNotification.fromJson(json);
-}
 
 /// @nodoc
 mixin _$DePoolOnRoundCompleteNotification {
-  String get roundId => throw _privateConstructorUsedError;
-  @amountJsonConverter
-  BigInt get reward => throw _privateConstructorUsedError;
-  @amountJsonConverter
-  BigInt get ordinaryStake => throw _privateConstructorUsedError;
-  @amountJsonConverter
-  BigInt get vestingStake => throw _privateConstructorUsedError;
-  @amountJsonConverter
-  BigInt get lockStake => throw _privateConstructorUsedError;
-  bool get reinvest => throw _privateConstructorUsedError;
-  int get reason => throw _privateConstructorUsedError;
-
-  /// Serializes this DePoolOnRoundCompleteNotification to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  String get roundId;
+  BigInt get reward;
+  BigInt get ordinaryStake;
+  BigInt get vestingStake;
+  BigInt get lockStake;
+  bool get reinvest;
+  int get reason;
 
   /// Create a copy of DePoolOnRoundCompleteNotification
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $DePoolOnRoundCompleteNotificationCopyWith<DePoolOnRoundCompleteNotification>
-      get copyWith => throw _privateConstructorUsedError;
-}
+      get copyWith => _$DePoolOnRoundCompleteNotificationCopyWithImpl<
+              DePoolOnRoundCompleteNotification>(
+          this as DePoolOnRoundCompleteNotification, _$identity);
 
-/// @nodoc
-abstract class $DePoolOnRoundCompleteNotificationCopyWith<$Res> {
-  factory $DePoolOnRoundCompleteNotificationCopyWith(
-          DePoolOnRoundCompleteNotification value,
-          $Res Function(DePoolOnRoundCompleteNotification) then) =
-      _$DePoolOnRoundCompleteNotificationCopyWithImpl<$Res,
-          DePoolOnRoundCompleteNotification>;
-  @useResult
-  $Res call(
-      {String roundId,
-      @amountJsonConverter BigInt reward,
-      @amountJsonConverter BigInt ordinaryStake,
-      @amountJsonConverter BigInt vestingStake,
-      @amountJsonConverter BigInt lockStake,
-      bool reinvest,
-      int reason});
-}
-
-/// @nodoc
-class _$DePoolOnRoundCompleteNotificationCopyWithImpl<$Res,
-        $Val extends DePoolOnRoundCompleteNotification>
-    implements $DePoolOnRoundCompleteNotificationCopyWith<$Res> {
-  _$DePoolOnRoundCompleteNotificationCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of DePoolOnRoundCompleteNotification
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? roundId = null,
-    Object? reward = null,
-    Object? ordinaryStake = null,
-    Object? vestingStake = null,
-    Object? lockStake = null,
-    Object? reinvest = null,
-    Object? reason = null,
-  }) {
-    return _then(_value.copyWith(
-      roundId: null == roundId
-          ? _value.roundId
-          : roundId // ignore: cast_nullable_to_non_nullable
-              as String,
-      reward: null == reward
-          ? _value.reward
-          : reward // ignore: cast_nullable_to_non_nullable
-              as BigInt,
-      ordinaryStake: null == ordinaryStake
-          ? _value.ordinaryStake
-          : ordinaryStake // ignore: cast_nullable_to_non_nullable
-              as BigInt,
-      vestingStake: null == vestingStake
-          ? _value.vestingStake
-          : vestingStake // ignore: cast_nullable_to_non_nullable
-              as BigInt,
-      lockStake: null == lockStake
-          ? _value.lockStake
-          : lockStake // ignore: cast_nullable_to_non_nullable
-              as BigInt,
-      reinvest: null == reinvest
-          ? _value.reinvest
-          : reinvest // ignore: cast_nullable_to_non_nullable
-              as bool,
-      reason: null == reason
-          ? _value.reason
-          : reason // ignore: cast_nullable_to_non_nullable
-              as int,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$DePoolOnRoundCompleteNotificationImplCopyWith<$Res>
-    implements $DePoolOnRoundCompleteNotificationCopyWith<$Res> {
-  factory _$$DePoolOnRoundCompleteNotificationImplCopyWith(
-          _$DePoolOnRoundCompleteNotificationImpl value,
-          $Res Function(_$DePoolOnRoundCompleteNotificationImpl) then) =
-      __$$DePoolOnRoundCompleteNotificationImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {String roundId,
-      @amountJsonConverter BigInt reward,
-      @amountJsonConverter BigInt ordinaryStake,
-      @amountJsonConverter BigInt vestingStake,
-      @amountJsonConverter BigInt lockStake,
-      bool reinvest,
-      int reason});
-}
-
-/// @nodoc
-class __$$DePoolOnRoundCompleteNotificationImplCopyWithImpl<$Res>
-    extends _$DePoolOnRoundCompleteNotificationCopyWithImpl<$Res,
-        _$DePoolOnRoundCompleteNotificationImpl>
-    implements _$$DePoolOnRoundCompleteNotificationImplCopyWith<$Res> {
-  __$$DePoolOnRoundCompleteNotificationImplCopyWithImpl(
-      _$DePoolOnRoundCompleteNotificationImpl _value,
-      $Res Function(_$DePoolOnRoundCompleteNotificationImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of DePoolOnRoundCompleteNotification
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? roundId = null,
-    Object? reward = null,
-    Object? ordinaryStake = null,
-    Object? vestingStake = null,
-    Object? lockStake = null,
-    Object? reinvest = null,
-    Object? reason = null,
-  }) {
-    return _then(_$DePoolOnRoundCompleteNotificationImpl(
-      roundId: null == roundId
-          ? _value.roundId
-          : roundId // ignore: cast_nullable_to_non_nullable
-              as String,
-      reward: null == reward
-          ? _value.reward
-          : reward // ignore: cast_nullable_to_non_nullable
-              as BigInt,
-      ordinaryStake: null == ordinaryStake
-          ? _value.ordinaryStake
-          : ordinaryStake // ignore: cast_nullable_to_non_nullable
-              as BigInt,
-      vestingStake: null == vestingStake
-          ? _value.vestingStake
-          : vestingStake // ignore: cast_nullable_to_non_nullable
-              as BigInt,
-      lockStake: null == lockStake
-          ? _value.lockStake
-          : lockStake // ignore: cast_nullable_to_non_nullable
-              as BigInt,
-      reinvest: null == reinvest
-          ? _value.reinvest
-          : reinvest // ignore: cast_nullable_to_non_nullable
-              as bool,
-      reason: null == reason
-          ? _value.reason
-          : reason // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$DePoolOnRoundCompleteNotificationImpl
-    implements _DePoolOnRoundCompleteNotification {
-  const _$DePoolOnRoundCompleteNotificationImpl(
-      {required this.roundId,
-      @amountJsonConverter required this.reward,
-      @amountJsonConverter required this.ordinaryStake,
-      @amountJsonConverter required this.vestingStake,
-      @amountJsonConverter required this.lockStake,
-      required this.reinvest,
-      required this.reason});
-
-  factory _$DePoolOnRoundCompleteNotificationImpl.fromJson(
-          Map<String, dynamic> json) =>
-      _$$DePoolOnRoundCompleteNotificationImplFromJson(json);
-
-  @override
-  final String roundId;
-  @override
-  @amountJsonConverter
-  final BigInt reward;
-  @override
-  @amountJsonConverter
-  final BigInt ordinaryStake;
-  @override
-  @amountJsonConverter
-  final BigInt vestingStake;
-  @override
-  @amountJsonConverter
-  final BigInt lockStake;
-  @override
-  final bool reinvest;
-  @override
-  final int reason;
-
-  @override
-  String toString() {
-    return 'DePoolOnRoundCompleteNotification(roundId: $roundId, reward: $reward, ordinaryStake: $ordinaryStake, vestingStake: $vestingStake, lockStake: $lockStake, reinvest: $reinvest, reason: $reason)';
-  }
+  /// Serializes this DePoolOnRoundCompleteNotification to a JSON map.
+  Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$DePoolOnRoundCompleteNotificationImpl &&
+            other is DePoolOnRoundCompleteNotification &&
             (identical(other.roundId, roundId) || other.roundId == roundId) &&
             (identical(other.reward, reward) || other.reward == reward) &&
             (identical(other.ordinaryStake, ordinaryStake) ||
@@ -257,63 +58,231 @@ class _$DePoolOnRoundCompleteNotificationImpl
   int get hashCode => Object.hash(runtimeType, roundId, reward, ordinaryStake,
       vestingStake, lockStake, reinvest, reason);
 
-  /// Create a copy of DePoolOnRoundCompleteNotification
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$DePoolOnRoundCompleteNotificationImplCopyWith<
-          _$DePoolOnRoundCompleteNotificationImpl>
-      get copyWith => __$$DePoolOnRoundCompleteNotificationImplCopyWithImpl<
-          _$DePoolOnRoundCompleteNotificationImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$DePoolOnRoundCompleteNotificationImplToJson(
-      this,
-    );
+  String toString() {
+    return 'DePoolOnRoundCompleteNotification(roundId: $roundId, reward: $reward, ordinaryStake: $ordinaryStake, vestingStake: $vestingStake, lockStake: $lockStake, reinvest: $reinvest, reason: $reason)';
   }
 }
 
-abstract class _DePoolOnRoundCompleteNotification
+/// @nodoc
+abstract mixin class $DePoolOnRoundCompleteNotificationCopyWith<$Res> {
+  factory $DePoolOnRoundCompleteNotificationCopyWith(
+          DePoolOnRoundCompleteNotification value,
+          $Res Function(DePoolOnRoundCompleteNotification) _then) =
+      _$DePoolOnRoundCompleteNotificationCopyWithImpl;
+  @useResult
+  $Res call(
+      {String roundId,
+      BigInt reward,
+      BigInt ordinaryStake,
+      BigInt vestingStake,
+      BigInt lockStake,
+      bool reinvest,
+      int reason});
+}
+
+/// @nodoc
+class _$DePoolOnRoundCompleteNotificationCopyWithImpl<$Res>
+    implements $DePoolOnRoundCompleteNotificationCopyWith<$Res> {
+  _$DePoolOnRoundCompleteNotificationCopyWithImpl(this._self, this._then);
+
+  final DePoolOnRoundCompleteNotification _self;
+  final $Res Function(DePoolOnRoundCompleteNotification) _then;
+
+  /// Create a copy of DePoolOnRoundCompleteNotification
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? roundId = null,
+    Object? reward = null,
+    Object? ordinaryStake = null,
+    Object? vestingStake = null,
+    Object? lockStake = null,
+    Object? reinvest = null,
+    Object? reason = null,
+  }) {
+    return _then(_self.copyWith(
+      roundId: null == roundId
+          ? _self.roundId
+          : roundId // ignore: cast_nullable_to_non_nullable
+              as String,
+      reward: null == reward
+          ? _self.reward
+          : reward // ignore: cast_nullable_to_non_nullable
+              as BigInt,
+      ordinaryStake: null == ordinaryStake
+          ? _self.ordinaryStake
+          : ordinaryStake // ignore: cast_nullable_to_non_nullable
+              as BigInt,
+      vestingStake: null == vestingStake
+          ? _self.vestingStake
+          : vestingStake // ignore: cast_nullable_to_non_nullable
+              as BigInt,
+      lockStake: null == lockStake
+          ? _self.lockStake
+          : lockStake // ignore: cast_nullable_to_non_nullable
+              as BigInt,
+      reinvest: null == reinvest
+          ? _self.reinvest
+          : reinvest // ignore: cast_nullable_to_non_nullable
+              as bool,
+      reason: null == reason
+          ? _self.reason
+          : reason // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _DePoolOnRoundCompleteNotification
     implements DePoolOnRoundCompleteNotification {
-  const factory _DePoolOnRoundCompleteNotification(
-      {required final String roundId,
-      @amountJsonConverter required final BigInt reward,
-      @amountJsonConverter required final BigInt ordinaryStake,
-      @amountJsonConverter required final BigInt vestingStake,
-      @amountJsonConverter required final BigInt lockStake,
-      required final bool reinvest,
-      required final int reason}) = _$DePoolOnRoundCompleteNotificationImpl;
-
+  const _DePoolOnRoundCompleteNotification(
+      {required this.roundId,
+      required this.reward,
+      required this.ordinaryStake,
+      required this.vestingStake,
+      required this.lockStake,
+      required this.reinvest,
+      required this.reason});
   factory _DePoolOnRoundCompleteNotification.fromJson(
-          Map<String, dynamic> json) =
-      _$DePoolOnRoundCompleteNotificationImpl.fromJson;
+          Map<String, dynamic> json) =>
+      _$DePoolOnRoundCompleteNotificationFromJson(json);
 
   @override
-  String get roundId;
+  final String roundId;
   @override
-  @amountJsonConverter
-  BigInt get reward;
+  final BigInt reward;
   @override
-  @amountJsonConverter
-  BigInt get ordinaryStake;
+  final BigInt ordinaryStake;
   @override
-  @amountJsonConverter
-  BigInt get vestingStake;
+  final BigInt vestingStake;
   @override
-  @amountJsonConverter
-  BigInt get lockStake;
+  final BigInt lockStake;
   @override
-  bool get reinvest;
+  final bool reinvest;
   @override
-  int get reason;
+  final int reason;
 
   /// Create a copy of DePoolOnRoundCompleteNotification
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$DePoolOnRoundCompleteNotificationImplCopyWith<
-          _$DePoolOnRoundCompleteNotificationImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  _$DePoolOnRoundCompleteNotificationCopyWith<
+          _DePoolOnRoundCompleteNotification>
+      get copyWith => __$DePoolOnRoundCompleteNotificationCopyWithImpl<
+          _DePoolOnRoundCompleteNotification>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$DePoolOnRoundCompleteNotificationToJson(
+      this,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _DePoolOnRoundCompleteNotification &&
+            (identical(other.roundId, roundId) || other.roundId == roundId) &&
+            (identical(other.reward, reward) || other.reward == reward) &&
+            (identical(other.ordinaryStake, ordinaryStake) ||
+                other.ordinaryStake == ordinaryStake) &&
+            (identical(other.vestingStake, vestingStake) ||
+                other.vestingStake == vestingStake) &&
+            (identical(other.lockStake, lockStake) ||
+                other.lockStake == lockStake) &&
+            (identical(other.reinvest, reinvest) ||
+                other.reinvest == reinvest) &&
+            (identical(other.reason, reason) || other.reason == reason));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, roundId, reward, ordinaryStake,
+      vestingStake, lockStake, reinvest, reason);
+
+  @override
+  String toString() {
+    return 'DePoolOnRoundCompleteNotification(roundId: $roundId, reward: $reward, ordinaryStake: $ordinaryStake, vestingStake: $vestingStake, lockStake: $lockStake, reinvest: $reinvest, reason: $reason)';
+  }
 }
+
+/// @nodoc
+abstract mixin class _$DePoolOnRoundCompleteNotificationCopyWith<$Res>
+    implements $DePoolOnRoundCompleteNotificationCopyWith<$Res> {
+  factory _$DePoolOnRoundCompleteNotificationCopyWith(
+          _DePoolOnRoundCompleteNotification value,
+          $Res Function(_DePoolOnRoundCompleteNotification) _then) =
+      __$DePoolOnRoundCompleteNotificationCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {String roundId,
+      BigInt reward,
+      BigInt ordinaryStake,
+      BigInt vestingStake,
+      BigInt lockStake,
+      bool reinvest,
+      int reason});
+}
+
+/// @nodoc
+class __$DePoolOnRoundCompleteNotificationCopyWithImpl<$Res>
+    implements _$DePoolOnRoundCompleteNotificationCopyWith<$Res> {
+  __$DePoolOnRoundCompleteNotificationCopyWithImpl(this._self, this._then);
+
+  final _DePoolOnRoundCompleteNotification _self;
+  final $Res Function(_DePoolOnRoundCompleteNotification) _then;
+
+  /// Create a copy of DePoolOnRoundCompleteNotification
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? roundId = null,
+    Object? reward = null,
+    Object? ordinaryStake = null,
+    Object? vestingStake = null,
+    Object? lockStake = null,
+    Object? reinvest = null,
+    Object? reason = null,
+  }) {
+    return _then(_DePoolOnRoundCompleteNotification(
+      roundId: null == roundId
+          ? _self.roundId
+          : roundId // ignore: cast_nullable_to_non_nullable
+              as String,
+      reward: null == reward
+          ? _self.reward
+          : reward // ignore: cast_nullable_to_non_nullable
+              as BigInt,
+      ordinaryStake: null == ordinaryStake
+          ? _self.ordinaryStake
+          : ordinaryStake // ignore: cast_nullable_to_non_nullable
+              as BigInt,
+      vestingStake: null == vestingStake
+          ? _self.vestingStake
+          : vestingStake // ignore: cast_nullable_to_non_nullable
+              as BigInt,
+      lockStake: null == lockStake
+          ? _self.lockStake
+          : lockStake // ignore: cast_nullable_to_non_nullable
+              as BigInt,
+      reinvest: null == reinvest
+          ? _self.reinvest
+          : reinvest // ignore: cast_nullable_to_non_nullable
+              as bool,
+      reason: null == reason
+          ? _self.reason
+          : reason // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+// dart format on

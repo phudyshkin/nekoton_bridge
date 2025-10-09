@@ -6,27 +6,31 @@ part of 'derived_key_sign_params.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ByAccountIdImpl _$$ByAccountIdImplFromJson(Map<String, dynamic> json) =>
-    _$ByAccountIdImpl(
+_DerivedKeyPasswordByAccountId _$DerivedKeyPasswordByAccountIdFromJson(
+        Map<String, dynamic> json) =>
+    _DerivedKeyPasswordByAccountId(
       DerivedKeyPasswordByAccountId.fromJson(
           json['data'] as Map<String, dynamic>),
       $type: json['type'] as String?,
     );
 
-Map<String, dynamic> _$$ByAccountIdImplToJson(_$ByAccountIdImpl instance) =>
+Map<String, dynamic> _$DerivedKeyPasswordByAccountIdToJson(
+        _DerivedKeyPasswordByAccountId instance) =>
     <String, dynamic>{
       'data': instance.data.toJson(),
       'type': instance.$type,
     };
 
-_$ByPublicKeyImpl _$$ByPublicKeyImplFromJson(Map<String, dynamic> json) =>
-    _$ByPublicKeyImpl(
+_DerivedKeyPasswordByPublicKey _$DerivedKeyPasswordByPublicKeyFromJson(
+        Map<String, dynamic> json) =>
+    _DerivedKeyPasswordByPublicKey(
       DerivedKeyPasswordByPublicKey.fromJson(
           json['data'] as Map<String, dynamic>),
       $type: json['type'] as String?,
     );
 
-Map<String, dynamic> _$$ByPublicKeyImplToJson(_$ByPublicKeyImpl instance) =>
+Map<String, dynamic> _$DerivedKeyPasswordByPublicKeyToJson(
+        _DerivedKeyPasswordByPublicKey instance) =>
     <String, dynamic>{
       'data': instance.data.toJson(),
       'type': instance.$type,

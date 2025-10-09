@@ -86,9 +86,9 @@ dependencies = [
 
 [[package]]
 name = "android_logger"
-version = "0.14.1"
+version = "0.15.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "05b07e8e73d720a1f2e4b6014766e6039fd2e96a4fa44e2a78d0e1fa2ff49826"
+checksum = "f6f39be698127218cca460cb624878c9aa4e2b47dba3b277963d2bf00bad263b"
 dependencies = [
  "android_log-sys",
  "env_filter",
@@ -893,7 +893,7 @@ dependencies = [
 name = "flutter_nekoton_bridge"
 version = "0.0.0"
 dependencies = [
- "android_logger 0.14.1",
+ "android_logger 0.15.0",
  "anyhow",
  "async-trait",
  "base64 0.22.1",
@@ -929,9 +929,9 @@ dependencies = [
 
 [[package]]
 name = "flutter_rust_bridge"
-version = "2.9.0"
+version = "2.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2f8c0dee6249225e815dcff3f3a39b98d9f66fdb3c392a432715b646bfa4da02"
+checksum = "ff1d2ad18166cead8c1b92b1c00e64aacc32e6ebd1ac95f77089c276c9c6bd8c"
 dependencies = [
  "allo-isolate",
  "android_logger 0.13.3",
@@ -958,9 +958,9 @@ dependencies = [
 
 [[package]]
 name = "flutter_rust_bridge_codegen"
-version = "2.9.0"
+version = "2.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ce4b53008b970ccd5a2405bf711beb664c43e7fd216624a606e3a60b49b6753c"
+checksum = "6f9092110d6f6dc82421bb00c5adc23f1595fc9146074ff856cb17c3af647407"
 dependencies = [
  "anyhow",
  "cargo_metadata",
@@ -1003,9 +1003,9 @@ dependencies = [
 
 [[package]]
 name = "flutter_rust_bridge_macros"
-version = "2.9.0"
+version = "2.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8e88d604908d9eccb4ca9c26640ce41033165cbef041460e704ae28bd5208bce"
+checksum = "36cf75fba54902e67db5eef4a520df1c9f604db6f71f106fbc012477e2d81542"
 dependencies = [
  "hex",
  "md-5",
@@ -1600,7 +1600,7 @@ dependencies = [
 [[package]]
 name = "nekoton"
 version = "0.13.1"
-source = "git+https://github.com/broxus/nekoton.git?branch=feature%2Fnew-abi-support#2956842be5f66c077d6f800cc3da380e4b7319e6"
+source = "git+https://github.com/broxus/nekoton.git#c6301a91bc9c631e570d013cfd89856c7fa6fcbe"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -1646,7 +1646,7 @@ dependencies = [
 [[package]]
 name = "nekoton-abi"
 version = "0.13.0"
-source = "git+https://github.com/broxus/nekoton.git?branch=feature%2Fnew-abi-support#2956842be5f66c077d6f800cc3da380e4b7319e6"
+source = "git+https://github.com/broxus/nekoton.git#c6301a91bc9c631e570d013cfd89856c7fa6fcbe"
 dependencies = [
  "anyhow",
  "base64 0.13.1",
@@ -1673,7 +1673,7 @@ dependencies = [
 [[package]]
 name = "nekoton-contracts"
 version = "0.13.0"
-source = "git+https://github.com/broxus/nekoton.git?branch=feature%2Fnew-abi-support#2956842be5f66c077d6f800cc3da380e4b7319e6"
+source = "git+https://github.com/broxus/nekoton.git#c6301a91bc9c631e570d013cfd89856c7fa6fcbe"
 dependencies = [
  "anyhow",
  "nekoton-abi",
@@ -1690,7 +1690,7 @@ dependencies = [
 [[package]]
 name = "nekoton-derive"
 version = "0.13.0"
-source = "git+https://github.com/broxus/nekoton.git?branch=feature%2Fnew-abi-support#2956842be5f66c077d6f800cc3da380e4b7319e6"
+source = "git+https://github.com/broxus/nekoton.git#c6301a91bc9c631e570d013cfd89856c7fa6fcbe"
 dependencies = [
  "either",
  "proc-macro2",
@@ -1701,7 +1701,7 @@ dependencies = [
 [[package]]
 name = "nekoton-jetton"
 version = "0.13.0"
-source = "git+https://github.com/broxus/nekoton.git?branch=feature%2Fnew-abi-support#2956842be5f66c077d6f800cc3da380e4b7319e6"
+source = "git+https://github.com/broxus/nekoton.git#c6301a91bc9c631e570d013cfd89856c7fa6fcbe"
 dependencies = [
  "anyhow",
  "lazy_static",
@@ -1718,7 +1718,7 @@ dependencies = [
 [[package]]
 name = "nekoton-proto"
 version = "0.1.0"
-source = "git+https://github.com/broxus/nekoton.git?branch=feature%2Fnew-abi-support#2956842be5f66c077d6f800cc3da380e4b7319e6"
+source = "git+https://github.com/broxus/nekoton.git#c6301a91bc9c631e570d013cfd89856c7fa6fcbe"
 dependencies = [
  "anyhow",
  "nekoton-abi",
@@ -1730,7 +1730,7 @@ dependencies = [
 [[package]]
 name = "nekoton-utils"
 version = "0.13.0"
-source = "git+https://github.com/broxus/nekoton.git?branch=feature%2Fnew-abi-support#2956842be5f66c077d6f800cc3da380e4b7319e6"
+source = "git+https://github.com/broxus/nekoton.git#c6301a91bc9c631e570d013cfd89856c7fa6fcbe"
 dependencies = [
  "anyhow",
  "base64 0.13.1",
@@ -2777,7 +2777,7 @@ checksum = "bfb942dfe1d8e29a7ee7fcbde5bd2b9a25fb89aa70caea2eba3bee836ff41076"
 [[package]]
 name = "ton_abi"
 version = "2.1.0"
-source = "git+https://github.com/broxus/ton-labs-abi?branch=feature%2Fnew-abi#593038afe040dda3393cda6cc7b15de66b05400c"
+source = "git+https://github.com/broxus/ton-labs-abi#9386e9f5d6021f9ef072b2bb99bc10b70adb98ab"
 dependencies = [
  "anyhow",
  "base64 0.13.1",
@@ -2799,7 +2799,7 @@ dependencies = [
 [[package]]
 name = "ton_block"
 version = "1.9.73"
-source = "git+https://github.com/broxus/ton-labs-block.git#eb87ac3abcf6b489d51e4da2e52f850594a1644f"
+source = "git+https://github.com/broxus/ton-labs-block.git#f1c3e222ee6a2b2ccf663f4f2df5e1335b95961a"
 dependencies = [
  "anyhow",
  "base64 0.13.1",
@@ -2821,7 +2821,7 @@ dependencies = [
 [[package]]
 name = "ton_executor"
 version = "1.15.54"
-source = "git+https://github.com/broxus/ton-labs-executor#1c63aa953462822397a3b50f260e294653e9caed"
+source = "git+https://github.com/broxus/ton-labs-executor#b299a0fc8f3c3ecc28e8e38a9c014be56d4ce52d"
 dependencies = [
  "anyhow",
  "log",
@@ -2834,7 +2834,7 @@ dependencies = [
 [[package]]
 name = "ton_types"
 version = "1.10.2"
-source = "git+https://github.com/broxus/ton-labs-types.git#3324562d7ff1ebec66d996128573966c1b53862b"
+source = "git+https://github.com/broxus/ton-labs-types.git#8556b60547a20f16d50abcab084479d0c9db3756"
 dependencies = [
  "anyhow",
  "base64 0.13.1",
@@ -2856,7 +2856,7 @@ dependencies = [
 [[package]]
 name = "ton_vm"
 version = "1.8.29"
-source = "git+https://github.com/broxus/ton-labs-vm.git#3bb002f54daaa039c2450af32a29e969d2dca66c"
+source = "git+https://github.com/broxus/ton-labs-vm.git#211bd88f46fa257ac4b939447f209465d3e201e1"
 dependencies = [
  "anyhow",
  "ed25519",

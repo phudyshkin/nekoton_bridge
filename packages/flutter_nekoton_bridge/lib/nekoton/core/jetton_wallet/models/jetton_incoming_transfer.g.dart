@@ -6,16 +6,16 @@ part of 'jetton_incoming_transfer.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$JettonIncomingTransferImpl _$$JettonIncomingTransferImplFromJson(
+_JettonIncomingTransfer _$JettonIncomingTransferFromJson(
         Map<String, dynamic> json) =>
-    _$JettonIncomingTransferImpl(
-      tokens: amountJsonConverter.fromJson(json['tokens'] as String),
+    _JettonIncomingTransfer(
+      tokens: BigInt.parse(json['tokens'] as String),
       from: Address.fromJson(json['from'] as String),
     );
 
-Map<String, dynamic> _$$JettonIncomingTransferImplToJson(
-        _$JettonIncomingTransferImpl instance) =>
+Map<String, dynamic> _$JettonIncomingTransferToJson(
+        _JettonIncomingTransfer instance) =>
     <String, dynamic>{
-      'tokens': amountJsonConverter.toJson(instance.tokens),
+      'tokens': instance.tokens.toString(),
       'from': instance.from.toJson(),
     };

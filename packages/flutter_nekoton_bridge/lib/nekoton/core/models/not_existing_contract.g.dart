@@ -6,14 +6,13 @@ part of 'not_existing_contract.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$NotExistingContractImpl _$$NotExistingContractImplFromJson(
-        Map<String, dynamic> json) =>
-    _$NotExistingContractImpl(
+_NotExistingContract _$NotExistingContractFromJson(Map<String, dynamic> json) =>
+    _NotExistingContract(
       timings: GenTimings.fromJson(json['timings'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$NotExistingContractImplToJson(
-        _$NotExistingContractImpl instance) =>
+Map<String, dynamic> _$NotExistingContractToJson(
+        _NotExistingContract instance) =>
     <String, dynamic>{
       'timings': instance.timings.toJson(),
     };

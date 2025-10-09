@@ -95,11 +95,11 @@ class KeyStore {
     );
     final decoded = jsonDecode(encoded) as Map<String, dynamic>;
 
-    return signer.maybeWhen(
-      encrypted: () => EncryptedKeyExportSeedOutput.fromJson(decoded),
-      derived: () => DerivedKeyExportOutput.fromJson(decoded),
-      orElse: () => throw UnsupportedError('Invalid signer'),
-    );
+    return switch (signer) {
+      KeySigner_Encrypted() => EncryptedKeyExportSeedOutput.fromJson(decoded),
+      KeySigner_Derived() => DerivedKeyExportOutput.fromJson(decoded),
+      _ => throw UnsupportedError('Invalid signer'),
+    };
   }
 
   /// Return list of public keys specified for signer or throw error.
@@ -147,16 +147,16 @@ class KeyStore {
 
   /// Sign data and return base64-encoded signature or throw error.
   /// [signatureId] - id of transport
-  /// [data] - base64-encoded data that should be signed.
+  /// [message] - base64-encoded data that should be signed.
   Future<String> sign({
-    required String data,
+    required UnsignedMessageImpl message,
     required SignInput input,
     required int? signatureId,
   }) async {
     return await keystore.sign(
       signer: input.toSigner(),
       input: jsonEncode(input),
-      data: data,
+      message: message,
       signatureId: signatureId,
     );
   }

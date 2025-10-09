@@ -1,4 +1,4 @@
-set(LibraryVersion "nekoton_bridge-v2.8.2") # generated; do not edit
+set(LibraryVersion "nekoton_bridge-v3.6.0") # generated; do not edit
 # # installed. You should not increase this version, as doing so will cause
 # # the plugin to fail to compile for some customers of the plugin.
 # cmake_minimum_required(VERSION 3.10)
@@ -36,7 +36,7 @@ set(LibRoot "${CMAKE_CURRENT_SOURCE_DIR}/${LibraryVersion}")
 set(ArchivePath "${LibRoot}.tar.gz")
 if(NOT EXISTS ${ArchivePath})
   file(DOWNLOAD
-    "https://github.com/phudyshkin/nekoton_bridge/raw/refs/heads/nekoton_4_0/platform-build/linux/nekoton_bridge-v0.0.0.tar.gz"
+    "https://github.com/phudyshkin/nekoton_bridge/raw/refs/heads/nekoton_5_0/platform-build/linux/nekoton_bridge-v0.0.0.tar.gz"
     ${ArchivePath}
     TLS_VERIFY ON
   )
