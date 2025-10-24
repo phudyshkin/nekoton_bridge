@@ -13,17 +13,17 @@ fn main() -> anyhow::Result<()> {
     rerun_except(&["**/*_api.rs"]).unwrap();
 
     // Create merged file for generation
-    // not work on windows. Comment this code and Use copy/paste generated from macos
-    let mut codegen = std::process::Command::new("dart")
-        .arg("run")
-        .arg("../bin/merger.dart")
-        .spawn()
-        .unwrap();
-    _ = codegen.wait();
+    // not work on windows. Comment this code and Use copy/paste (nekoton_bridge/rust/src/api/merged.rs) generated from macos
+    // let mut codegen = std::process::Command::new("dart")
+    //     .arg("run")
+    //     .arg("../bin/merger.dart")
+    //    .spawn()
+    //    .unwrap();
+   //  _ = codegen.wait();
 
 
     codegen::generate(
-        Config::from_config_file("../flutter_rust_bridge.yaml")?.unwrap(),
-        Default::default(),
+         Config::from_config_file("../flutter_rust_bridge.yaml")?.unwrap(),
+         Default::default(),
     )
 }

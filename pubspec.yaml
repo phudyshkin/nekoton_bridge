@@ -1,6 +1,12 @@
 name: nekoton_bridge_workspace
 
 environment:
-  sdk: '>=3.5.0 <4.0.0'
+  sdk: '>=3.9.0 <4.0.0'
+
+workspace:
+  - packages/nekoton_bridge
+  - packages/flutter_nekoton_bridge
+  - packages/flutter_nekoton_bridge/example
+
 dev_dependencies:
-  melos: ^6.3.0
+  melos: ^7.1.0
