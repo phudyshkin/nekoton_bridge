@@ -57,6 +57,12 @@ flutter:
         ffiPlugin: true
       ios:
         ffiPlugin: true
+      linux:
+        ffiPlugin: true
+      macos:
+        ffiPlugin: true
+      windows:
+        ffiPlugin: true
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:
