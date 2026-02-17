@@ -42,7 +42,7 @@ set(LibRoot "${CMAKE_CURRENT_SOURCE_DIR}/${LibraryVersion}")
 #set(ArchivePath "${LibRoot}.tar.gz")
 #if(NOT EXISTS ${ArchivePath})
 #  file(DOWNLOAD
-#    "https://github.com/YourGitHubAccount/repo_name/releases/download/${LibraryVersion}/other.tar.gz"
+#    "https://github.com/phudyshkin/nekoton_bridge/raw/refs/heads/nekoton_5_0/platform-build/windows/nekoton_bridge-v0.0.0.tar.gz"
 #    ${ArchivePath}
 #    TLS_VERIFY ON
 #  )
